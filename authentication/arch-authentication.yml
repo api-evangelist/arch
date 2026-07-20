@@ -1,0 +1,13 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/arch-client-api-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/arch-client-api-openapi.json
