@@ -1,0 +1,645 @@
+openapi: 3.0.0
+info:
+  title: Arch Client Accounts Tasks API
+  version: 0.1.0
+  description: "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n"
+servers:
+- url: /
+host: arch.co
+tags:
+- name: Tasks
+paths:
+  /client-api/v0/tasks/{id}:
+    get:
+      summary: Get a task by ID.
+      security:
+      - BearerAuth: []
+      description: Get a task by ID.
+      tags:
+      - Tasks
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the task to get.
+        required: true
+        schema:
+          type: integer
+      - name: includeWireInstructions
+        in: query
+        example: true
+        description: Whether to include Wire Verification in the data. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Task not found or caller not authorized to view task.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /client-api/v0/tasks/{id}/complete:
+    post:
+      summary: Complete a task by ID.
+      security:
+      - BearerAuth: []
+      description: Complete a task by ID.
+      tags:
+      - Tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                completionDate:
+                  type: string
+                  format: date
+                  description: The date this task will be marked as completed at. Should be in the "YYYY-MM-DD" format.
+                  example: '2024-03-27'
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the task to complete.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Malformed body or task already completed.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Task not found or caller not authorized to complete task.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Error completing task.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /client-api/v0/tasks:
+    get:
+      summary: Get all tasks for the user.
+      security:
+      - BearerAuth: []
+      description: Get all tasks for the user.
+      tags:
+      - Tasks
+      parameters:
+      - name: limit
+        in: query
+        description: The number of activities to return
+        schema:
+          type: integer
+          default: 25
+          maximum: 1000
+      - name: offset
+        in: query
+        description: The number of activities to skip before collecting results
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: holdingIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for tasks related to holdings with ids in the provided argument
+        schema:
+          type: string
+      - name: investingEntityIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for tasks related to investing entities with ids in the provided argument
+        schema:
+          type: string
+      - name: issuingEntityIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for tasks related to issuing entities with ids in the provided argument
+        schema:
+          type: string
+      - name: accountIds
+        in: query
+        example: 1,2,3,4
+        description: Will filter the output to only include holdings relevant to one of the account ids in the provided argument
+        schema:
+          type: string
+      - name: assignedToUsers
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for tasks with an assigned user with a matching id on one of the provided ids
+        schema:
+          type: string
+      - name: completedByUsers
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for tasks completed by a user with a matching id on one of the provided ids
+        schema:
+          type: string
+      - name: beforeDueDate
+        in: query
+        description: Filter the output for tasks with a due time before the queried date-time.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterDueDate
+        in: query
+        description: Filter the output for tasks with a due time after the queried date-time.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeCompletionDate
+        in: query
+        description: Filter the output for tasks with a completion date before the queried date-time.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterCompletionDate
+        in: query
+        description: Filter the output for tasks with a completion date after the queried date-time.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeCreationTime
+        in: query
+        description: Filter the output for tasks with a creation time before the queried date-time.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterCreationTime
+        in: query
+        description: Filter the output for tasks with a creation time after the queried date-time.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: isComplete
+        in: query
+        description: Filter the output for tasks that have a completion status matching the provided value
+        example: true
+        schema:
+          type: boolean
+      - name: includeWireInstructions
+        in: query
+        example: true
+        description: Whether to include Wire Verification in the data. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskList'
+  /client-api/v0/tasks/{userId}/assign:
+    patch:
+      summary: Assign one or more tasks to a user with userId.
+      security:
+      - BearerAuth: []
+      description: Assign one or more tasks to a user with userId.
+      tags:
+      - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - taskIds
+              properties:
+                taskIds:
+                  type: array
+                  description: An array of taskIds.
+                  items:
+                    type: integer
+                  example:
+                  - 1
+                  - 2
+                  - 3
+      parameters:
+      - name: userId
+        in: path
+        description: The ID of the user to be assigned the tasks.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: string
+        '403':
+          description: Tasked user does not have permission to complete one or more of the provided tasks, or one or more of the provided tasks cannot be assigned by you.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: User not found or is inaccessible.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Error completing task.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /client-api/v0/tasks/{id}/task-notes:
+    patch:
+      summary: Update the notes section of a task.
+      security:
+      - BearerAuth: []
+      description: Update the notes section (investorNotes) of a task by ID.
+      tags:
+      - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - taskNotes
+              properties:
+                taskNotes:
+                  type: string
+                  description: The updated notes for the task. Can be null or empty string to clear notes.
+                  example: Updated task notes here
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the task to update.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Malformed request body.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Task not found or caller not authorized to update task.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Error updating task.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /client-api/v0/tasks/{id}/comments:
+    get:
+      summary: Get all user comments for a task.
+      security:
+      - BearerAuth: []
+      description: Get all user comments for a task. Employee comments are excluded. Requires CommentsRead permission.
+      tags:
+      - Tasks
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the task to get comments for.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          description: Invalid task ID
+          content:
+            text/plain:
+              schema:
+                type: string
+        '403':
+          description: Forbidden - CommentsRead permission required
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Task not found or caller not authorized to view task.
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    Task:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          description: The task ID.
+          example: 9007
+          readOnly: true
+        dueDate:
+          type: string
+          format: date
+          example: '2023-07-14'
+          description: The due date of the task.
+        completionDate:
+          deprecated: true
+          type: string
+          format: date
+          example: '2024-04-02'
+          description: The date the task was completed (in UTC). For specific completion time, use 'completionTime'.
+        completionTime:
+          type: string
+          format: date-time
+          example: '2024-03-11T14:13:29.000Z'
+          description: The time the task was completed.
+        completed:
+          type: boolean
+          example: true
+          description: Whether the task is completed.
+        creationTime:
+          type: string
+          format: date-time
+          example: '2024-03-11T14:13:29.000Z'
+          description: The time the task was created.
+        investorNotes:
+          type: string
+          example: This is a note
+          description: The note from the investor.
+        holdingUrl:
+          type: string
+          example: /holdings/16
+          description: The URL of the holding this Task is associated with.
+        investingEntityUrl:
+          type: string
+          example: /investing-entities/3
+          description: The URL of the investing entity this Task is associated with.
+        activityRef:
+          $ref: '#/components/schemas/ActivityRef'
+        activityUrl:
+          type: string
+          example: /activities/767801
+          description: The URL of the activity this Task is sourced from.
+        accountUrl:
+          type: string
+          example: /accounts/56
+          description: The URL of the account this Task is sourced from.
+        completedByUserUrl:
+          type: string
+          example: /users/2766
+          description: The URL of the user who completed the task.
+        assignedToUserUrl:
+          type: string
+          example: /users/2766
+          description: The URL of the user who the task is assigned to.
+        value:
+          $ref: '#/components/schemas/FinancialValue'
+        wireVerification:
+          type: object
+          properties:
+            currentWireExtraction:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 198
+                  description: The ID of Wire Extraction
+                sourceActivityId:
+                  type: integer
+                  example: 812464
+                  description: The ID of source actviity
+                specifiedCompletionTime:
+                  type: string
+                  format: date-time
+                  example: '2025-06-01T00:00:00.000Z'
+                  description: Date and time of specified completion
+                wireInstructions:
+                  type: object
+                  description: Current wire instructions
+                  properties:
+                    id:
+                      type: integer
+                      example: 2503
+                      description: The ID of the wire instruction
+                    bankName:
+                      type: string
+                      example: Arch Corpo Bank
+                      description: The name of the bank
+                    bankAddress:
+                      type: string
+                      example: 1048 Broadway New York, NY 10003 USA
+                      description: The address of the bank
+                    accountName:
+                      type: string
+                      example: Tiger Global PIP
+                      description: The name of the account
+                    accountNumber:
+                      type: string
+                      example: 9984671534
+                      description: The number of the account
+                    abaNumber:
+                      type: string
+                      example: 890033223
+                      description: The ABA (or routing) number
+                    reference:
+                      type: string
+                      example: Arch Family Foundation
+                      description: The reference of wire
+                    bic:
+                      type: string
+                      example: ABGGE
+                      description: The Bank Identifier Code
+                    iban:
+                      type: string
+                      example: DE89370400440532013000
+                      description: The Internation Bank Account Number
+                    sortCode:
+                      type: string
+                      example: 123456
+                      description: The Sort Code
+                    contactName:
+                      type: string
+                      example: John Smith
+                      description: The name of the contact
+                    contactNumber:
+                      type: string
+                      example: 123-456-7890
+                      description: The phone number of the contact
+            changedFields:
+              type: array
+              description: an array of changed fields between the current and previous iterations of wire instructions
+              items:
+                type: string
+              example:
+              - bankName
+              - bankAddress
+          description: Current wire instructions and changed fields between the current and previous iterations of wire instructions - requires includeWireInstructions flag to be true. Wire Data is a premium feature that will return null if the Client is not subscribed to Wire Instruction Data Extraction.
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    TaskList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+          example: page
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+          example: /tasks?limit=10&offset=0
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          description: List of tasks
+        prev:
+          type: string
+          description: The relative URL for the previous page of tasks
+          example: /tasks?limit=10&offset=0
+        next:
+          type: string
+          description: The relative URL for the next page of tasks
+          example: /tasks?limit=10&offset=10
+    FinancialValue:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+    ActivityRef:
+      type: object
+      required:
+      - id
+      - url
+      - filesUrl
+      properties:
+        id:
+          type: string
+          description: The ID of the referenced activity
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced activity
+          example: /activities/112
+        filesUrl:
+          type: string
+          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
+          example: /activities/112/files
+    Comment:
+      type: object
+      required:
+      - id
+      - author
+      - creationTime
+      - updateTime
+      - message
+      properties:
+        id:
+          type: integer
+          description: The comment ID
+          example: 12345
+        author:
+          type: object
+          description: Comment author information
+          required:
+          - id
+          - name
+          - url
+          properties:
+            id:
+              type: integer
+              description: User ID
+              example: 2766
+            name:
+              type: string
+              description: User's full name
+              example: John Smith
+            url:
+              type: string
+              description: URL to user resource
+              example: /users/2766
+        creationTime:
+          type: string
+          format: date-time
+          description: When the comment was created
+          example: '2024-03-11T14:13:29.000Z'
+        updateTime:
+          type: string
+          format: date-time
+          description: When the comment was last updated
+          example: '2024-03-11T14:13:29.000Z'
+        message:
+          type: string
+          description: The comment text
+          example: This needs to be reviewed
+        parentCommentId:
+          type: integer
+          nullable: true
+          description: Parent comment ID for threaded comments, or null for top-level comments
+          example: 12340
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

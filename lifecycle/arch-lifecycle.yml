@@ -1,0 +1,27 @@
+generated: '2026-07-18'
+method: searched
+source: https://arch.co/client-api/api-docs/
+note: >-
+  Lifecycle posture for the Arch Client API. Versioning and the deprecated operation are
+  derived from the OpenAPI; the status page was located on the provider's public surface.
+versioning:
+  scheme: uri-path
+  current: v0
+  spec_version: 0.1.0
+  base_path: /client-api/v0
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: No formal deprecation/sunset policy page was found; one operation is marked deprecated in-spec.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://arch-group.gitlab.io/status-page/
+status_components:
+- {name: Website, description: Arch public-facing website}
+- {name: Arch Portal, description: Platform for investors to manage private investments}
+- {name: Client API, description: A JSON HTTP API for Arch customers}
+- {name: Arch Fund Services, description: Platform for funds to manage their investments}
+deprecated_operations:
+- operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/lookthroughs
+  summary: (Deprecated) Get lookthroughs for the specified account

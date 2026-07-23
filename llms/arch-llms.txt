@@ -1,0 +1,38 @@
+# Arch
+
+> Arch (Arch Labs, Inc.) is the digital administration platform for private markets and alternative investments. The Arch Client API is a JSON HTTP REST API that lets customers programmatically access holdings, cash flows, investing/issuing entities, offerings, activities, files, tasks, and tax documents on the Arch platform, authenticating with client-credential JWT bearer tokens.
+
+## APIs
+
+- [Arch Client API — docs](https://arch.co/client-api/api-docs/): JSON HTTP REST API over private-market investment data (base URL https://arch.co/client-api/v0).
+
+## Specs
+
+- [OpenAPI 3.0 (Arch Client API)](openapi/arch-client-api-openapi.json): 52 operations across Activities, Cash Flows, Firms, Holdings, Investing Entities, Issuing Entities, Lookthroughs, Offerings, Tasks, Tax Documents, Users, and User Roles.
+- [OpenAPI Overlay](overlays/arch-client-api-overlay.yaml): API Evangelist enhancements.
+
+## Authentication
+
+- [Authentication profile](authentication/arch-authentication.yml): Bearer JWT via client-credentials. POST /client-api/v0/auth/token with clientId + clientSecret returns a JWT; send as `authorization: Bearer <token>`. Request credentials at api-support@arch.co.
+
+## Conventions & semantics
+
+- [Conventions](conventions/arch-conventions.yml): offset/limit pagination ("Pages", default 25, max 1000), include* field expansion, before*/after* date filters, URI-path versioning (v0).
+- [Rate limits](rate-limits/arch-rate-limits.yml): per-minute; 429 on exceed; RateLimit-* response headers.
+- [Error catalog](errors/arch-problem-types.yml): standard HTTP status codes with JSON `message` body (not RFC 9457).
+- [Data model](data-model/arch-data-model.yml): entity graph — Account, Holding, InvestingEntity, IssuingEntity, Offering, Activity, CashFlow, Task, TaxDocument, Firm.
+- [Lifecycle](lifecycle/arch-lifecycle.yml): status page, versioning, deprecated operations.
+
+## Agent
+
+- [MCP tools (candidate)](mcp/arch-mcp.yml): candidate MCP tool surface derived from the OpenAPI.
+- [Agent skills](skills/_index.yml): packaged operating instructions grounded in real operationIds.
+- [Agentic access](agentic-access/arch-agentic-access.yml): recommended x-agentic-access execution contracts per operation.
+
+## Docs
+
+- [Developer / API reference](https://arch.co/client-api/api-docs/)
+- [Company website](https://archlabs.com)
+- [Status page](https://arch-group.gitlab.io/status-page/)
+- [Trust center](https://trust.arch.co/)
+- [Legal (terms, privacy, GDPR)](https://arch.co/legal.html)

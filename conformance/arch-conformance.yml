@@ -1,0 +1,39 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/arch-client-api-openapi.json
+note: >-
+  Cross-cutting standards conformance for the Arch Client API, derived from the OpenAPI
+  and the published documentation. GDPR is asserted from Arch's published GDPR compliance
+  policy; a Vanta-hosted trust center is published but specific certifications are not
+  machine-verifiable here (see security/arch-trust-center.yml).
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: Published OpenAPI 3.0.0 document served via Swagger UI at arch.co/client-api/api-docs/.
+- id: oauth2-client-credentials
+  conforms: partial
+  evidence: Client-credentials style token exchange (clientId/clientSecret -> JWT) but not declared as an OpenAPI oauth2 securityScheme; modeled as http bearer.
+- id: jwt-bearer
+  conforms: true
+  evidence: components.securitySchemes.BearerAuth type http scheme bearer bearerFormat JWT.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors returned as HTTP status + JSON body, not application/problem+json.
+- id: rfc6585-rate-limit-429
+  conforms: true
+  evidence: Documents HTTP 429 plus RateLimit-* response headers.
+- id: pagination-offset-limit
+  conforms: true
+  evidence: offset/limit query parameters; default page size 25, max 1000.
+- id: rest-json
+  conforms: true
+  evidence: Resource-oriented JSON HTTP API over application/json.
+- id: gdpr
+  conforms: true
+  evidence: Published GDPR compliance policy at arch.co/legal.html#gdpr-compliance-policy.
+- id: fhir-r4
+  conforms: false
+- id: scim
+  conforms: false
+- id: fapi
+  conforms: false

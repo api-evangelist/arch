@@ -1,0 +1,439 @@
+openapi: 3.0.0
+info:
+  title: Arch Client Accounts Cash Flows API
+  version: 0.1.0
+  description: "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n"
+servers:
+- url: /
+host: arch.co
+tags:
+- name: Cash Flows
+  description: Read and write data relating to money inflow / outflow
+paths:
+  /client-api/v0/cash-flows:
+    get:
+      summary: Get data for a set of cash flows available to the user
+      security:
+      - BearerAuth: []
+      description: Returns a paginated list of cash flows available to the user as determined by the user's access token.
+      tags:
+      - Cash Flows
+      parameters:
+      - name: limit
+        in: query
+        description: The number of cash flows to return
+        schema:
+          type: integer
+          default: 25
+          maximum: 1000
+      - name: offset
+        in: query
+        description: The number of cash flows to skip before collecting results
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: holdingIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for cash flows belonging to holdings with ids in the provided argument
+        schema:
+          type: string
+      - name: investingEntityIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for cash flows belonging to investing entities with ids in the provided argument
+        schema:
+          type: string
+      - name: issuingEntityIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for cash flows belonging to issuing entities with ids in the provided argument
+        schema:
+          type: string
+      - name: accountIds
+        in: query
+        example: 1,2,3,4
+        description: Will filter the output to only include holdings relevant to one of the account ids in the provided argument
+        schema:
+          type: string
+      - name: title
+        in: query
+        example: Test Name
+        description: Filter the output for cash flows with a title that contains the provided value
+        schema:
+          type: string
+      - name: types
+        schema:
+          type: string
+        example: Capital Call, Distribution, Contribution
+        in: query
+        description: Will filter the output to only include cash flows with one of the types in the provided argument
+      - name: beforeDueAt
+        in: query
+        description: Filter the output for cash flows with a due time before the queried datetime.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterDueAt
+        in: query
+        description: Filter the output for cash flows with a due time after the queried datetime.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeCompletedAt
+        in: query
+        description: Filter the output for cash flows with a completion date before the queried datetime.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterCompletedAt
+        in: query
+        description: Filter the output for cash flows with a completion date after the queried datetime.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeCreatedAt
+        in: query
+        description: Filter the output for cash flows with a creation time before the queried datetime.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterCreatedAt
+        in: query
+        description: Filter the output for cash flows with a creation time after the queried datetime.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: includeAllocations
+        in: query
+        description: Whether to include data about allocations in the response.
+        example: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashFlowList'
+        '500':
+          description: Internal server error.
+    post:
+      summary: Add a new cash flow to Arch. Assumes USD.
+      security:
+      - BearerAuth: []
+      description: Creates a new cash flow and returns the URL, if successful. Assumes the cash flow is in USD.
+      tags:
+      - Cash Flows
+      requestBody:
+        description: Details of the new cash flow to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCashFlow'
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the new cash flow
+        '403':
+          description: No permission to create cash flow with the specified data.
+        '500':
+          description: Internal server error.
+  /client-api/v0/cash-flows/{id}:
+    get:
+      summary: Get a specific cash flow by ID.
+      security:
+      - BearerAuth: []
+      description: Returns an object containing data for a specific cash flow.
+      tags:
+      - Cash Flows
+      parameters:
+      - name: id
+        in: path
+        description: A specific cash flow to query
+        required: true
+        schema:
+          type: integer
+      - name: includeAllocations
+        in: query
+        description: Whether to include data about allocations in the response.
+        example: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashFlow'
+        '400':
+          description: Cash flow ID could not be parsed.
+        '404':
+          description: Cash flow ID not found or is inaccessible to the user.
+        '500':
+          description: Internal server error.
+components:
+  schemas:
+    CashFlowList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+          example: page
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+          example: /cashflows?limit=1000&offset=1000
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashFlow'
+          description: List of cash-flows
+        next:
+          type: string
+          description: The relative URL for accessing the next page of this resource via the Arch Client API
+          example: /cashflows?limit=1000&offset=2000
+        prev:
+          type: string
+          description: The relative URL for accessing the previous page of this resource via the Arch Client API
+          example: /cashflows?limit=1000&offset=0
+    CashFlow:
+      type: object
+      required:
+      - kind
+      - id
+      - type
+      - selfUrl
+      - firmUrl
+      - holdingUrl
+      - investingEntityUrl
+      - financialValue
+      - createdAt
+      properties:
+        kind:
+          type: string
+          description: Cash Flow
+        id:
+          type: integer
+          description: The Arch ID of the cash flow
+          example: 12345
+        type:
+          type: object
+          description: The type of cash flow
+          properties:
+            name:
+              $ref: '#/components/schemas/CashFlowType'
+            flowDirection:
+              type: integer
+              description: Direction of the cash flow (-1 outbound, 0 internal transfer, 1 inbound)
+              enum:
+              - -1
+              - 0
+              - 1
+        selfUrl:
+          type: string
+          description: The relative path for accessing this resource via the Arch Client API
+          example: /cashflows/37205
+        firmUrl:
+          example: /firms/15
+          type: string
+          description: The relative path for accessing the firm associated with the cash flow
+        activityUrl:
+          type: string
+          description: The relative path for accessing the activity that the cash flow is tied to
+          example: /activities/23125
+        holdingUrl:
+          type: string
+          description: The relative path for accessing the holding that the cash flow is tied to
+          example: /investments/91494
+        investingEntityUrl:
+          type: string
+          description: The relative path for accessing the investing entity associated with the cash flow
+          example: /entities/29110
+        issuingEntityUrl:
+          example: /issuing-entities/15
+          type: string
+          description: The relative path for accessing the issuing entity associated with the cash flow
+        accountUrl:
+          example: /accounts/56
+          type: string
+          description: The relative path for accessing the account associated with the cash flow
+        financialValue:
+          $ref: '#/components/schemas/CashFlowFinancialValue'
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of cash flow created in UTC
+        dueAt:
+          type: string
+          format: date-time
+          description: Date and time of cash flow's specified completion in UTC
+        completedAt:
+          type: string
+          format: date-time
+          description: Date and time of cash flow's recorded completion in UTC
+        title:
+          type: string
+          description: The title or name of the cash flow
+          example: My Cash Flow
+        investorNotes:
+          type: string
+          description: Notes added by the investor for the cash flow
+          example: Created via API
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashFlowAllocation'
+    CashFlowAllocation:
+      type: object
+      required:
+      - flowDirection
+      - typeName
+      - financialValue
+      - id
+      properties:
+        flowDirection:
+          type: number
+          example: 1
+          description: The direction of the cash transfer relative to the caller
+        typeName:
+          type: string
+          example: Buy
+          description: The type of this specific allocation
+        financialValue:
+          $ref: '#/components/schemas/CashFlowFinancialValue'
+        id:
+          type: number
+          example: 1
+          description: The ID of this specific allocation
+        investorNotes:
+          type: string
+          example: My Note
+          description: Notes relating to this allocation, entered by users on Portal.
+    CashFlowType:
+      description: The type of cash flow
+      type: string
+      enum:
+      - Capital Call
+      - Distribution
+      - Contribution
+      - Interest Payment
+      - Redemption
+      - Buy
+      - Sale
+      - Dividend
+      - Internal Transfer
+    NewCashFlow:
+      type: object
+      required:
+      - type
+      - financialValue
+      - dueAt
+      - holdingId
+      properties:
+        type:
+          $ref: '#/components/schemas/CashFlowType'
+        financialValue:
+          $ref: '#/components/schemas/NewFinancialValue'
+        holdingId:
+          type: integer
+          description: The ID of the holding that the cash flow is tied to
+        dueAt:
+          type: string
+          format: date-time
+          description: Date and time of cash flow's specified completion in UTC
+        completedAt:
+          type: string
+          format: date-time
+          description: Date and time of cash flow's recorded completion in UTC
+        title:
+          type: string
+          description: The title or name of the cash flow
+        investorNotes:
+          type: string
+          description: Notes added by the investor for the cash flow
+      example:
+        type: Capital Call
+        financialValue:
+          quantity: 1000
+          currencyCode: USD
+        holdingId: 29110
+        dueAt: '2023-12-16 01:00:00'
+        completedAt: '2023-11-15 01:00:00'
+        title: My New Cash Flow
+        investorNotes: Created via API
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    NewFinancialValue:
+      type: object
+      description: 'A financial value in USD. Currently only USD is supported. Most values can be negative, except totalContribution which must be non-negative.
+
+        '
+      required:
+      - quantity
+      properties:
+        quantity:
+          type: number
+          description: The amount in dollars (USD). Can be negative for most fields, except totalContribution.
+          example: 100000
+    FinancialValueUnitType:
+      type: string
+      enum:
+      - CURRENCY
+      - STOCK
+      - CRYPTO
+      example: CURRENCY
+      description: Indicates the denomination or category of financial instrument being returned. Possible values include CURRENCY, STOCK, and CRYPTO
+    CashFlowFinancialValue:
+      title: FinancialValue
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+        symbol:
+          type: string
+          description: Currency symbol, if unit type is a currency, or stock ticker if it is a stock
+        unitType:
+          $ref: '#/components/schemas/FinancialValueUnitType'
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+        symbol: $
+        unitType: CURRENCY
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,25 @@
+generated: '2026-07-18'
+method: searched
+probe: false
+url: https://trust.arch.co/
+platform: Vanta
+note: >-
+  Arch publishes a Vanta-hosted trust center at trust.arch.co (HTTP 200, JS-rendered).
+  Specific certification badges are rendered client-side and were not machine-extractable
+  here; do not assert named certifications without verification. Arch's legal pages
+  publish a GDPR compliance policy, privacy policy, cookie policy, and a subprocessors list.
+certifications: []
+documents:
+- {name: Subprocessors, url: https://trust.arch.co/subprocessors}
+- {name: GDPR Compliance Policy, url: https://arch.co/legal.html#gdpr-compliance-policy}
+- {name: Privacy Policy, url: https://arch.co/legal.html#privacy-policy}
+- {name: Cookie Policy, url: https://arch.co/legal.html#cookie-policy}
+security_practices:
+- Encrypted user passwords.
+- All connections secured with industry-standard TLS.
+contacts:
+  data_protection_officer: dpo@arch.com
+  privacy: privacy@arch.com
+evidence:
+- {source: https://trust.arch.co/, kind: trust-center, keywords: [trust center, vanta]}
+- {source: https://arch.co/legal.html, kind: compliance-policy, keywords: [gdpr, privacy, subprocessors]}

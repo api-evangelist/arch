@@ -1,0 +1,37 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/arch-client-api-openapi.json
+note: >-
+  Packaged Agent Skills for the Arch Client API, one per marquee flow. Every step is
+  grounded in a real operation from the OpenAPI (operationId where the spec defines one,
+  otherwise the verbatim METHOD + path). No provider-published AGENTS.md/skill files were found.
+skills:
+- file: arch-authenticate-and-pull-investments.md
+  name: Authenticate and pull private-market investment data
+  api: openapi/arch-client-api-openapi.json
+  operations:
+  - 'POST /client-api/v0/auth/token'
+  - 'GET /client-api/v0/investing-entities'
+  - 'GET /client-api/v0/holdings'
+  - get-single-investing-entity
+  - 'GET /client-api/v0/cash-flows'
+- file: arch-add-holding-and-upload-statement.md
+  name: Add a holding and upload its statement
+  api: openapi/arch-client-api-openapi.json
+  operations:
+  - create-funds-holding
+  - create-company-holding
+  - create-account-holding
+  - get-list-holding-file-types
+  - post-holding-statement-upload
+  - post-holding-cashflow-upload
+- file: arch-triage-tasks-and-tax-documents.md
+  name: Triage tasks and retrieve tax documents
+  api: openapi/arch-client-api-openapi.json
+  operations:
+  - 'GET /client-api/v0/tasks'
+  - 'PATCH /client-api/v0/tasks/{userId}/assign'
+  - 'POST /client-api/v0/tasks/{id}/complete'
+  - get-list-tax-documents
+  - get-tax-document-by-id
+  - get-tax-document-download-file

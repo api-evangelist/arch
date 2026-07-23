@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: https://arch.co/client-api/api-docs/
+note: >-
+  The Arch Client API is rate limited, measured in requests per minute. Exceeding
+  the limit returns HTTP 429 Too Many Requests. Current limit status is exposed on
+  standard RateLimit-* response headers on every request. Exact numeric limits are
+  provisioned per API user and are not published; inspect the headers to read them.
+enforcement:
+  status_code: 429
+  status_reason: Too Many Requests
+  window: per-minute
+signaling:
+  style: response-headers
+  headers:
+  - name: RateLimit-Policy
+    description: Max number of requests allowed over a specified window. Format "[requests];w=[window seconds]".
+  - name: RateLimit-Limit
+    description: Max number of requests allowed over the current window. Format "[requests]".
+  - name: RateLimit-Remaining
+    description: Remaining requests allowed over the current window. Format "[requests]".
+  - name: RateLimit-Reset
+    description: Seconds remaining until the current window resets.
+guidance: Space out requests; on 429 back off and honor RateLimit-Reset before retrying.
+rate_limits:
+- name: default
+  scope: per-api-user
+  window: 60
+  window_unit: seconds
+  limit_count: null
+  note: Numeric limit provisioned per user; not published — read from RateLimit-Limit header.

@@ -1,0 +1,83 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/arch-client-api-openapi.json
+format: http-status
+note: Arch Client API returns standard HTTP status codes with a JSON body; responses are not application/problem+json
+  (RFC 9457). Derived from OpenAPI 4xx/5xx responses.
+error_envelope:
+  transport: JSON HTTP
+  fields:
+  - message
+  example:
+    message: Account id not found or is inaccessible to the user
+problems:
+- status: 400
+  title: Bad Request
+  occurrences: 12
+  remediation: Check request body/query parameters against the schema.
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#get-single-activity
+    description: Id could not be parsed
+  - operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/cash-flows/{id}
+    description: Cash flow ID could not be parsed.
+  - operation: openapi/arch-client-api-openapi.json#create-funds-holding
+    description: Bad Request
+- status: 401
+  title: Unauthorized
+  occurrences: 1
+  remediation: Obtain or refresh a JWT access token via POST /client-api/v0/auth/token.
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/auth/token
+    description: Unauthorized.
+- status: 403
+  title: Forbidden
+  occurrences: 7
+  remediation: The authenticated user lacks access to the requested resource.
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/cash-flows
+    description: No permission to create cash flow with the specified data.
+  - operation: openapi/arch-client-api-openapi.json#get-individual-firm
+    description: Firm not found or caller not authorized to view firm.
+  - operation: openapi/arch-client-api-openapi.json#PATCH /client-api/v0/tasks/{userId}/assign
+    description: Tasked user does not have permission to complete one or more of the provided tasks, or
+      one or more of the provided tasks cannot be assigned by you.
+- status: 404
+  title: Not Found
+  occurrences: 25
+  remediation: The resource id does not exist or is inaccessible to the caller.
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/accounts
+    description: Account id not found or is inaccessible to the user
+  - operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/accounts/{id}
+    description: Account id not found or is inaccessible to the user
+  - operation: openapi/arch-client-api-openapi.json#get-single-activity
+    description: Activity id not found or is inaccessible to the user
+- status: 405
+  title: Method Not Allowed
+  occurrences: 1
+  remediation: The HTTP method is not supported on this path.
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#PATCH /client-api/v0/activities/{id}
+    description: Endpoint not yet implemented.
+- status: 409
+  title: Conflict
+  occurrences: 3
+  remediation: "Resource conflict \u2014 the entity already exists or violates a uniqueness constraint."
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/user-roles
+    description: Some user roles already exist
+  - operation: openapi/arch-client-api-openapi.json#DELETE /client-api/v0/user-roles
+    description: Some user roles don't exist yet
+  - operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/users
+    description: User with this email already exists
+- status: 500
+  title: Internal Server Error
+  occurrences: 34
+  remediation: Server error; retry with backoff and contact api-support@arch.co if it persists.
+  examples:
+  - operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/accounts
+    description: Internal server error.
+  - operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/accounts/{id}
+    description: Internal server error.
+  - operation: openapi/arch-client-api-openapi.json#get-list-activities
+    description: Internal server error.

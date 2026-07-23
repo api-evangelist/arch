@@ -1,0 +1,475 @@
+openapi: 3.0.0
+info:
+  title: Arch Client Accounts Tax Documents API
+  version: 0.1.0
+  description: "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n"
+servers:
+- url: /
+host: arch.co
+tags:
+- name: Tax Documents
+paths:
+  /client-api/v0/tax-documents:
+    get:
+      operationId: get-list-tax-documents
+      parameters:
+      - name: year
+        in: query
+        deprecated: true
+        description: A year to query tax documents from. Defaults to the last calendar year.
+        schema:
+          type: integer
+      - name: beforeReceivedTime
+        in: query
+        description: Filter the output for activities with a processed time before the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterReceivedTime
+        in: query
+        description: Filter the output for activities with a processed time after the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: years
+        in: query
+        description: A comma separated list of years to query tax documents from. Defaults to the last calendar year.
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The number of tax documents to skip before collecting results
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: limit
+        in: query
+        description: The number of tax documents to return
+        schema:
+          type: integer
+          default: 25
+          minimum: 25
+      - name: documentType
+        in: query
+        description: The type of tax document to filter by
+        schema:
+          type: string
+          enum:
+          - K1
+          - '1099'
+          - Other
+      - name: includeFiles
+        in: query
+        description: Whether to include file details in the response
+        schema:
+          type: boolean
+          default: false
+      summary: Get all tax documents
+      security:
+      - BearerAuth: []
+      tags:
+      - Tax Documents
+      responses:
+        '200':
+          description: The tax document overview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxDocumentList'
+  /client-api/v0/tax-documents/{taxDocId}:
+    get:
+      operationId: get-tax-document-by-id
+      summary: Get a single tax document by ID
+      security:
+      - BearerAuth: []
+      tags:
+      - Tax Documents
+      parameters:
+      - name: taxDocId
+        in: path
+        description: The ID of the tax document to retrieve
+        required: true
+        schema:
+          type: integer
+      - name: includeFiles
+        in: query
+        description: Whether to include file details in the response
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: The tax document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxDocument'
+        '404':
+          description: Tax document not found
+  /client-api/v0/tax-documents/{taxDocId}/files:
+    get:
+      operationId: get-tax-document-list-files
+      summary: Get all files for a specific tax document
+      security:
+      - BearerAuth: []
+      description: Returns a list of files, including download links.
+      tags:
+      - Tax Documents
+      parameters:
+      - name: taxDocId
+        in: path
+        description: A specific tax document to query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of files for the tax document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxDocFileList'
+  /client-api/v0/tax-documents/{taxDocId}/files/{fileId}/download:
+    get:
+      operationId: get-tax-document-download-file
+      summary: Download individual tax doc file
+      security:
+      - BearerAuth: []
+      tags:
+      - Tax Documents
+      parameters:
+      - name: taxDocId
+        in: path
+        description: A specific tax document to query
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: A specific file to download
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: Buffer containing the content of the requested file.
+components:
+  schemas:
+    IssuingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - issuing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced issuing entity
+          example: 204
+        url:
+          type: string
+          description: A relative url to the referenced issuing entity
+          example: /issuing-entities/204
+        name:
+          type: string
+          description: The name of the referenced issuing entity
+          example: Issuing Entity 204
+    HoldingRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - holding-ref
+        id:
+          type: number
+          description: The ID of the referenced holding
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced holding
+          example: /holdings/112
+        name:
+          type: string
+          description: The name of the referenced holding
+          example: Holding 112
+    TaxDocFileList:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+          - page
+        contents:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/File'
+            - type: object
+              properties:
+                version:
+                  type: string
+                  enum:
+                  - Final
+                  - Draft
+                  - Estimate
+                  - Uploaded
+                type:
+                  type: string
+                  description: The type of document received.
+                  example: K-1
+                downloadUrl:
+                  type: string
+                  description: A relative url to download the file itself, as originally received by Arch
+                activityRef:
+                  $ref: '#/components/schemas/ActivityRef'
+            example:
+              kind: page
+              selfUrl: /tax-documents/100200/files
+              contents:
+              - id: 200101
+                name: 56_TestEntity.pdf
+                sizeBytes: 12345
+                uploadTime: '2024-03-14T18:50:15.000Z'
+                fileHash: afakehash
+                version: Estimate
+                type: K-1
+                downloadUrl: /tax-documents/100200/files/200101/download
+                originalName: estimated-k1.pdf
+              - id: 200102
+                name: 56_TestEntity.pdf
+                sizeBytes: 23456
+                uploadTime: '2024-03-28T12:22:00.000Z'
+                fileHash: differentfakehash
+                version: Final
+                type: K-1
+                downloadUrl: /tax-documents/100200/files/200102/download
+                originalName: final-k1.pdf
+    TaxDocumentList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxDocument'
+          description: List of tax documents
+        selfUrl:
+          type: string
+          description: The URL for the current page of documents
+          example: /tax-documents?limit=25&offset=50
+        next:
+          type: string
+          description: The URL for the next page of documents
+          example: /tax-documents?limit=25&offset=75
+        prev:
+          type: string
+          description: The URL for previous page of documents
+          example: /tax-documents?limit=25&offset=25
+    AccountRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - account-ref
+        id:
+          type: number
+          description: The ID of the referenced account
+          example: 56
+        url:
+          type: string
+          description: A relative url to the referenced account
+          example: /account/56
+        name:
+          type: string
+          description: The name of the referenced account
+          example: Account 56
+    ActivityRef:
+      type: object
+      required:
+      - id
+      - url
+      - filesUrl
+      properties:
+        id:
+          type: string
+          description: The ID of the referenced activity
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced activity
+          example: /activities/112
+        filesUrl:
+          type: string
+          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
+          example: /activities/112/files
+    InvestingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - investing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced investing entity
+          example: 711
+        url:
+          type: string
+          description: A relative url to the referenced investing entity
+          example: /investing-entities/711
+        name:
+          type: string
+          description: The name of the referenced investing entity
+          example: Investing Entity 711
+    TaxDocument:
+      type: object
+      required:
+      - kind
+      - id
+      - selfUrl
+      - type
+      - holdingRef
+      - investingEntityRef
+      - issuingEntityRef
+      properties:
+        kind:
+          type: string
+          description: tax-document
+          example: tax-document
+        id:
+          type: number
+          description: The Arch ID for tracking the tax document
+          example: 100200
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+          example: /tax-documents/100200
+        type:
+          type: string
+          description: The type of document expected.
+          example: K-1
+        taxYear:
+          type: number
+          description: The tax year the document corresponds to
+          example: 2024
+        repeatedCadence:
+          type: string
+          enum:
+          - Yearly
+          - One-off
+          description: Whether the tax document is expected yearly, or one time
+        collectionStatus:
+          type: string
+          enum:
+          - Waiting
+          - Linking
+          - ReceivedEstimate
+          - ReceivedDraft
+          - ReceivedFinal
+          - NoDocument
+          - NotThisYear
+          - Overdue
+          - OverdueReachedOut
+          - NotApplicable
+          - WaitingReachedOut
+          description: Whether we have received the document
+        receivedDate:
+          type: string
+          format: date
+          description: The date the document was received
+          example: 2024/03/29
+        receivedTime:
+          type: string
+          format: date-time
+          description: Date and time when the document was received in UTC
+          example: '2024-03-29T14:30:00.000Z'
+        expectedDate:
+          type: string
+          format: date
+          description: The date the document was expected to arrive
+          example: 2024/03/31
+        fileUrl:
+          type: string
+          description: A relative URL to see the files associated with this tax document
+          example: /tax-documents/100200/files
+        holdingRef:
+          $ref: '#/components/schemas/HoldingRef'
+        investingEntityRef:
+          $ref: '#/components/schemas/InvestingEntityRef'
+        issuingEntityRef:
+          $ref: '#/components/schemas/IssuingEntityRef'
+        accountRef:
+          $ref: '#/components/schemas/AccountRef'
+    File:
+      type: object
+      required:
+      - id
+      - name
+      - uploadTime
+      - downloadUrl
+      properties:
+        id:
+          type: number
+          description: A unique identifier for the file
+          example: 101
+        name:
+          type: string
+          description: Name of the file
+          example: 56_TestEntity.pdf
+        sizeBytes:
+          type: number
+          description: Size of the file in bytes
+          example: 123456
+        uploadTime:
+          type: string
+          description: Time of the file upload
+          example: '2024-02-08T18:50:15.000Z'
+        fileHash:
+          type: string
+          description: A hash of the file
+          example: afakehash
+        downloadUrl:
+          type: string
+          description: A relative url to download the file itself, as originally received by Arch
+          example: /{parentType}/1234/files/1234/download
+        originalName:
+          type: string
+          description: Original name of the file before applying custom name conventions
+          example: file_123.pdf
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

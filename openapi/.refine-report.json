@@ -1,0 +1,42 @@
+{
+  "provider": "arch",
+  "sources": [
+    "arch-accounts-api-openapi.yml",
+    "arch-activities-api-openapi.yml",
+    "arch-addepar-api-openapi.yml",
+    "arch-authentication-api-openapi.yml",
+    "arch-cash-flows-api-openapi.yml",
+    "arch-firms-api-openapi.yml",
+    "arch-holdings-api-openapi.yml",
+    "arch-investing-entities-api-openapi.yml",
+    "arch-issuing-entities-api-openapi.yml",
+    "arch-lookthroughs-api-openapi.yml",
+    "arch-offerings-api-openapi.yml",
+    "arch-tasks-api-openapi.yml",
+    "arch-tax-documents-api-openapi.yml",
+    "arch-user-roles-api-openapi.yml",
+    "arch-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "arch-accounts-api-openapi.yml",
+    "arch-activities-api-openapi.yml",
+    "arch-addepar-api-openapi.yml",
+    "arch-authentication-api-openapi.yml",
+    "arch-cash-flows-api-openapi.yml",
+    "arch-firms-api-openapi.yml",
+    "arch-holdings-api-openapi.yml",
+    "arch-investing-entities-api-openapi.yml",
+    "arch-issuing-entities-api-openapi.yml",
+    "arch-lookthroughs-api-openapi.yml",
+    "arch-offerings-api-openapi.yml",
+    "arch-tasks-api-openapi.yml",
+    "arch-tax-documents-api-openapi.yml",
+    "arch-user-roles-api-openapi.yml",
+    "arch-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

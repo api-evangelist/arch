@@ -1,0 +1,52 @@
+generated: '2026-07-18'
+method: searched
+source: https://arch.co/client-api/api-docs/
+note: >-
+  Cross-cutting request/response semantics for the Arch Client API, captured from the
+  published API documentation and derived from the OpenAPI. Cross-links authentication/,
+  rate-limits/, errors/, and lifecycle/.
+authentication:
+  style: bearer-jwt
+  token_endpoint: POST https://arch.co/client-api/v0/auth/token
+  flow: client-credentials
+  request_fields: [clientId, clientSecret]
+  header: 'authorization: Bearer <access_token>'
+  token_format: JWT
+  token_reuse: Store and reuse the token until it expires; decode the JWT `exp` (Unix seconds) to find expiry.
+  credential_provisioning: Request a Client ID and Client Secret from api-support@arch.co.
+  ref: authentication/arch-authentication.yml
+pagination:
+  style: offset-limit
+  name: Pages
+  params:
+  - {name: offset, in: query, description: Zero-based item offset into the list.}
+  - {name: limit, in: query, default: 25, max: 1000, description: Page size; default 25, up to 1000 on endpoints that allow it.}
+  response_container: Objects returned inside a list ("Page"); list bodies carry a `contents` array.
+idempotency:
+  supported: false
+  note: No idempotency-key header/parameter is documented or present in the OpenAPI.
+versioning:
+  style: uri-path
+  current: v0
+  base_path: /client-api/v0
+  note: API version is embedded in the path (v0); the spec info.version is 0.1.0.
+filtering:
+  style: query-parameters
+  patterns:
+  - before*/after* date-range filters (e.g. afterCreatedAt, beforeDueDate, afterStatementDate)
+  - id set filters (ids, holdingIds, investingEntityIds, issuingEntityIds, accountIds)
+  - include* expansion flags to hydrate related data (e.g. includeCashFlow, includeFiles, includeInsights, includeTax, includeMetrics, includeWireInstructions)
+field_expansion:
+  style: include-flags
+  note: Related data is opt-in via include* boolean query parameters rather than a generic expand param.
+error_envelope:
+  format: http-status + JSON body
+  problem_json: false
+  fields: [message]
+  ref: errors/arch-problem-types.yml
+rate_limit_signaling:
+  style: response-headers
+  headers: [RateLimit-Policy, RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset]
+  exceeded_status: 429
+  ref: rate-limits/arch-rate-limits.yml
+media_type: application/json

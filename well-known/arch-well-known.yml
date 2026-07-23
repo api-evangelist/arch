@@ -1,0 +1,21 @@
+generated: '2026-07-18'
+method: probed
+note: >-
+  Probed the /.well-known/ discovery surface on the Arch marketing host (archlabs.com) and
+  the API/product host (arch.co). No well-known documents were served (all 404). Recorded for
+  completeness; absence is valid data. No WellKnown/SecurityTxt pointer is wired because
+  nothing returned 200.
+hosts:
+- host: https://archlabs.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+- host: https://www.archlabs.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+- host: https://arch.co
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}

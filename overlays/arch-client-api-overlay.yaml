@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Arch Client API
+  version: 1.0.0
+extends: openapi/arch-client-api-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: arch
+    x-apievangelist-artifacts:
+      authentication: authentication/arch-authentication.yml
+      conventions: conventions/arch-conventions.yml
+      errors: errors/arch-problem-types.yml
+      rate-limits: rate-limits/arch-rate-limits.yml
+      lifecycle: lifecycle/arch-lifecycle.yml
+      data-model: data-model/arch-data-model.yml
+      conformance: conformance/arch-conformance.yml
+      mcp: mcp/arch-mcp.yml
+      skills: skills/_index.yml
+    x-apievangelist-category: private-markets-administration
+- target: $.servers
+  update:
+  - url: https://arch.co/client-api/v0
+    description: Production Arch Client API base URL (host arch.co, base path /client-api/v0).
+- target: $.info
+  update:
+    x-rate-limit:
+      window: per-minute
+      exceeded_status: 429
+      headers: [RateLimit-Policy, RateLimit-Limit, RateLimit-Remaining, RateLimit-Reset]

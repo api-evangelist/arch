@@ -1,27 +1,463 @@
 aid: arch
 name: Arch
-description: Arch is a company surfaced as a portfolio company of menlo-ventures, uncork-capital and added
-  to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Arch (Arch Labs, Inc.) is the digital administration platform for private
+  markets and alternative investments. It aggregates statements, capital calls,
+  tax documents, and data from hundreds of funds and sources into one secure
+  portal, then uses automation and AI to extract data, summarize documents,
+  surface insights, and coordinate workflows for limited partners, advisors,
+  accountants, family offices, and fund service providers. The Arch Client API
+  is a JSON HTTP REST API that lets customers programmatically access holdings,
+  cash flows, investing/issuing entities, activities, tasks, files, and tax
+  documents on the platform, authenticating with client-credential JWT bearer
+  tokens. Founded in 2018, Arch is backed by Oak HC/FT, Menlo Ventures, Craft
+  Ventures, Uncork Capital, Citi Ventures, and others.
 url: https://raw.githubusercontent.com/api-evangelist/arch/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - menlo-ventures
 - uncork-capital
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profile
+x-tier-reason: enriched-from-client-api
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://archlabs.com/images/arch-logo.svg
 tags:
 - Company
-apis: []
+- Private Markets
+- Alternative Investments
+- Fintech
+- Wealth Management
+- Investment Administration
+- Portfolio Management
+- Documents
+apis:
+- aid: arch:arch-accounts-api
+  name: Arch Accounts API
+  description: The Accounts API from Arch — 2 operation(s) for accounts.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-activities-api
+  name: Arch Activities API
+  description: Interact with Arch objects representing financial updates
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Activities
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-activities-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-addepar-api
+  name: Arch Addepar API
+  description: The Addepar API from Arch — 1 operation(s) for addepar.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Addepar
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-addepar-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-authentication-api
+  name: Arch Authentication API
+  description: The Authentication API from Arch — 1 operation(s) for authentication.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-cash-flows-api
+  name: Arch Cash Flows API
+  description: Read and write data relating to money inflow / outflow
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Cash Flows
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-cash-flows-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-firms-api
+  name: Arch Firms API
+  description: Reference info about firms.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Firms
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-firms-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-holdings-api
+  name: Arch Holdings API
+  description: Read holding data and push new investments.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Holdings
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-holdings-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-investing-entities-api
+  name: Arch Investing Entities API
+  description: Read from and create new investing entities
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Investing Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-investing-entities-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-issuing-entities-api
+  name: Arch Issuing Entities API
+  description: Read from and create new issuing entities
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Issuing Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-issuing-entities-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-lookthroughs-api
+  name: Arch Lookthroughs API
+  description: Fetch data relating to the underling investments made by your own investments
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Lookthroughs
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-lookthroughs-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-offerings-api
+  name: Arch Offerings API
+  description: Get data on individual investment offering opportunities offered by your holdings
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Offerings
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-offerings-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-tasks-api
+  name: Arch Tasks API
+  description: The Tasks API from Arch — 6 operation(s) for tasks.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-tax-documents-api
+  name: Arch Tax Documents API
+  description: The Tax Documents API from Arch — 4 operation(s) for tax documents.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Tax Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-tax-documents-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-user-roles-api
+  name: Arch User Roles API
+  description: The User Roles API from Arch — 1 operation(s) for user roles.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - User Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-user-roles-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
+- aid: arch:arch-users-api
+  name: Arch Users API
+  description: The Users API from Arch — 2 operation(s) for users.
+  humanURL: https://arch.co/client-api/api-docs/
+  baseURL: https://arch.co/client-api/v0
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/arch-users-api-openapi.yml
+  - type: Documentation
+    url: https://arch.co/client-api/api-docs/
+  - type: APIReference
+    url: https://arch.co/client-api/api-docs/
+  - type: Authentication
+    url: authentication/arch-authentication.yml
+  - type: RateLimits
+    url: rate-limits/arch-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/arch-problem-types.yml
+  - type: Conventions
+    url: conventions/arch-conventions.yml
+  - type: DataModel
+    url: data-model/arch-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/arch-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/arch-agentic-access.yml
+- type: Authentication
+  url: authentication/arch-authentication.yml
+- type: Lifecycle
+  url: lifecycle/arch-lifecycle.yml
+- type: Conformance
+  url: conformance/arch-conformance.yml
+- type: MCPServer
+  url: mcp/arch-mcp.yml
+- type: LLMsTxt
+  url: llms/arch-llms.txt
+- type: Overlay
+  url: overlays/arch-client-api-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: TrustCenter
+  url: security/arch-trust-center.yml
 - type: Website
   url: https://archlabs.com
+- type: DeveloperPortal
+  url: https://arch.co/client-api/api-docs/
+- type: Documentation
+  url: https://arch.co/client-api/api-docs/
+- type: APIReference
+  url: https://arch.co/client-api/api-docs/
+- type: GettingStarted
+  url: https://arch.co/client-api/api-docs/
+- type: Support
+  url: https://archlabs.com/contact.html
+- type: SignUp
+  url: https://archlabs.com/portal
+- type: Login
+  url: https://archlabs.com/portal/home
+- type: TermsOfService
+  url: https://arch.co/legal.html
+- type: PrivacyPolicy
+  url: https://arch.co/legal.html#privacy-policy
+- type: Compliance
+  url: https://arch.co/legal.html#gdpr-compliance-policy
+- type: StatusPage
+  url: https://arch-group.gitlab.io/status-page/
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

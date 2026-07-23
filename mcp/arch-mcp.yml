@@ -1,0 +1,271 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/arch-client-api-openapi.json
+note: Candidate MCP tool surface derived one-per-operation from the Arch Client API OpenAPI. No official
+  Arch MCP server was found as of the generated date.
+server:
+  name: arch-client-api
+  transport: http
+  auth: Bearer JWT (client-credentials via POST /client-api/v0/auth/token)
+tools:
+- name: get_accounts
+  description: Get all accounts for caller
+  method: GET
+  path: /client-api/v0/accounts
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/accounts
+- name: get_accounts_by_id
+  description: Get data for a specific account
+  method: GET
+  path: /client-api/v0/accounts/{id}
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/accounts/{id}
+- name: get_list_activities
+  description: Get all activities accessible to the user
+  method: GET
+  path: /client-api/v0/activities
+  source_operation: openapi/arch-client-api-openapi.json#get-list-activities
+- name: get_single_activity
+  description: Get activity by id
+  method: GET
+  path: /client-api/v0/activities/{id}
+  source_operation: openapi/arch-client-api-openapi.json#get-single-activity
+- name: patch_activities_by_id
+  description: Update activity by id
+  method: PATCH
+  path: /client-api/v0/activities/{id}
+  source_operation: openapi/arch-client-api-openapi.json#PATCH /client-api/v0/activities/{id}
+- name: get_list_activity_files
+  description: Get all files for a specific activity
+  method: GET
+  path: /client-api/v0/activities/{id}/files
+  source_operation: openapi/arch-client-api-openapi.json#get-list-activity-files
+- name: post_activities_files
+  description: Query activity files
+  method: POST
+  path: /client-api/v0/activities/files
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/activities/files
+- name: get_activity_download_single_file
+  description: Download the file, as originally received.
+  method: GET
+  path: /client-api/v0/activities/{activityId}/files/{fileId}/download
+  source_operation: openapi/arch-client-api-openapi.json#get-activity-download-single-file
+- name: get_addepar_exports
+  description: Get Addepar export results for accessible accounts
+  method: GET
+  path: /client-api/v0/addepar/exports
+  source_operation: openapi/arch-client-api-openapi.json#get-addepar-exports
+- name: get_cash_flows
+  description: Get data for a set of cash flows available to the user
+  method: GET
+  path: /client-api/v0/cash-flows
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/cash-flows
+- name: post_cash_flows
+  description: Add a new cash flow to Arch. Assumes USD.
+  method: POST
+  path: /client-api/v0/cash-flows
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/cash-flows
+- name: get_cash_flows_by_id
+  description: Get a specific cash flow by ID.
+  method: GET
+  path: /client-api/v0/cash-flows/{id}
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/cash-flows/{id}
+- name: list_firms
+  description: Get a paginated list of firms
+  method: GET
+  path: /client-api/v0/firms
+  source_operation: openapi/arch-client-api-openapi.json#list-firms
+- name: get_individual_firm
+  description: Get a firm by ID.
+  method: GET
+  path: /client-api/v0/firms/{id}
+  source_operation: openapi/arch-client-api-openapi.json#get-individual-firm
+- name: get_holdings
+  description: Get a paginated list of holdings
+  method: GET
+  path: /client-api/v0/holdings
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/holdings
+- name: post_holdings
+  description: Add a new holding to Arch
+  method: POST
+  path: /client-api/v0/holdings
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/holdings
+- name: get_holdings_by_id
+  description: Get data for a specific holding
+  method: GET
+  path: /client-api/v0/holdings/{id}
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/holdings/{id}
+- name: create_funds_holding
+  description: Add a new funds or real estate holding to Arch
+  method: POST
+  path: /client-api/v0/holdings/fund
+  source_operation: openapi/arch-client-api-openapi.json#create-funds-holding
+- name: create_company_holding
+  description: Add a new company holding to Arch
+  method: POST
+  path: /client-api/v0/holdings/company
+  source_operation: openapi/arch-client-api-openapi.json#create-company-holding
+- name: create_account_holding
+  description: Add a new account holding to Arch
+  method: POST
+  path: /client-api/v0/holdings/account
+  source_operation: openapi/arch-client-api-openapi.json#create-account-holding
+- name: get_list_holding_file_types
+  description: Get uploadable file types for a holding
+  method: GET
+  path: /client-api/v0/holdings/{holdingId}/files/types
+  source_operation: openapi/arch-client-api-openapi.json#get-list-holding-file-types
+- name: get_holdings_by_id_files
+  description: Get all files for a specific holding
+  method: GET
+  path: /client-api/v0/holdings/{id}/files
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/holdings/{id}/files
+- name: post_holding_single_file_upload
+  description: Upload a new file
+  method: POST
+  path: /client-api/v0/holdings/{id}/files
+  source_operation: openapi/arch-client-api-openapi.json#post-holding-single-file-upload
+- name: post_holding_statement_upload
+  description: Upload a statement file
+  method: POST
+  path: /client-api/v0/holdings/{id}/files/statements
+  source_operation: openapi/arch-client-api-openapi.json#post-holding-statement-upload
+- name: post_holding_cashflow_upload
+  description: Upload a cash flow notice
+  method: POST
+  path: /client-api/v0/holdings/{id}/files/cash-flows
+  source_operation: openapi/arch-client-api-openapi.json#post-holding-cashflow-upload
+- name: get_holdings_by_id_files_by_id_download
+  description: Download the file, as originally received.
+  method: GET
+  path: /client-api/v0/holdings/{holdingId}/files/{fileId}/download
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/holdings/{holdingId}/files/{fileId}/download
+- name: get_investing_entities
+  description: Get all investing entities accessible to the user
+  method: GET
+  path: /client-api/v0/investing-entities
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/investing-entities
+- name: post_investing_entities
+  description: Add a new investing entity to Arch
+  method: POST
+  path: /client-api/v0/investing-entities
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/investing-entities
+- name: get_single_investing_entity
+  description: Get info about one investing entity
+  method: GET
+  path: /client-api/v0/investing-entities/{id}
+  source_operation: openapi/arch-client-api-openapi.json#get-single-investing-entity
+- name: get_investing_entities_by_id_holdings
+  description: Get data for a set of holdings under an investing entity
+  method: GET
+  path: /client-api/v0/investing-entities/{id}/holdings
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/investing-entities/{id}/holdings
+- name: get_single_issuing_entity
+  description: Get data for a specific issuing entity
+  method: GET
+  path: /client-api/v0/issuing-entities/{id}
+  source_operation: openapi/arch-client-api-openapi.json#get-single-issuing-entity
+- name: get_list_issuing_entities
+  description: Get issuing entities accessible to the user.
+  method: GET
+  path: /client-api/v0/issuing-entities
+  source_operation: openapi/arch-client-api-openapi.json#get-list-issuing-entities
+- name: get_lookthroughs
+  description: (Deprecated) Get lookthroughs for the specified account
+  method: GET
+  path: /client-api/v0/lookthroughs
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/lookthroughs
+- name: get_offerings
+  description: Get all offering ids for the caller
+  method: GET
+  path: /client-api/v0/offerings
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/offerings
+- name: get_offerings_by_id
+  description: Get an offering by id
+  method: GET
+  path: /client-api/v0/offerings/{id}
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/offerings/{id}
+- name: get_tasks_by_id
+  description: Get a task by ID.
+  method: GET
+  path: /client-api/v0/tasks/{id}
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/tasks/{id}
+- name: post_tasks_by_id_complete
+  description: Complete a task by ID.
+  method: POST
+  path: /client-api/v0/tasks/{id}/complete
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/tasks/{id}/complete
+- name: get_tasks
+  description: Get all tasks for the user.
+  method: GET
+  path: /client-api/v0/tasks
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/tasks
+- name: patch_tasks_by_id_assign
+  description: Assign one or more tasks to a user with userId.
+  method: PATCH
+  path: /client-api/v0/tasks/{userId}/assign
+  source_operation: openapi/arch-client-api-openapi.json#PATCH /client-api/v0/tasks/{userId}/assign
+- name: patch_tasks_by_id_task_notes
+  description: Update the notes section of a task.
+  method: PATCH
+  path: /client-api/v0/tasks/{id}/task-notes
+  source_operation: openapi/arch-client-api-openapi.json#PATCH /client-api/v0/tasks/{id}/task-notes
+- name: get_tasks_by_id_comments
+  description: Get all user comments for a task.
+  method: GET
+  path: /client-api/v0/tasks/{id}/comments
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/tasks/{id}/comments
+- name: get_list_tax_documents
+  description: Get all tax documents
+  method: GET
+  path: /client-api/v0/tax-documents
+  source_operation: openapi/arch-client-api-openapi.json#get-list-tax-documents
+- name: get_tax_document_by_id
+  description: Get a single tax document by ID
+  method: GET
+  path: /client-api/v0/tax-documents/{taxDocId}
+  source_operation: openapi/arch-client-api-openapi.json#get-tax-document-by-id
+- name: get_tax_document_list_files
+  description: Get all files for a specific tax document
+  method: GET
+  path: /client-api/v0/tax-documents/{taxDocId}/files
+  source_operation: openapi/arch-client-api-openapi.json#get-tax-document-list-files
+- name: get_tax_document_download_file
+  description: Download individual tax doc file
+  method: GET
+  path: /client-api/v0/tax-documents/{taxDocId}/files/{fileId}/download
+  source_operation: openapi/arch-client-api-openapi.json#get-tax-document-download-file
+- name: get_list_user_roles
+  description: Get a paginated list of user roles
+  method: GET
+  path: /client-api/v0/user-roles
+  source_operation: openapi/arch-client-api-openapi.json#get-list-user-roles
+- name: post_user_roles
+  description: Create new user roles
+  method: POST
+  path: /client-api/v0/user-roles
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/user-roles
+- name: delete_user_roles
+  description: Remove user roles
+  method: DELETE
+  path: /client-api/v0/user-roles
+  source_operation: openapi/arch-client-api-openapi.json#DELETE /client-api/v0/user-roles
+- name: get_users_by_id
+  description: Get data for a user
+  method: GET
+  path: /client-api/v0/users/{id}
+  source_operation: openapi/arch-client-api-openapi.json#GET /client-api/v0/users/{id}
+- name: patch_users_by_id
+  description: Update data for a user. Unspecified fields will not be updated.
+  method: PATCH
+  path: /client-api/v0/users/{id}
+  source_operation: openapi/arch-client-api-openapi.json#PATCH /client-api/v0/users/{id}
+- name: post_users
+  description: Create new user
+  method: POST
+  path: /client-api/v0/users
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/users
+- name: post_auth_token
+  description: Authenticate using client credentials
+  method: POST
+  path: /client-api/v0/auth/token
+  source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/auth/token

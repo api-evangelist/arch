@@ -1,0 +1,2505 @@
+openapi: 3.0.0
+info:
+  title: Arch Client Accounts Holdings API
+  version: 0.1.0
+  description: "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n"
+servers:
+- url: /
+host: arch.co
+tags:
+- name: Holdings
+  description: Read holding data and push new investments.
+paths:
+  /client-api/v0/holdings:
+    get:
+      summary: Get a paginated list of holdings
+      parameters:
+      - name: limit
+        in: query
+        description: The number of holdings to return
+        schema:
+          type: integer
+          default: 25
+          maximum: 1000
+      - name: offset
+        in: query
+        description: The number of holdings to skip before collecting results
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: includeMetrics
+        in: query
+        description: Include financial metrics (IRR, TVPI, and DPI) in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeOwnership
+        in: query
+        description: Include ownership info. Will cause an error if holding is not set up for lookthrough extraction. Provides the ownership percentage of the fund, and the issuing entity to query to access the underlying portfolio companies.
+        required: false
+        schema:
+          type: boolean
+      - name: includeTransferInfo
+        in: query
+        description: Include transfer relationships (transferInfo) for each holding in the response. When omitted or false, the transferInfo field is not returned.
+        required: false
+        schema:
+          type: boolean
+      - name: includeBlackDiamondInfo
+        in: query
+        description: Include Black Diamond info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeCustomFields
+        in: query
+        description: Set this to true to receive custom fields associated with the holding.
+        schema:
+          type: boolean
+      - name: includeAddeparInfo
+        in: query
+        description: Include Addepar info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeArchwayInfo
+        in: query
+        description: Include Archway info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeBurgissInfo
+        in: query
+        description: Include Burgiss info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeTamaracInfo
+        in: query
+        description: Include Tamarac info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeOrionInfo
+        in: query
+        description: Include Orion info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: investingEntityIds
+        in: query
+        description: Will filter the output to only include holdings relevant to one of the investing entity ids in the provided argument
+        example: 1,2,3,4
+        schema:
+          type: string
+      - name: issuingEntityIds
+        in: query
+        description: Will filter the output to only include holdings relevant to one of the issuing entity ids in the provided argument
+        example: 1,2,3,4
+        schema:
+          type: string
+      - name: accountIds
+        in: query
+        description: Will filter the output to only include holdings relevant to one of the account ids in the provided argument
+        example: 1,2,3,4
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Filter the output for holding names that include the search term.
+        schema:
+          type: string
+      - name: beforeEndDate
+        in: query
+        description: Filter the output for holdings with an end date before the queried date.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterEndDate
+        in: query
+        description: Filter the output for holdings with an end date after the queried date.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeStartDate
+        in: query
+        example: '2024-05-22T21:15:55.306Z'
+        description: Filter the output for holdings with a start date before the queried date.
+        schema:
+          type: string
+          format: date-time
+      - name: afterStartDate
+        in: query
+        example: '2024-05-22T21:15:55.306Z'
+        description: Filter the output for holdings with a start date after the queried date.
+        schema:
+          type: string
+          format: date-time
+      - name: includeTax
+        in: query
+        description: Controls whether tax placeholder holdings are included in the results. Use "Only" to return only tax placeholder holdings, "Include" to include them along with regular holdings, or "Exclude" to exclude them entirely. Defaults to Exclude.
+        required: false
+        schema:
+          type: string
+          enum:
+          - Only
+          - Include
+          - Exclude
+          default: Exclude
+      - name: valueAsOfDate
+        in: query
+        description: Return financial values as of this date (YYYY-MM-DD). When omitted, the latest values are returned.
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: 2024-12-31T00:00Z
+      - name: valueCalculationMethod
+        in: query
+        description: Controls how financial values are calculated. "statementsOnly" pulls the value directly from the latest statement before the "as of" date; "includeCashFlows" (the default) uses that account statement, plus/minus and subsequent cash flows up to the "as of" date.
+        required: false
+        schema:
+          type: string
+          enum:
+          - includeCashFlows
+          - statementsOnly
+          default: includeCashFlows
+      security:
+      - BearerAuth: []
+      description: Return a paginated list of holdings
+      tags:
+      - Holdings
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingList'
+        '500':
+          description: Internal server error.
+    post:
+      summary: Add a new holding to Arch
+      security:
+      - BearerAuth: []
+      description: Creates a new holding and returns the URL, if successful. Financial values are assumed to be in dollars
+      tags:
+      - Holdings
+      requestBody:
+        description: Details of the new holding to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewHolding'
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the new holding
+        '500':
+          description: Internal server error.
+  /client-api/v0/holdings/{id}:
+    get:
+      summary: Get data for a specific holding
+      security:
+      - BearerAuth: []
+      description: Returns the data for a specific holding, if the user has access through the access token.
+      tags:
+      - Holdings
+      parameters:
+      - name: id
+        in: path
+        description: A specific holding to query
+        required: true
+        schema:
+          type: integer
+      - name: includeOwnership
+        in: query
+        description: Include ownership info. Will cause an error if holding is not set up for lookthrough extraction. Provides the ownership percentage of the fund, and the issuing entity to query to access the underlying portfolio companies.
+        required: false
+        schema:
+          type: boolean
+      - name: includeTransferInfo
+        in: query
+        description: Include transfer relationships (transferInfo) for each holding in the response. When omitted or false, the transferInfo field is not returned.
+        required: false
+        schema:
+          type: boolean
+      - name: includeMetrics
+        in: query
+        description: Include financial metrics in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeBlackDiamondInfo
+        in: query
+        description: Include Black Diamond info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeCustomFields
+        in: query
+        description: Set this to true to receive custom fields associated with the holding.
+        schema:
+          type: boolean
+      - name: includeAddeparInfo
+        in: query
+        description: Include Addepar info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeArchwayInfo
+        in: query
+        description: Include Archway info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeBurgissInfo
+        in: query
+        description: Include Burgiss info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeTamaracInfo
+        in: query
+        description: Include Tamarac info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeOrionInfo
+        in: query
+        description: Include Orion info in the response
+        required: false
+        schema:
+          type: boolean
+      - name: includeTax
+        in: query
+        description: Controls whether tax placeholder holdings are included in the results. Use "Only" to return only tax placeholder holdings, "Include" to include them along with regular holdings, or "Exclude" to exclude them entirely. Defaults to Exclude.
+        required: false
+        schema:
+          type: string
+          enum:
+          - Only
+          - Include
+          - Exclude
+          default: Exclude
+      - name: valueAsOfDate
+        in: query
+        description: Return historical financial values as of this date (YYYY-MM-DD). When omitted, latest values are returned.
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: 2024-12-31T00:00Z
+      - name: valueCalculationMethod
+        in: query
+        description: Controls how financial values are calculated. "includeCashFlows" uses account statements and cash flows; "statementsOnly" pulls the value directly from the latest statement before the "as of" date. Defaults to "includeCashFlows".
+        required: false
+        schema:
+          type: string
+          enum:
+          - includeCashFlows
+          - statementsOnly
+          default: includeCashFlows
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holding'
+        '404':
+          description: Holding id not found or is inaccessible to the user
+        '500':
+          description: Internal server error.
+  /client-api/v0/holdings/fund:
+    post:
+      operationId: create-funds-holding
+      summary: Add a new funds or real estate holding to Arch
+      security:
+      - BearerAuth: []
+      description: 'Creates a new funds or real estate holding (direct ownership) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided. Note: offeringInfo should be null for Real Estate - Direct Ownership.
+
+        '
+      tags:
+      - Holdings
+      requestBody:
+        description: Details of the new funds holding to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - investmentInfo
+              properties:
+                investmentInfo:
+                  type: object
+                  required:
+                  - investmentType
+                  - investingEntityId
+                  - entityInput
+                  - investmentSettings
+                  properties:
+                    investmentType:
+                      $ref: '#/components/schemas/InvestmentTypeEnum'
+                    investingEntityId:
+                      type: integer
+                      minimum: 1
+                      example: 56
+                    entityInput:
+                      description: 'Specify the firm and issuing entity by name (inputMethod: "byName") or by Offering Id (inputMethod: "byId"). When using byName, Arch will match against existing offerings; if found, that offering is reused, otherwise a new one is created.
+
+
+                        **Important:** When using byId with an existing offering, offering-level fields (taxDocumentInfo, marketInfo) cannot be provided and will throw a validation error. When using byName and it matches an existing offering, any provided offering-level fields will be silently ignored. Investment-specific fields (like feeInfo) can always be set.
+
+
+                        (Disclaimer: Offering Ids are subject to change after investment creation, up to date Offering Ids can be obtained from the `/offerings` endpoint)
+
+                        '
+                      oneOf:
+                      - type: object
+                        required:
+                        - inputMethod
+                        - firmName
+                        - issuingEntityName
+                        properties:
+                          inputMethod:
+                            type: string
+                            enum:
+                            - byName
+                          firmName:
+                            type: string
+                            maxLength: 255
+                            example: Sequoia Capital
+                          issuingEntityName:
+                            type: string
+                            maxLength: 255
+                            example: Example Fund LP
+                        additionalProperties: false
+                      - type: object
+                        required:
+                        - inputMethod
+                        - offeringId
+                        properties:
+                          inputMethod:
+                            type: string
+                            enum:
+                            - byId
+                          offeringId:
+                            type: integer
+                            minimum: 1
+                            example: 8412
+                        additionalProperties: false
+                    investmentSettings:
+                      type: object
+                      required:
+                      - linkingMethod
+                      properties:
+                        enableLookthrough:
+                          type: boolean
+                          description: Whether to enable lookthroughs for this holding
+                          default: false
+                          example: false
+                        linkingMethod:
+                          $ref: '#/components/schemas/LinkingMethodEnum'
+                    notes:
+                      type: string
+                      example: Invested in Series B round
+                    financials:
+                      type: object
+                      description: 'Financial values for the holding. If provided with valueAsOfDate, a "Value Provided by Investor" activity will be created with these values. Validation rules: valueAsOfDate is required if any financial values are provided, and at least one financial value is required if valueAsOfDate is provided. If no financials are provided, only an "Investment Added to Arch" activity is created.
+
+                        '
+                      properties:
+                        valueAsOfDate:
+                          type: string
+                          format: date
+                          description: 'Required if any financial values are provided. Cannot be provided without at least one financial value.
+
+                            '
+                          example: '2024-03-15'
+                        capitalAccount:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total value of the holding.
+                        initialCommitment:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total commitment to the holding.
+                        totalContribution:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - type: object
+                            properties:
+                              quantity:
+                                minimum: 0
+                            description: Total contributions made towards the commitment. Must be non-negative.
+                        outstandingCommitment:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total contributions required to meet the commitment.
+                        totalDistributions:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total distributions made from the holding.
+                        recallableDistributions:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total distributions that can be recalled.
+                    customFields:
+                      type: object
+                      additionalProperties:
+                        type: object
+                        required:
+                        - value
+                        properties:
+                          value:
+                            oneOf:
+                            - type: string
+                            - type: number
+                            - type: boolean
+                      example:
+                        '707':
+                          value: Technology
+                        '709':
+                          value: 123.45
+                    addeparInfo:
+                      type: object
+                      description: 'Addepar integration information. If you provide addeparInfo without an accountId, the API
+
+                        will verify that an Addepar account mapping exists for the investing entity''s account. If no
+
+                        mapping exists, a 400 error will be returned - please contact Arch to set up the account mapping.
+
+                        '
+                      properties:
+                        accountId:
+                          type: integer
+                          minimum: 1
+                          example: 123456
+                        ownerEntityId:
+                          type: integer
+                          minimum: 1
+                          example: 789012
+                        ownedEntityId:
+                          type: integer
+                          minimum: 1
+                          example: 345678
+                      additionalProperties: false
+                    contactInfo:
+                      type: object
+                      required:
+                      - email
+                      properties:
+                        firstName:
+                          type: string
+                          maxLength: 255
+                          example: John
+                        lastName:
+                          type: string
+                          maxLength: 255
+                          example: Smith
+                        email:
+                          type: string
+                          format: email
+                          maxLength: 255
+                          example: john.smith@example.com
+                      additionalProperties: false
+                    transferInfo:
+                      $ref: '#/components/schemas/TransferInfoInput'
+                offeringInfo:
+                  type: object
+                  description: "Offering information including tax documents and fee details.\n\n\n**IMPORTANT:**\n1. offeringInfo should be null for Real Estate - Direct Ownership.\n2. When using byId with an existing offering, taxDocumentInfo cannot be provided and will throw a validation error.\n   When using byName and it matches an existing offering, taxDocumentInfo will be silently ignored.\n   Investment-specific fields like feeInfo can always be set\n"
+                  properties:
+                    taxDocumentInfo:
+                      type: object
+                      description: Optional. If provided, both taxDocumentType and taxDocumentStartYear are required.
+                      required:
+                      - taxDocumentType
+                      - taxDocumentStartYear
+                      properties:
+                        taxDocumentType:
+                          $ref: '#/components/schemas/TaxDocumentTypeEnum'
+                        taxDocumentStartYear:
+                          type: integer
+                          minimum: 1900
+                          maximum: 2100
+                          example: 2024
+                    feeInfo:
+                      type: object
+                      properties:
+                        managementFee:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          example: 2
+                        carryFee:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          example: 20
+                        returnExpectation:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          example: 15
+              example:
+                investmentInfo:
+                  investmentType: Fund (Partnership Equity)
+                  investingEntityId: 56
+                  entityInput:
+                    inputMethod: byName
+                    firmName: Sequoia Capital
+                    issuingEntityName: Sequoia Fund XIV
+                  investmentSettings:
+                    enableLookthrough: true
+                    linkingMethod: LOA
+                  notes: Committed in Q1 2024
+                  financials:
+                    valueAsOfDate: '2024-01-15'
+                    initialCommitment:
+                      quantity: 5000000
+                  contactInfo:
+                    firstName: John
+                    lastName: Smith
+                    email: john.smith@sequoia.com
+                offeringInfo:
+                  taxDocumentInfo:
+                    taxDocumentType: K-1
+                    taxDocumentStartYear: 2024
+                  feeInfo:
+                    managementFee: 2
+                    carryFee: 20
+                    returnExpectation: 25
+      responses:
+        '200':
+          description: Holding created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holding'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - message
+                properties:
+                  message:
+                    type: string
+                    example: 'Missing required field: email'
+        '500':
+          description: Internal Server Error
+  /client-api/v0/holdings/company:
+    post:
+      operationId: create-company-holding
+      summary: Add a new company holding to Arch
+      security:
+      - BearerAuth: []
+      description: 'Creates a new company holding (direct equity, SAFE, convertible note, etc.) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided. Note: sharesInfo should be null for all except Company - Direct Equity. Note: offeringInfo should be null for all except Company - Direct Equity and Company - SAFE.
+
+        '
+      tags:
+      - Holdings
+      requestBody:
+        description: Details of the new company holding to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - investmentInfo
+              properties:
+                investmentInfo:
+                  type: object
+                  required:
+                  - investmentType
+                  - investingEntityId
+                  - entityInput
+                  - investmentSettings
+                  properties:
+                    investmentType:
+                      $ref: '#/components/schemas/InvestmentTypeEnum'
+                    investingEntityId:
+                      type: integer
+                      minimum: 1
+                      example: 56
+                    entityInput:
+                      description: 'When referencing the firm and issuing entity by name (inputMethod: "byName"), Arch will correlate it with existing verified funds. If a match is found, the existing offering will be used; otherwise a new offering will be created. Alternatively, an Arch Offering Id can be provided (inputMethod: "byId") to directly use an existing offering.
+
+
+                        **IMPORTANT:** When using an existing offering (either via byId or when byName matches an existing offering), the offering record and related data will NOT be modified: - Offering-level fields (type, investmentType, name, prices, rates, etc.) remain unchanged - No new offering_documents or document_issuances are created - equityRound in companyInfo will not override the offering name
+
+                        The new investment will simply use the existing offering''s configuration as-is.
+
+
+                        (Disclaimer: Offering Ids are subject to change after investment creation, up to date Offering Ids can be obtained from the `/offerings` endpoint)
+
+                        '
+                      oneOf:
+                      - type: object
+                        required:
+                        - inputMethod
+                        - firmName
+                        - issuingEntityName
+                        properties:
+                          inputMethod:
+                            type: string
+                            enum:
+                            - byName
+                          firmName:
+                            type: string
+                            maxLength: 255
+                            example: Sequoia Capital
+                          issuingEntityName:
+                            type: string
+                            maxLength: 255
+                            example: Example Fund LP
+                        additionalProperties: false
+                      - type: object
+                        required:
+                        - inputMethod
+                        - offeringId
+                        properties:
+                          inputMethod:
+                            type: string
+                            enum:
+                            - byId
+                          offeringId:
+                            type: integer
+                            minimum: 1
+                            example: 8412
+                        additionalProperties: false
+                    investmentSettings:
+                      type: object
+                      required:
+                      - linkingMethod
+                      properties:
+                        enableLookthrough:
+                          type: boolean
+                          description: Whether to enable lookthroughs for this holding
+                          default: false
+                          example: false
+                        linkingMethod:
+                          $ref: '#/components/schemas/LinkingMethodEnum'
+                    notes:
+                      type: string
+                      example: Invested in Series B round
+                    financials:
+                      type: object
+                      description: 'Financial values for the holding. If provided with valueAsOfDate, a "Value Provided by Investor" activity will be created with these values. Validation rules: valueAsOfDate is required if any financial values are provided, and at least one financial value is required if valueAsOfDate is provided. If no financials are provided, only an "Investment Added to Arch" activity is created.
+
+                        '
+                      properties:
+                        valueAsOfDate:
+                          type: string
+                          format: date
+                          description: 'Required if any financial values are provided. Cannot be provided without at least one financial value.
+
+                            '
+                          example: '2024-03-15'
+                        capitalAccount:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total value of the holding.
+                        initialCommitment:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total commitment to the holding.
+                        totalContribution:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - type: object
+                            properties:
+                              quantity:
+                                minimum: 0
+                            description: Total contributions made towards the commitment. Must be non-negative.
+                        outstandingCommitment:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total contributions required to meet the commitment.
+                        totalDistributions:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total distributions made from the holding.
+                        recallableDistributions:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total distributions that can be recalled.
+                    customFields:
+                      type: object
+                      additionalProperties:
+                        type: object
+                        required:
+                        - value
+                        properties:
+                          value:
+                            oneOf:
+                            - type: string
+                            - type: number
+                            - type: boolean
+                      example:
+                        '707':
+                          value: Technology
+                        '709':
+                          value: 123.45
+                    addeparInfo:
+                      type: object
+                      description: 'Addepar integration information. If you provide addeparInfo without an accountId, the API
+
+                        will verify that an Addepar account mapping exists for the investing entity''s account. If no
+
+                        mapping exists, a 400 error will be returned - please contact Arch to set up the account mapping.
+
+                        '
+                      properties:
+                        accountId:
+                          type: integer
+                          minimum: 1
+                          example: 123456
+                        ownerEntityId:
+                          type: integer
+                          minimum: 1
+                          example: 789012
+                        ownedEntityId:
+                          type: integer
+                          minimum: 1
+                          example: 345678
+                      additionalProperties: false
+                    contactInfo:
+                      type: object
+                      required:
+                      - email
+                      properties:
+                        firstName:
+                          type: string
+                          maxLength: 255
+                          example: John
+                        lastName:
+                          type: string
+                          maxLength: 255
+                          example: Smith
+                        email:
+                          type: string
+                          format: email
+                          maxLength: 255
+                          example: john.smith@example.com
+                      additionalProperties: false
+                    transferInfo:
+                      $ref: '#/components/schemas/TransferInfoInput'
+                companyInfo:
+                  type: object
+                  description: Company-specific information.
+                  properties:
+                    equityRound:
+                      type: string
+                      maxLength: 255
+                      description: 'The equity round (e.g., "Series A", "Series B").
+
+                        For new offerings, this becomes the offering name.
+
+                        **Note:** When using an existing offering (byId or byName match), this field is ignored.
+
+                        '
+                      example: Series B
+                    sharesInfo:
+                      type: object
+                      description: 'Share details for direct equity holdings.
+
+                        **Important:** Only allowed for Investment Type ''Private Company - Equity''.
+
+                        Providing sharesInfo for other investment types will result in a validation error.
+
+                        '
+                      properties:
+                        shareType:
+                          $ref: '#/components/schemas/ShareTypeEnum'
+                        shareAmount:
+                          type: number
+                          minimum: 0
+                          example: 10000
+                    taxTreatment:
+                      type: object
+                      description: Tax treatment information for the investment
+                      properties:
+                        qsbsTreatment:
+                          $ref: '#/components/schemas/QSBSTreatmentEnum'
+                        qsbsStartDate:
+                          type: string
+                          format: date
+                          example: '2024-01-15'
+                        qsbsNotes:
+                          type: string
+                          example: Verified with legal counsel
+                offeringInfo:
+                  type: object
+                  description: "Offering information including tax documents and market details.\n\n\n**IMPORTANT:**\n1. offeringInfo is ONLY allowed for Investment Type 'Private Company - Equity' or 'Private Company - SAFE'.\n2. When using byId with an existing offering, offeringInfo cannot be provided and will throw a validation error.\n   When using byName and it matches an existing offering, offeringInfo will be silently ignored.\n   EquityRound in companyInfo will also be ignored when using an existing offering.\n"
+                  properties:
+                    taxDocumentInfo:
+                      type: object
+                      description: Optional. If provided, both taxDocumentType and taxDocumentStartYear are required.
+                      required:
+                      - taxDocumentType
+                      - taxDocumentStartYear
+                      properties:
+                        taxDocumentType:
+                          $ref: '#/components/schemas/TaxDocumentTypeEnum'
+                        taxDocumentStartYear:
+                          type: integer
+                          minimum: 1900
+                          maximum: 2100
+                          example: 2024
+                    marketInfo:
+                      type: object
+                      properties:
+                        currentPrice:
+                          type: number
+                          minimum: 0
+                          example: 10.5
+                        conversionDiscount:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          example: 20
+                        interestRate:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          example: 5
+                        valuationCap:
+                          type: number
+                          minimum: 0
+                          example: 10000000
+                        preferredReturn:
+                          type: number
+                          minimum: 0
+                          maximum: 100
+                          example: 8
+              example:
+                investmentInfo:
+                  investmentType: Private Company - Equity
+                  investingEntityId: 56
+                  entityInput:
+                    inputMethod: byId
+                    offeringId: 8412
+                  investmentSettings:
+                    enableLookthrough: false
+                    linkingMethod: SubDocs
+                  financials:
+                    valueAsOfDate: '2024-02-10'
+                    capitalAccount:
+                      quantity: 250000
+                  contactInfo:
+                    email: investor.relations@techstartup.com
+                companyInfo:
+                  equityRound: Series A
+                  sharesInfo:
+                    shareType: Class A (Common)
+                    shareAmount: 50000
+                  taxTreatment:
+                    qsbsTreatment: 'Yes'
+                    qsbsStartDate: '2024-02-10'
+                offeringInfo:
+                  taxDocumentInfo:
+                    taxDocumentType: 1099-B
+                    taxDocumentStartYear: 2024
+      responses:
+        '200':
+          description: Holding created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holding'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - message
+                properties:
+                  message:
+                    type: string
+                    example: 'Missing required field: email'
+        '500':
+          description: Internal Server Error
+  /client-api/v0/holdings/account:
+    post:
+      operationId: create-account-holding
+      summary: Add a new account holding to Arch
+      security:
+      - BearerAuth: []
+      description: 'Creates a new account holding (bank account, brokerage account, etc.) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided.
+
+        '
+      tags:
+      - Holdings
+      requestBody:
+        description: Details of the new account holding to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - investmentInfo
+              properties:
+                investmentInfo:
+                  type: object
+                  required:
+                  - investmentType
+                  - investingEntityId
+                  - entityInput
+                  - investmentSettings
+                  properties:
+                    investmentType:
+                      $ref: '#/components/schemas/InvestmentTypeEnum'
+                    investingEntityId:
+                      type: integer
+                      minimum: 1
+                      example: 56
+                    entityInput:
+                      description: 'When referencing the firm and issuing entity by name (inputMethod: "byName"), Arch will correlate it with existing verified funds. If a match is found, the existing offering will be used; otherwise a new offering will be created. Alternatively, an Arch Offering Id can be provided (inputMethod: "byId") to directly use an existing offering.
+
+
+                        **IMPORTANT:** When using an existing offering (either via byId or when byName matches an existing offering), the offering record and related data will NOT be modified: - Offering-level fields (type, investmentType, name, prices, rates, etc.) remain unchanged - No new offering_documents or document_issuances are created - equityRound in companyInfo will not override the offering name
+
+                        The new investment will simply use the existing offering''s configuration as-is.
+
+
+                        (Disclaimer: Offering Ids are subject to change after investment creation, up to date Offering Ids can be obtained from the `/offerings` endpoint)
+
+                        '
+                      oneOf:
+                      - type: object
+                        required:
+                        - inputMethod
+                        - firmName
+                        - issuingEntityName
+                        properties:
+                          inputMethod:
+                            type: string
+                            enum:
+                            - byName
+                          firmName:
+                            type: string
+                            maxLength: 255
+                            example: Sequoia Capital
+                          issuingEntityName:
+                            type: string
+                            maxLength: 255
+                            example: Example Fund LP
+                        additionalProperties: false
+                      - type: object
+                        required:
+                        - inputMethod
+                        - offeringId
+                        properties:
+                          inputMethod:
+                            type: string
+                            enum:
+                            - byId
+                          offeringId:
+                            type: integer
+                            minimum: 1
+                            example: 8412
+                        additionalProperties: false
+                    investmentSettings:
+                      type: object
+                      required:
+                      - linkingMethod
+                      properties:
+                        enableLookthrough:
+                          type: boolean
+                          description: Whether to enable lookthroughs for this holding
+                          default: false
+                          example: false
+                        linkingMethod:
+                          $ref: '#/components/schemas/LinkingMethodEnum'
+                    notes:
+                      type: string
+                      example: Invested in Series B round
+                    financials:
+                      type: object
+                      description: 'Financial values for the holding. If provided with valueAsOfDate, a "Value Provided by Investor" activity will be created with these values. Validation rules: valueAsOfDate is required if any financial values are provided, and at least one financial value is required if valueAsOfDate is provided. If no financials are provided, only an "Investment Added to Arch" activity is created.
+
+                        '
+                      properties:
+                        valueAsOfDate:
+                          type: string
+                          format: date
+                          description: 'Required if any financial values are provided. Cannot be provided without at least one financial value.
+
+                            '
+                          example: '2024-03-15'
+                        capitalAccount:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total value of the holding.
+                        initialCommitment:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total commitment to the holding.
+                        totalContribution:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - type: object
+                            properties:
+                              quantity:
+                                minimum: 0
+                            description: Total contributions made towards the commitment. Must be non-negative.
+                        outstandingCommitment:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total contributions required to meet the commitment.
+                        totalDistributions:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total distributions made from the holding.
+                        recallableDistributions:
+                          allOf:
+                          - $ref: '#/components/schemas/NewFinancialValue'
+                          - description: Total distributions that can be recalled.
+                    customFields:
+                      type: object
+                      additionalProperties:
+                        type: object
+                        required:
+                        - value
+                        properties:
+                          value:
+                            oneOf:
+                            - type: string
+                            - type: number
+                            - type: boolean
+                      example:
+                        '707':
+                          value: Technology
+                        '709':
+                          value: 123.45
+                    addeparInfo:
+                      type: object
+                      description: 'Addepar integration information. If you provide addeparInfo without an accountId, the API
+
+                        will verify that an Addepar account mapping exists for the investing entity''s account. If no
+
+                        mapping exists, a 400 error will be returned - please contact Arch to set up the account mapping.
+
+                        '
+                      properties:
+                        accountId:
+                          type: integer
+                          minimum: 1
+                          example: 123456
+                        ownerEntityId:
+                          type: integer
+                          minimum: 1
+                          example: 789012
+                        ownedEntityId:
+                          type: integer
+                          minimum: 1
+                          example: 345678
+                      additionalProperties: false
+                    contactInfo:
+                      type: object
+                      required:
+                      - email
+                      properties:
+                        firstName:
+                          type: string
+                          maxLength: 255
+                          example: John
+                        lastName:
+                          type: string
+                          maxLength: 255
+                          example: Smith
+                        email:
+                          type: string
+                          format: email
+                          maxLength: 255
+                          example: john.smith@example.com
+                      additionalProperties: false
+                    transferInfo:
+                      $ref: '#/components/schemas/TransferInfoInput'
+                accountInfo:
+                  type: object
+                  description: External account information for bank and brokerage accounts
+                  properties:
+                    accountNumber:
+                      type: string
+                      maxLength: 30
+                      example: '123456789'
+                    accountAlias:
+                      type: string
+                      maxLength: 255
+                      example: Main Checking
+              example:
+                investmentInfo:
+                  investmentType: Bank Account
+                  investingEntityId: 56
+                  entityInput:
+                    inputMethod: byName
+                    firmName: Chase Bank
+                    issuingEntityName: JPMorgan Chase Bank
+                  investmentSettings:
+                    linkingMethod: LOA
+                  financials:
+                    valueAsOfDate: '2024-03-15'
+                    capitalAccount:
+                      quantity: 50000
+                  contactInfo:
+                    email: account.manager@chase.com
+                accountInfo:
+                  accountNumber: '12345678'
+                  accountAlias: Operating Account
+      responses:
+        '200':
+          description: Holding created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Holding'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - message
+                properties:
+                  message:
+                    type: string
+                    example: 'Missing required field: email'
+        '500':
+          description: Internal Server Error
+  /client-api/v0/holdings/{holdingId}/files/types:
+    get:
+      operationId: get-list-holding-file-types
+      summary: Get uploadable file types for a holding
+      parameters:
+      - name: holdingId
+        in: path
+        description: The holding to view file types for
+        required: true
+        schema:
+          type: integer
+      security:
+      - BearerAuth: []
+      description: List valid file types for upload
+      tags:
+      - Holdings
+      responses:
+        '200':
+          description: A list of valid file types.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/FileTypeList'
+                - example:
+                    kind: FileTypeList
+                    contents:
+                    - name: Tax Document
+                      context: investment
+                    - name: Subscription Document
+                      context: investment
+                    - name: Wire Instructions
+                      context: investment
+        '404':
+          description: Holding ID not found or is inaccessible to the user
+          content:
+            application/text:
+              schema:
+                type: string
+                example: Not found or inaccessible
+  /client-api/v0/holdings/{id}/files:
+    get:
+      summary: Get all files for a specific holding
+      security:
+      - BearerAuth: []
+      description: Returns a list of file metadata, including a presigned download link for a specific holding, if the user has access through through the access token.
+      tags:
+      - Holdings
+      parameters:
+      - name: id
+        in: path
+        description: A specific holding to query
+        required: true
+        schema:
+          type: integer
+      - name: beforeUploadTime
+        in: query
+        description: Filter the output for files uploaded before the queried time.
+        example: '2024-05-22T21:15:55.306Z'
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: afterUploadTime
+        in: query
+        description: Filter the output for files uploaded after the queried time.
+        example: '2024-05-22T21:15:55.306Z'
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: A list of file metadata for the holding.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingFileList'
+        '404':
+          description: Holding id not found or is inaccessible to the user
+          content:
+            application/text:
+              schema:
+                type: string
+                example: Not found or inaccessible
+    post:
+      operationId: post-holding-single-file-upload
+      summary: Upload a new file
+      description: Upload a file and attach it to a holding in Arch. This endpoint is for generic files.
+      parameters:
+      - name: id
+        in: path
+        description: The holding to upload to
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              - fileType
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+                fileType:
+                  type: string
+                  description: The type of file being uploaded (required). Only accepts files other than statements or cash flows, such as "Agreement", "Fund Correspondence", "Limited Partnership Agreement", "Offering Materials (e.g., PPM, Pitch Deck)", "Subscription Document", or "Miscellaneous Document". For Statements (account statements, quarterly reports, etc.) and Cash Flows (capital call and distribution notices), please use the corresponding endpoints.
+                notes:
+                  type: string
+                  description: Optional notes or comments about the file upload.
+      security:
+      - BearerAuth: []
+      tags:
+      - Holdings
+      responses:
+        '200':
+          description: The metadata for the uploaded file.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingFileList'
+        '404':
+          description: Holding id not found or is inaccessible to the user.
+          content:
+            application/text:
+              schema:
+                type: string
+                example: Not Found or inaccessible
+  /client-api/v0/holdings/{id}/files/statements:
+    post:
+      operationId: post-holding-statement-upload
+      summary: Upload a statement file
+      description: Upload a statement, report, or letter and attach it to a holding in Arch.
+      parameters:
+      - name: id
+        in: path
+        description: The holding to upload to
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              - fileType
+              - statementDate
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+                fileType:
+                  type: string
+                  enum:
+                  - Account Statement
+                  - Quarterly Report
+                  - Financial Statements
+                  description: 'The specific type of statement being uploaded. Must be one of: "Account Statement", "Quarterly Report", "Financial Statements".'
+                statementDate:
+                  type: string
+                  format: date
+                  description: The statement date of the document (YYYY-MM-DD).
+                notes:
+                  type: string
+                  description: Optional notes or comments about the file upload.
+                financials:
+                  type: string
+                  description: 'Financial values to update for the holding as a JSON string. Only applies when fileType is "Account Statement". All monetary values should be provided as dollars in USD.
+
+                    Supported fields:
+
+                    - value (Total value of the holding)
+
+                    - totalCommitment (Amount investor promised to contribute to the fund)
+
+                    - totalContribution (Total contributions made towards the commitment)
+
+                    - remainingCommitment (Total contributions required to meet the commitment)
+
+                    - totalDistribution (The amount paid by the fund to the investor)
+
+                    - recallableDistribution (Total distributions that can be recalled)
+
+
+                    Example: {"value": 100000, "totalContribution": 50000, "totalDistribution": 10000}'
+      security:
+      - BearerAuth: []
+      tags:
+      - Holdings
+      responses:
+        '200':
+          description: The metadata for the uploaded file.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingFileList'
+        '404':
+          description: Holding id not found or is inaccessible to the user.
+          content:
+            application/text:
+              schema:
+                type: string
+                example: Not Found or inaccessible
+  /client-api/v0/holdings/{id}/files/cash-flows:
+    post:
+      operationId: post-holding-cashflow-upload
+      summary: Upload a cash flow notice
+      description: Upload a capital call or distribution notice and attach it to a holding in Arch.
+      parameters:
+      - name: id
+        in: path
+        description: The holding to upload to
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              - fileType
+              - dueDate
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+                fileType:
+                  type: string
+                  enum:
+                  - Capital Call
+                  - Distribution
+                  description: 'The specific type of cash flow notice being uploaded. Must be one of: "Capital Call", "Distribution".'
+                dueDate:
+                  type: string
+                  format: date
+                  description: The due date for action (YYYY-MM-DD).
+                cashFlowAmount:
+                  type: number
+                  description: The cash flow amount in USD.
+                notes:
+                  type: string
+                  description: Optional notes or comments about the file upload.
+      security:
+      - BearerAuth: []
+      tags:
+      - Holdings
+      responses:
+        '200':
+          description: The metadata for the uploaded file.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingFileList'
+        '404':
+          description: Holding id not found or is inaccessible to the user.
+          content:
+            application/text:
+              schema:
+                type: string
+                example: Not Found or inaccessible
+  /client-api/v0/holdings/{holdingId}/files/{fileId}/download:
+    get:
+      summary: Download the file, as originally received.
+      security:
+      - BearerAuth: []
+      description: Download the file, as originally received by Arch.
+      tags:
+      - Holdings
+      parameters:
+      - name: holdingId
+        in: path
+        description: The holding the file exists under
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: The id of the file that's being requested
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: Buffer containing the content of the requested file.
+        '404':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Holding id not found or is inaccessible to the user
+components:
+  schemas:
+    ShareTypeEnum:
+      type: string
+      enum:
+      - Class A (Common)
+      - Class B (Preferred)
+      example: Class A (Common)
+    FinancialValue:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+    LinkingMethodEnum:
+      type: string
+      description: 'Method for linking the investment:
+
+        - `LOA` - Arch will link the investment via Letter of Authorization
+
+        - `SubDocs` - Client will provide subdocuments for linking
+
+        - `Do Not Link` - Linking is unavailable for this investment
+
+        '
+      enum:
+      - LOA
+      - SubDocs
+      - Do Not Link
+      example: LOA
+    CustomField:
+      type: object
+      description: A user-specified custom field. Does not yet support File fields.
+      properties:
+        name:
+          type: string
+        fieldType:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - NUMBER
+          - CHECKBOX
+          - DATE
+          - FILES
+          - FINANCIAL_VALUE
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+          - $ref: '#/components/schemas/FinancialValue'
+    FileTypeList:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+          - FileTypeList
+        contents:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the file type for upload
+              kind:
+                type: string
+                description: Kind of data that the file type can be uploaded to
+                enum:
+                - holding
+                - investing-entity
+    InvestingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - investing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced investing entity
+          example: 711
+        url:
+          type: string
+          description: A relative url to the referenced investing entity
+          example: /investing-entities/711
+        name:
+          type: string
+          description: The name of the referenced investing entity
+          example: Investing Entity 711
+    QSBSTreatmentEnum:
+      type: string
+      enum:
+      - Unknown
+      - 'Yes'
+      - 'No'
+      example: Unknown
+    HoldingFileList:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+          - FileList
+        contents:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/File'
+            - type: object
+              properties:
+                downloadUrl:
+                  type: string
+                  description: A relative url to download the file itself, as originally received by Arch
+                  example: /holdings/1234/files/1234/download
+    InvestmentTypeEnum:
+      type: string
+      enum:
+      - Bank Account
+      - Fund (Partnership Equity)
+      - Brokerage Account
+      - Private Company - Equity
+      - Other
+      - Unknown
+      - Bank Account (Checking)
+      - Bank Account (Savings)
+      - Partnership (LLC)
+      - Partnership (LLP)
+      - Partnership (GP/LP)
+      - Partnership (S-Corp)
+      - Corporation (LLC)
+      - Corporation (C-Corp)
+      - Partnership (PTP)
+      - Loan
+      - Private Company - Convertible Note
+      - Private Company - SAFE
+      - Real Asset
+      - Cryptocurrency
+      - SPAC
+      - Automated Cash Account
+      - Public Company - Equity
+      example: Fund (Partnership Equity)
+    TransferInfoInput:
+      type: object
+      description: 'Records that this new holding is the result of a transfer from an existing holding. The new holding''s start date is set to transferDate and a transfer relationship (transferor holding -> new holding) is recorded.
+
+        '
+      required:
+      - transferorHoldingId
+      - transferDate
+      properties:
+        transferorHoldingId:
+          type: integer
+          minimum: 1
+          description: The Arch ID of the existing holding this holding was transferred from
+          example: 50050
+        transferDate:
+          type: string
+          format: date
+          description: The date the transfer took place (YYYY-MM-DD)
+          example: '2024-06-30'
+        transferType:
+          type: string
+          enum:
+          - partial
+          - full
+          default: full
+          description: 'Whether the transfer is partial or full. Defaults to "full". A full transfer
+
+            ends the transferor holding on transferDate (unless it already has an end date);
+
+            a partial transfer leaves the transferor holding unchanged.
+
+            '
+      additionalProperties: false
+    HoldingRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - holding-ref
+        id:
+          type: number
+          description: The ID of the referenced holding
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced holding
+          example: /holdings/112
+        name:
+          type: string
+          description: The name of the referenced holding
+          example: Holding 112
+    InvestmentLinkStatus:
+      type: string
+      enum:
+      - Authorization Required
+      - Contact Info Required
+      - Pending External Action
+      - Additional Authorization Required
+      - In Progress
+      - Linked
+      - Linked Confirmed
+      - Linking Under Review
+      - Linked Confirmed
+      - Pass-Through Linked
+      - Unlinked
+      - Linking Unavailable
+      - Awaiting DocuSign
+    TaxDocumentTypeEnum:
+      type: string
+      enum:
+      - K-1
+      - W-2
+      - 1099-INT
+      - 1099-DIV
+      - 1099-B
+      - 1099-G
+      - 1099-Consolidated
+      - Other One-Time Document
+      - '1099'
+      - 1098-E
+      - '5498'
+      - '1098'
+      - K-1 (State Only)
+      - 1042-S
+      - Charity Receipt
+      - '3921'
+      - 1099-R
+      - 592-B
+      - Foreign Tax Document
+      - 1099-SA
+      - 5498-SA
+      - 1095-B
+      - 1095-C
+      - Estimated Income
+      - 1099-A
+      - 1099-C
+      - 1099-CAP
+      - 1099-H
+      - 1099-K
+      - 1099-LTC
+      - 1099-MISC
+      - 1099-OID
+      - 1099-PATR
+      - 1099-Q
+      - 83(b) Election
+      - HUD-1 Closing Statement
+      - Property Tax Receipt
+      - Investment Writeoff
+      - Other Recurring Document
+      - PFIC Statement
+      - K-3
+      - '8986'
+      - 1099-NEC
+      - '480.6'
+      - Account Specific
+      - Form 926
+      - W-2G
+      - 1099-Remic
+      - 5498-ESA
+      example: K-1
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    HoldingList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: Page
+        selfUrl:
+          type: string
+          description: The relative URL for accessing the current page of this resource
+          example: /holdings?offset=5&limit=5
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Holding'
+          description: List of holdings
+        prev:
+          type: string
+          description: The relative URL for accessing the previous page of this resource
+          example: /holdings?offset=0&limit=5
+        next:
+          type: string
+          description: The relative URL for accessing the next page of this resource
+          example: /holdings?offset=10&limit=5
+        parentUrl:
+          type: string
+          description: The relative URL for accessing the parent resource of this set of holdings
+      example:
+        kind: page
+        id: 56
+        selfUrl: /investing-entities/56/holdings?limit=25&offset=25
+        parentUrl: /investing-entities/56
+        prev: /investing-entities/56/holdings?limit=25&offset=0
+        next: /investing-entities/56/holdings?limit=25&offset=50
+        contents:
+        - kind: holding
+          id: 50051
+          selfUrl: /holdings/50051
+          name: Arch Example Holding
+          isTaxPlaceholder: false
+          investingEntityRef:
+            kind: investing-entity-ref
+            id: 56
+            url: /investing-entities/56
+            name: Arch Example Issuer
+          investingEntityName: Arch Example Investor
+          investingEntityUrl: /investingEntities/56
+          issuingEntityRef:
+            kind: issuing-entity-ref
+            id: 420
+            url: /issuing-entities/420
+            name: Arch Example Issuer
+          issuingEntityName: Arch Example Issuer
+          issuingEntityUrl: /issuingEntities/420
+          offeringRef:
+            kind: offering-ref
+            id: 112
+            url: /offerings/112
+            name: Offering 112
+          offeringUrl: /offerings/112
+          accountName: Arch Example Account
+          accountRef:
+            kind: account-ref
+            id: 56
+            url: /accounts/56
+            name: Account 56
+          archEmail: exampleinvestor-exampleissuer@archdocuments.com
+          startDate: '2023-01-19T00:00:00.000Z'
+          endDate: '2023-01-19T00:00:00.000Z'
+          firmName: Firm Name 1
+          firmRef:
+            kind: firm-ref
+            id: 42
+            url: /firms/42
+            name: Firm Name 1
+          financials:
+            capitalAccount:
+              quantity: 2000
+              currencyCode: USD
+              dollars: 2000
+            valueAsOfTime: 2024-02-26H00:00:00.000Z
+          latestStatementRef:
+            id: 12345
+            url: /activities/12345
+            activityType: Account Statement Received
+            statementDate: '2025-06-30T00:00:00.000Z'
+            activitiesSinceStatementUrl: /activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z
+    NewFinancialValue:
+      type: object
+      description: 'A financial value in USD. Currently only USD is supported. Most values can be negative, except totalContribution which must be non-negative.
+
+        '
+      required:
+      - quantity
+      properties:
+        quantity:
+          type: number
+          description: The amount in dollars (USD). Can be negative for most fields, except totalContribution.
+          example: 100000
+    File:
+      type: object
+      required:
+      - id
+      - name
+      - uploadTime
+      - downloadUrl
+      properties:
+        id:
+          type: number
+          description: A unique identifier for the file
+          example: 101
+        name:
+          type: string
+          description: Name of the file
+          example: 56_TestEntity.pdf
+        sizeBytes:
+          type: number
+          description: Size of the file in bytes
+          example: 123456
+        uploadTime:
+          type: string
+          description: Time of the file upload
+          example: '2024-02-08T18:50:15.000Z'
+        fileHash:
+          type: string
+          description: A hash of the file
+          example: afakehash
+        downloadUrl:
+          type: string
+          description: A relative url to download the file itself, as originally received by Arch
+          example: /{parentType}/1234/files/1234/download
+        originalName:
+          type: string
+          description: Original name of the file before applying custom name conventions
+          example: file_123.pdf
+    IssuingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - issuing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced issuing entity
+          example: 204
+        url:
+          type: string
+          description: A relative url to the referenced issuing entity
+          example: /issuing-entities/204
+        name:
+          type: string
+          description: The name of the referenced issuing entity
+          example: Issuing Entity 204
+    NewHolding:
+      type: object
+      required:
+      - investingEntityId
+      - offeringId
+      properties:
+        name:
+          type: string
+          description: The name for the holding
+        investingEntityId:
+          type: number
+          description: The ID for the entity that owns the holding
+        offeringId:
+          type: number
+          description: The ID for the vehicle that was invested in
+        startDate:
+          type: string
+          format: date
+          description: The date the holding began (YYYY-MM-DD)
+        endDate:
+          type: string
+          format: date
+          description: The date the holding ends (YYYY-MM-DD)
+        financials:
+          type: object
+          description: Current financial values for the holding. Note - valueAsOfDate is required if any financial values are provided.
+          properties:
+            valueAsOfDate:
+              type: string
+              format: date
+              description: The timestamp of the most recent valuation. Required if any financial values are provided.
+            capitalAccount:
+              $ref: '#/components/schemas/NewFinancialValue'
+              description: Total value of the holding, in dollars
+            initialCommitment:
+              $ref: '#/components/schemas/NewFinancialValue'
+              description: Total commitment to the holding, in dollars
+            totalContribution:
+              allOf:
+              - $ref: '#/components/schemas/NewFinancialValue'
+              - type: object
+                properties:
+                  quantity:
+                    minimum: 0
+                description: Total of any contributions made towards the commitment, in dollars. Must be non-negative.
+            outstandingCommitment:
+              $ref: '#/components/schemas/NewFinancialValue'
+              description: Total contributions required to meet the commitment, in dollars
+            totalDistributions:
+              $ref: '#/components/schemas/NewFinancialValue'
+              description: Total of any distributions made from the holding, in dollars
+            recallableDistributions:
+              $ref: '#/components/schemas/NewFinancialValue'
+              description: Total of any distributions made from the holding that can be recalled, in dollars
+        customFields:
+          type: object
+          description: Custom field values for the holding. Map from field definition ID to field value.
+          additionalProperties:
+            type: object
+            required:
+            - value
+            properties:
+              value:
+                oneOf:
+                - type: string
+                - type: number
+                - type: boolean
+                description: The value for the custom field. Type must match the field definition type. FILES and FINANCIAL_VALUE types are not supported.
+      example:
+        name: Arch Example Holding
+        investingEntityId: 56
+        offeringId: 112
+        startDate: '2022-03-10'
+        endDate: '2024-03-09'
+        financials:
+          capitalAccount:
+            quantity: 100000
+          valueAsOfDate: '2023-01-19'
+        customFields:
+          '707':
+            value: Crypto
+          '709':
+            value: 123.45
+    Timestamp:
+      type: string
+      format: YYYY-MM-DDTHH:mm:ss.SSSZ
+    FirmRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - firm-ref
+        id:
+          type: number
+          description: The ID of the referenced firm
+          example: 42
+        url:
+          type: string
+          description: A relative url to the referenced firm
+          example: /firms/42
+        name:
+          type: string
+          description: The name of the referenced firm
+          example: Acme Capital Partners
+    AccountRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - account-ref
+        id:
+          type: number
+          description: The ID of the referenced account
+          example: 56
+        url:
+          type: string
+          description: A relative url to the referenced account
+          example: /account/56
+        name:
+          type: string
+          description: The name of the referenced account
+          example: Account 56
+    Holding:
+      type: object
+      required:
+      - kind
+      - id
+      - selfUrl
+      - name
+      - investingEntityName
+      - investingEntityRef
+      - investingEntityUrl
+      - offeringRef
+      - offeringUrl
+      - archEmail
+      properties:
+        kind:
+          type: string
+          description: Holding
+        id:
+          type: number
+          description: The Arch ID for tracking the holding
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+        name:
+          type: string
+          description: The name for the holding
+        isTaxPlaceholder:
+          type: boolean
+          description: If this holding is a placeholder for an expected tax document
+        investingEntityRef:
+          $ref: '#/components/schemas/InvestingEntityRef'
+        investingEntityName:
+          type: string
+          description: The name of the entity that owns the holding
+        investingEntityUrl:
+          type: string
+          description: The relative path to query for the entity that owns the holding
+        issuingEntityRef:
+          $ref: '#/components/schemas/IssuingEntityRef'
+        accountName:
+          type: string
+          description: The name of the account that owns the holding
+        accountRef:
+          $ref: '#/components/schemas/AccountRef'
+        accountUrl:
+          type: string
+          description: The relative path to query the related Account if any
+          example: /accounts/56
+        issuingEntityName:
+          type: string
+          description: The name of the entity that issues documents for the holding
+        issuingEntityUrl:
+          type: string
+          description: The relative path to query for the entity that issues documents for the holding
+        offeringRef:
+          $ref: '#/components/schemas/OfferingRef'
+        offeringUrl:
+          type: string
+          description: The relative path to query for the vehicle that was invested in
+        archEmail:
+          type: string
+          description: A unique Arch email that receives documents and updates for the holding
+        linkStatus:
+          $ref: '#/components/schemas/InvestmentLinkStatus'
+          description: The status of the linking process for the investment.
+        startDate:
+          type: string
+          format: date
+          description: The date the holding began (YYYY-MM-DD)
+        endDate:
+          type: string
+          format: date
+          description: The date the holding ends (YYYY-MM-DD)
+        firmName:
+          type: string
+          description: The name of the firm this holding is associated with
+        firmRef:
+          $ref: '#/components/schemas/FirmRef'
+        financials:
+          type: object
+          description: Current financial values for the holding
+          properties:
+            valueAsOfTime:
+              allOf:
+              - $ref: '#/components/schemas/Timestamp'
+              - description: The timestamp of the most recent valuation
+            capitalAccount:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total value of the holding
+            initialCommitment:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total commitment to the holding
+            totalContribution:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total of any contributions made towards the commitment (For lookthroughs, this is analogous to cost-basis)
+            outstandingCommitment:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total contributions required to meet the commitment
+            totalDistributions:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total of any distributions made from the holding
+            recallableDistributions:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total of any distributions made from the holding that can be recalled
+            investedCapital:
+              allOf:
+              - $ref: '#/components/schemas/FinancialValue'
+              - description: Total capital invested in the underlying asset (Lookthroughs only)
+        transferInfo:
+          type: array
+          description: 'The transfer relationships this holding is involved in. Only returned when the
+
+            includeTransferInfo query parameter is set to true. A holding can be involved
+
+            in many transfers, both into it and out of it, so this list may contain any
+
+            number of entries (empty when the holding was not involved in any transfer).
+
+            In each entry, one of the two holding refs is a self-reference to this holding.
+
+            Transfers involving a holding the caller cannot access are omitted.
+
+            '
+          items:
+            type: object
+            properties:
+              transferorHoldingRef:
+                allOf:
+                - $ref: '#/components/schemas/HoldingRef'
+                - description: The holding that was transferred from
+              transfereeHoldingRef:
+                allOf:
+                - $ref: '#/components/schemas/HoldingRef'
+                - description: The holding that was transferred to
+              transferDate:
+                type: string
+                format: date
+                description: 'The date the transfer took place. Resolved as the transferor holding''s
+
+                  end date, falling back to the transferee holding''s start date, then null.
+
+                  '
+        latestStatementRef:
+          type: object
+          description: Reference to the most recent statement activity for this holding to help reconcile valuations
+          properties:
+            id:
+              type: number
+              description: The activity ID
+            url:
+              type: string
+              description: Relative URL to the activity
+            activityType:
+              type: string
+              description: The type of statement activity (e.g., "Account Statement Received")
+            statementDate:
+              type: string
+              format: date
+              description: The statement date
+            activitiesSinceStatementUrl:
+              type: string
+              description: Relative URL to query all activities that occurred after this statement date for this holding
+        contact:
+          type: object
+          description: Contact information for the holding
+          properties:
+            name:
+              type: string
+              description: Contact's name
+            email:
+              type: string
+              description: Contact's email
+            phone:
+              type: string
+              description: Contact's phone number
+        metrics:
+          type: object
+          description: Metrics of the holding's financial performance
+          properties:
+            irr:
+              type: number
+            tvpi:
+              type: number
+            dpi:
+              type: number
+        blackDiamondInfo:
+          type: object
+          properties:
+            symbol:
+              type: string
+              description: The symbol of the holding
+            accountNumber:
+              type: string
+              description: The account number of the holding
+            contraAccountNumber:
+              type: string
+              description: The contra account number of the holding
+            assetName:
+              type: string
+              description: The name of the asset
+            accountName:
+              type: string
+              description: The name of the account
+        addeparInfo:
+          type: object
+          properties:
+            accountId:
+              type: number
+              description: The addepar account ID associated with this holding
+            ownerEntityId:
+              type: number
+              description: The addepar ID of the owner entity for this holding
+            ownerEntityName:
+              type: string
+              description: The name of the owner entity for this holding
+            ownedEntityId:
+              type: number
+              description: The addepar ID of the owned entity for this holding
+            ownedEntityName:
+              type: string
+              description: The name of the owned entity for this holding
+            positionId:
+              type: number
+              description: The id of the addepar position for this holding
+        integrations:
+          type: object
+          properties:
+            archwayInfo:
+              type: object
+              properties:
+                investmentId:
+                  type: number
+                  description: The Arch ID for tracking the holding
+                archwaySecurityType:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: Security Type Id
+                    description:
+                      type: string
+                      description: Security Type Description
+                archwayProductId:
+                  type: string
+                  description: Archway ID for tracking the holding
+                archwayPortfolioId:
+                  type: number
+                  description: Archway ID for tracking the portfolio
+            burgissInfo:
+              type: object
+              properties:
+                investmentId:
+                  type: number
+                  description: The Arch ID for tracking the holding
+                currentIdentifier:
+                  type: string
+                  description: The customized identifier added for the holding in Burgiss
+                accountNumber:
+                  type: number
+                  description: The Burgiss ID for tracking the Burgiss account
+                investmentGuid:
+                  type: string
+                  description: The Burgiss ID for tracking the holding
+            tamaracInfo:
+              type: object
+              properties:
+                investmentId:
+                  type: number
+                  description: The Arch ID for tracking the holding
+                accountNumber:
+                  type: string
+                  description: Tamarac ID for tracking the Tamarac account
+                symbol:
+                  type: string
+                  description: Tamarac ID for tracking the holding
+            orionInfo:
+              type: object
+              properties:
+                exclusionReason:
+                  type: string
+                  nullable: true
+                  description: Export exclusion reason (MANUALLY_DISABLED or null)
+                ticker:
+                  type: string
+                  description: Product ticker for Orion
+                accountNumber:
+                  type: string
+                  description: Orion account number
+                accountId:
+                  type: string
+                  description: Orion account ID
+                assetId:
+                  type: string
+                  description: Orion asset ID
+                initialCommitmentCents:
+                  type: number
+                  description: Initial commitment amount in cents
+                initialCommitmentDate:
+                  type: string
+                  format: date
+                  description: Initial commitment date (YYYY-MM-DD)
+        ownership:
+          type: object
+          properties:
+            percentage:
+              type: number
+              description: the whole number percent ownership the caller has in the holding.
+            issuingEntityId:
+              type: number
+              description: the ID of the issuing entity that contains the underlying portfolio companies.
+            issuingEntityUrl:
+              type: string
+              description: the url to access the issuing entity that contains the underlying portfolio companies. Prepopulated with the query parameter required to fetch the underlying portfolio.
+        customFields:
+          type: object
+          description: A map from custom field ID to custom field data.
+          additionalProperties:
+            $ref: '#/components/schemas/CustomField'
+      example:
+        kind: holding
+        id: 50051
+        selfUrl: /holdings/50051
+        name: Arch Example Holding
+        isTaxPlaceholder: false
+        investingEntityRef:
+          kind: investing-entity-ref
+          id: 56
+          url: /investing-entities/56
+          name: Arch Example Issuer
+        investingEntityName: Arch Example Investor
+        investingEntityUrl: /investingEntities/56
+        issuingEntityRef:
+          kind: issuing-entity-ref
+          id: 420
+          url: /issuing-entities/420
+          name: Arch Example Issuer
+        issuingEntityName: Arch Example Issuer
+        issuingEntityUrl: /issuingEntities/420
+        offeringRef:
+          kind: offering-ref
+          id: 112
+          url: /offerings/112
+          name: Offering 112
+        offeringUrl: /offerings/112
+        accountName: Arch Example Account
+        accountRef:
+          kind: account-ref
+          id: 56
+          url: /accounts/56
+          name: Account 56
+        accountUrl: /accounts/56
+        archEmail: exampleinvestor-exampleissuer@archdocuments.com
+        startDate: '2023-01-19T00:00:00.000Z'
+        endDate: '2023-01-19T00:00:00.000Z'
+        firmName: Firm Name 1
+        firmRef:
+          kind: firm-ref
+          id: 42
+          url: /firms/42
+          name: Firm Name 1
+        financials:
+          capitalAccount:
+            quantity: 2000
+            currencyCode: USD
+            dollars: 2000
+          valueAsOfTime: 2024-02-26H00:00:00.000Z
+          initialCommitment:
+            quantity: 2000
+            currencyCode: USD
+            dollars: 2000
+          totalContribution:
+            quantity: 2000
+            currencyCode: USD
+            dollars: 2000
+          outstandingCommitment:
+            quantity: 2000
+            currencyCode: USD
+            dollars: 2000
+          totalDistributions:
+            quantity: 2000
+            currencyCode: USD
+            dollars: 2000
+          recallableDistributions:
+            quantity: 2000
+            currencyCode: USD
+            dollars: 2000
+        latestStatementRef:
+          id: 12345
+          url: /activities/12345
+          activityType: Account Statement Received
+          statementDate: '2025-06-30T00:00:00.000Z'
+          activitiesSinceStatementUrl: /activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z
+    OfferingRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - offering-ref
+        id:
+          type: number
+          description: The ID of the referenced offering
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced offering
+          example: /offerings/112
+        name:
+          type: string
+          description: The name of the referenced offering
+          example: Offering 112
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

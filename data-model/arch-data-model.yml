@@ -1,0 +1,201 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/arch-client-api-openapi.json
+note: Entity-relationship graph derived from OpenAPI component schemas ($ref links and *Ref id-reference
+  fields). Ref suffixes collapsed to their base entity.
+core_entities:
+- Account
+- Holding
+- InvestingEntity
+- IssuingEntity
+- Offering
+- Activity
+- CashFlow
+- Task
+- TaxDocument
+- Firm
+- File
+- User
+- UserRole
+entity_count: 68
+relationships:
+- from: Account
+  to: Client
+  cardinality: has_one
+  via: clientRef
+- from: ActivityPatch
+  to: ActivityType
+  cardinality: has_one
+  via: type
+- from: Activity
+  to: Holding
+  cardinality: has_one
+  via: holdingRef
+- from: Activity
+  to: InvestingEntity
+  cardinality: has_one
+  via: investingEntityRef
+- from: Activity
+  to: IssuingEntity
+  cardinality: has_one
+  via: issuingEntityRef
+- from: Activity
+  to: Account
+  cardinality: has_one
+  via: accountRef
+- from: Activity
+  to: Task
+  cardinality: has_one
+  via: taskRef
+- from: Activity
+  to: TaxDoc
+  cardinality: has_one
+  via: taxDocRef
+- from: Activity
+  to: ActivityType
+  cardinality: has_one
+  via: type
+- from: Activity
+  to: CashFlow
+  cardinality: has_one
+  via: cashFlowRef
+- from: CashFlowList
+  to: CashFlow
+  cardinality: has_many
+  via: contents
+- from: CashFlowAllocation
+  to: CashFlowFinancialValue
+  cardinality: has_one
+  via: financialValue
+- from: CashFlow
+  to: CashFlowFinancialValue
+  cardinality: has_one
+  via: financialValue
+- from: CashFlow
+  to: CashFlowAllocation
+  cardinality: has_many
+  via: allocations
+- from: CashFlowFinancialValue
+  to: CurrencyCode
+  cardinality: has_one
+  via: currencyCode
+- from: CashFlowFinancialValue
+  to: FinancialValueUnitType
+  cardinality: has_one
+  via: unitType
+- from: NewCashFlow
+  to: CashFlowType
+  cardinality: has_one
+  via: type
+- from: NewCashFlow
+  to: NewFinancialValue
+  cardinality: has_one
+  via: financialValue
+- from: FirmList
+  to: Firm
+  cardinality: has_many
+  via: contents
+- from: FinancialValue
+  to: CurrencyCode
+  cardinality: has_one
+  via: currencyCode
+- from: Holding
+  to: InvestingEntity
+  cardinality: has_one
+  via: investingEntityRef
+- from: Holding
+  to: IssuingEntity
+  cardinality: has_one
+  via: issuingEntityRef
+- from: Holding
+  to: Account
+  cardinality: has_one
+  via: accountRef
+- from: Holding
+  to: Offering
+  cardinality: has_one
+  via: offeringRef
+- from: Holding
+  to: InvestmentLinkStatus
+  cardinality: has_one
+  via: linkStatus
+- from: Holding
+  to: Firm
+  cardinality: has_one
+  via: firmRef
+- from: HoldingList
+  to: Holding
+  cardinality: has_many
+  via: contents
+- from: InvestingEntity
+  to: WireInstructions
+  cardinality: has_one
+  via: wireInstructions
+- from: InvestingEntityList
+  to: InvestingEntity
+  cardinality: has_many
+  via: contents
+- from: NewInvestingEntity
+  to: WireInstructions
+  cardinality: has_one
+  via: defaultWireInstructions
+- from: NewInvestingEntity
+  to: WireInstructions
+  cardinality: has_one
+  via: defaultWireInstructionsForFurtherCredit
+- from: IssuingEntity
+  to: Holding
+  cardinality: has_many
+  via: underlyingLookthroughs
+- from: IssuingEntityList
+  to: IssuingEntity
+  cardinality: has_many
+  via: contents
+- from: OfferingPage
+  to: Offering
+  cardinality: has_many
+  via: contents
+- from: Task
+  to: Activity
+  cardinality: has_one
+  via: activityRef
+- from: Task
+  to: FinancialValue
+  cardinality: has_one
+  via: value
+- from: TaskList
+  to: Task
+  cardinality: has_many
+  via: contents
+- from: TaxDocument
+  to: Holding
+  cardinality: has_one
+  via: holdingRef
+- from: TaxDocument
+  to: InvestingEntity
+  cardinality: has_one
+  via: investingEntityRef
+- from: TaxDocument
+  to: IssuingEntity
+  cardinality: has_one
+  via: issuingEntityRef
+- from: TaxDocument
+  to: Account
+  cardinality: has_one
+  via: accountRef
+- from: TaxDocumentList
+  to: TaxDocument
+  cardinality: has_many
+  via: contents
+- from: ResponseUserRole
+  to: User
+  cardinality: has_one
+  via: userRef
+- from: RequestUserRole
+  to: RoleType
+  cardinality: has_one
+  via: roleType
+- from: UserRoleList
+  to: ResponseUserRole
+  cardinality: has_many
+  via: contents

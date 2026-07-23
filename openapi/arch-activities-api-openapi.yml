@@ -1,0 +1,1111 @@
+openapi: 3.0.0
+info:
+  title: Arch Client Accounts Activities API
+  version: 0.1.0
+  description: "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n"
+servers:
+- url: /
+host: arch.co
+tags:
+- name: Activities
+  description: Interact with Arch objects representing financial updates
+paths:
+  /client-api/v0/activities:
+    get:
+      operationId: get-list-activities
+      summary: Get all activities accessible to the user
+      security:
+      - BearerAuth: []
+      description: Returns a list of all activities available to the user determined by the access token.
+      tags:
+      - Activities
+      parameters:
+      - name: limit
+        in: query
+        description: The number of activities to return
+        schema:
+          type: integer
+          default: 25
+          maximum: 1000
+      - name: offset
+        in: query
+        description: The number of activities to skip before collecting results
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: investingEntityIds
+        example: 1,2,3,4
+        in: query
+        description: Will filter the output to only include activities belonging to one of the Investing Entity ids in the provided argument
+        schema:
+          type: string
+      - name: issuingEntityIds
+        example: 1,2,3,4
+        in: query
+        description: Will filter the output to only include activities belonging to one of the Issuing Entity ids in the provided argument
+        schema:
+          type: string
+      - name: accountIds
+        in: query
+        description: Will filter the output to only include holdings relevant to one of the account ids in the provided argument
+        example: 1,2,3,4
+        schema:
+          type: string
+      - name: types
+        schema:
+          type: string
+        example: Investment Added,Account Statement
+        in: query
+        description: Will filter the output to only include activities with one of the types in the provided argument
+      - name: beforeStatementDate
+        in: query
+        description: Filter the output for activities with a statement date before the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterStatementDate
+        in: query
+        description: Filter the output for activities with a statement date after the queried date.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeCreatedAt
+        deprecated: true
+        in: query
+        description: Filter the output for activities with a creation time before the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterCreatedAt
+        deprecated: true
+        in: query
+        description: Filter the output for activities with a creation time after the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeDueAt
+        in: query
+        description: Filter the output for activities with a due time before the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterDueAt
+        in: query
+        description: Filter the output for activities with a due time after the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: beforeProcessedAt
+        in: query
+        description: Filter the output for activities with a processed time before the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: afterProcessedAt
+        in: query
+        description: Filter the output for activities with a processed time after the queried timestamp.
+        example: '2024-05-22T21:15:55.306Z'
+        schema:
+          type: string
+          format: date-time
+      - name: holdingIds
+        in: query
+        example: 1,2,3,4
+        description: Filter the output for activities related to holdings with ids in the provided argument
+        schema:
+          type: string
+      - name: includeSummaries
+        in: query
+        example: true
+        description: Whether to include AI summaries in the data. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      - name: hasSummaries
+        in: query
+        example: true
+        description: Filter the output for activities that have an AI summary if true, or activities that don't have an AI summary if false. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      - name: includeCashFlow
+        in: query
+        example: true
+        description: Whether to include the cash flow associated with the activity, if it exists
+        schema:
+          type: boolean
+      - name: includeEmailBodies
+        in: query
+        example: true
+        description: Whether to include the email body and html associated with the activity
+        schema:
+          type: boolean
+      - name: includeApprovalStatus
+        in: query
+        example: true
+        description: Whether to include whether the activity is Pending/Approved. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A list of activities data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityList'
+        '500':
+          description: Internal server error.
+  /client-api/v0/activities/{id}:
+    get:
+      operationId: get-single-activity
+      summary: Get activity by id
+      security:
+      - BearerAuth: []
+      description: Returns activity data.
+      tags:
+      - Activities
+      parameters:
+      - name: id
+        in: path
+        description: A specific activity to query
+        required: true
+        schema:
+          type: integer
+      - name: includeSummaries
+        in: query
+        example: true
+        description: Whether to include AI summaries in the data. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      - name: includeCashFlow
+        in: query
+        example: true
+        description: Whether to include the cash flow associated with the activity, if it exists
+        schema:
+          type: boolean
+      - name: includeEmailBodies
+        in: query
+        example: true
+        description: Whether to include the email body and html associated with the activity
+        schema:
+          type: boolean
+      - name: includeApprovalStatus
+        in: query
+        example: true
+        description: Whether to include whether the activity is Pending/Approved. Please contact Arch to enable this parameter.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Activity data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+        '400':
+          description: Id could not be parsed
+        '404':
+          description: Activity id not found or is inaccessible to the user
+        '500':
+          description: Internal server error.
+    patch:
+      parameters:
+      - name: id
+        in: path
+        description: A specific activity to query
+        required: true
+        schema:
+          type: integer
+      summary: Update activity by id
+      security:
+      - BearerAuth: []
+      description: Updates activity data. (Not yet documented)
+      tags:
+      - Activities
+      responses:
+        '405':
+          description: Endpoint not yet implemented.
+  /client-api/v0/activities/{id}/files:
+    get:
+      operationId: get-list-activity-files
+      summary: Get all files for a specific activity
+      security:
+      - BearerAuth: []
+      description: Returns a list of file metadata, including a presigned download link for a specific activity, if the user has access through through the access token.
+      tags:
+      - Activities
+      parameters:
+      - name: id
+        in: path
+        description: A specific activity to query
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of file metadata for the activity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityFileList'
+        '404':
+          description: Activity id not found or is inaccessible to the user
+  /client-api/v0/activities/files:
+    post:
+      summary: Query activity files
+      security:
+      - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - activityIds
+              properties:
+                activityIds:
+                  type: array
+                  items:
+                    type: number
+      description: Get metadata for activity files
+      tags:
+      - Activities
+      responses:
+        '200':
+          description: A flat array of files with metadata for the related activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/File'
+                  - type: object
+                    properties:
+                      activityUrl:
+                        type: string
+                        description: a relative url to access the parent activity
+                        example: /activities/1234
+  /client-api/v0/activities/{activityId}/files/{fileId}/download:
+    get:
+      operationId: get-activity-download-single-file
+      summary: Download the file, as originally received.
+      security:
+      - BearerAuth: []
+      description: Download the file, as originally received by Arch.
+      tags:
+      - Activities
+      parameters:
+      - name: activityId
+        in: path
+        description: The activity the file exists under
+        required: true
+        schema:
+          type: integer
+      - name: fileId
+        in: path
+        description: The id of the file that's being requested
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: Buffer containing the content of the requested file.
+        '404':
+          content:
+            application/text:
+              schema:
+                type: string
+          description: Activity id not found or is inaccessible to the user
+components:
+  schemas:
+    IssuingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - issuing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced issuing entity
+          example: 204
+        url:
+          type: string
+          description: A relative url to the referenced issuing entity
+          example: /issuing-entities/204
+        name:
+          type: string
+          description: The name of the referenced issuing entity
+          example: Issuing Entity 204
+    HoldingRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - holding-ref
+        id:
+          type: number
+          description: The ID of the referenced holding
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced holding
+          example: /holdings/112
+        name:
+          type: string
+          description: The name of the referenced holding
+          example: Holding 112
+    ActivityList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+        contents:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/Activity'
+            - type: object
+              properties:
+                filesUrl:
+                  type: string
+                  description: A relative URL to see files attached to the activity.
+          description: List of activities
+        prev:
+          type: string
+          description: The relative URL for the previous page of activities
+        next:
+          type: string
+          description: The relative URL for the next page of activities
+      example:
+        kind: page
+        selfUrl: /activities?offset=1000&limit=1000
+        prev: /activities?offset=0&limit=1000
+        next: /activities?offset=2000&limit=1000
+        contents:
+        - kind: activity
+          id: 50051
+          selfUrl: /activities/50051
+          holdingRef:
+            kind: holding-ref
+            id: 112
+            url: /holdings/112
+            name: Holding 112
+          holdingUrl: /holdings/112
+          investingEntityRef:
+            kind: investing-entity-ref
+            id: 711
+            url: /investing-entities/711
+            name: Investing Entity 711
+          investingEntityUrl: /investing-entities/711
+          issuingEntityRef:
+            kind: issuing-entity-ref
+            id: 204
+            url: /issuing-entities/204
+            name: Issuing Entity 204
+          issuingEntityUrl: /issuing-entities/204
+          accountRef:
+            kind: account-ref
+            id: 56
+            url: /accounts/56
+            name: Account 56
+          accountUrl: /accounts/56
+          taskRef:
+            id: 42
+            url: /tasks/42
+          filesUrl: /activities/50051/files
+          type: Stock Certificate Uploaded
+          createdAt: '2023-09-05T15:22:48.000Z'
+          dueAt: '2023-09-05T15:22:48.000Z'
+          statementDate: YYYY-MM-DD
+          amountCents: 234234
+          totalCommitmentCents: 2345234
+          totalCommitment:
+            dollars: 23452.34
+            currencyCode: USD
+            quantity: 23452.34
+          totalContributionCents: 4573456
+          totalContibution:
+            dollars: 45734.56
+            currencyCode: USD
+            quantity: 45734.56
+          remainingCommitmentCents: 24534
+          remainingCommitment:
+            dollars: 245.34
+            currencyCode: USD
+            quantity: 245.34
+          totalDistributionCents: 324234
+          totalDistribution:
+            dollars: 3242.34
+            currencyCode: USD
+            quantity: 3242.34
+          recallableDistributionCents: 9768
+          recallableDistribution:
+            dollars: 97.68
+            currencyCode: USD
+            quantity: 97.68
+          capitalAccountCents: 234562
+          capitalAccount:
+            dollars: 2345.62
+            currencyCode: USD
+            quantity: 2345.62
+          processedAt: '2023-09-05T15:22:48.000Z'
+          summaries:
+          - This is an AI-generated summary of the activity.
+          cashFlowRef:
+            id: 1
+            url: /cash-flows/1
+          cashFlowUrl: /cash-flows/1
+          cashFlow:
+            id: 1
+            title: Cash Flow 1
+            dueAt: '2023-09-05T15:22:48.000Z'
+            type:
+              id: 1
+              name: Capital Call
+            financialValue:
+              dollars: 2342.34
+              currencyCode: USD
+              quantity: 2342.34
+    TaxDocRef:
+      type: object
+      required:
+      - id
+      - url
+      properties:
+        id:
+          type: integer
+          description: The ID of the referenced tax document
+          example: 42
+        url:
+          type: string
+          description: A relative url to the referenced tax document
+          example: /tax-documents/42
+    CashFlowType:
+      description: The type of cash flow
+      type: string
+      enum:
+      - Capital Call
+      - Distribution
+      - Contribution
+      - Interest Payment
+      - Redemption
+      - Buy
+      - Sale
+      - Dividend
+      - Internal Transfer
+    ActivityType:
+      type: string
+      enum:
+      - Quarantined
+      - Tax Document
+      - Draft Tax Document
+      - Capital Call Request
+      - Capital Call Confirmed
+      - Distribution Notice
+      - Distribution Election
+      - Account Statement
+      - Audited Financial Statements
+      - Investment Opportunity
+      - Investment Update
+      - Personal Information Request
+      - Meeting Details
+      - Investment Personnel Change
+      - Wire Instructions Request
+      - Investment Inquiry
+      - Other
+      - Subscription Document
+      - Limited Partner Agreement
+      - Performance Update
+      - Financial Statements
+      - Subscription Documents Executed
+      - SEC Disclosure
+      - Quarterly Report
+      - Activity Confirmation
+      - Withdrawal/Redemption Confirmed
+      - Transparency Report
+      - Firm Structure Update
+      - PR/News Update
+      - Report
+      - Event Invitation
+      - Confirmation Needed
+      - Investment Started
+      - Capital Call Reminder
+      - Distribution Reminder
+      - Security Update
+      - Stock Distribution Notice
+      - Capital Call
+      - Legal Documentation Received
+      - Operating Agreement
+      - Subscription Documents Submitted
+      - Contribution
+      - Investor Accreditation
+      - Tax Update
+      - Meeting Materials
+      - Invoice
+      - Tax Document Uploaded
+      - Cash Flow History
+      - Historical Statements
+      - Investment Info
+      - Distribution
+      - Stock Certificate
+      - Estimated Tax Document
+      - Cash Flow Projection
+      - Annual Report
+      - Signature Requested
+      - Redemption
+      - Investment Added
+      - Misc Update
+      - Document Submitted
+      - Advisor Agreement
+      - Investment Transfer
+      - Capital Call Paid
+      - Distribution Paid
+      - Interest Paid
+      - Investment Financials Updated
+      - Investment Ended
+      - Document Received
+      - Contribution Paid Notice
+      - Interest Paid Notice
+      - Withdrawal/Redemption Paid
+      - Financials Updated By Issuer
+      - Tax Documentation Request
+      - Files Uploaded
+      - Subscription Documents Uploaded
+      - Stock Certificate Uploaded
+      - Limited Partnership Agreement File Uploaded
+      - QSBS Documentation
+      - Letter of Transmittal Uploaded
+      - Form ADV Received
+      - Investment File Uploaded
+      - Entity File Uploaded
+      - File Removed
+      - Amendment to LP Agreement Received
+      - Form CRS
+      - Privacy Notice
+      - Fact Sheet
+      - Contact Details Task
+      - Add Accountant
+      - Exposure Report
+      - Offering Materials
+      - Closing Documents
+      - Sale Confirmation
+      - Sale Paid
+      - Purchase Confirmation
+      - Dividend Confirmation
+      - Dividend Paid
+      - Investor Letter
+      - Custom Cashflow
+      - Internal Transfer
+      - Cap Table
+      - Semi-Annual Report Received
+      - Value Provided by Investor
+      - Provide Transaction Details Activity
+      - Withdrawal/Redemption Request
+      - Partial Account Statement
+      - Capital Call Update
+      - Addepar Entity Information Request
+    CashFlowRef:
+      type: object
+      required:
+      - id
+      - url
+      properties:
+        id:
+          type: number
+          description: The ID of the referenced cash flow
+          example: 524
+        url:
+          type: string
+          description: A relative url to the referenced cash flow
+          example: /holdings/524
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    FinancialValue:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+    AccountRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - account-ref
+        id:
+          type: number
+          description: The ID of the referenced account
+          example: 56
+        url:
+          type: string
+          description: A relative url to the referenced account
+          example: /account/56
+        name:
+          type: string
+          description: The name of the referenced account
+          example: Account 56
+    ActivityFileList:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum:
+          - fileList
+        contents:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/File'
+            - type: object
+              properties:
+                downloadUrl:
+                  type: string
+                  description: A relative url to download the file itself, as originally received by Arch
+                  example: /activities/1234/files/101/download
+    InvestingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - investing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced investing entity
+          example: 711
+        url:
+          type: string
+          description: A relative url to the referenced investing entity
+          example: /investing-entities/711
+        name:
+          type: string
+          description: The name of the referenced investing entity
+          example: Investing Entity 711
+    Activity:
+      type: object
+      required:
+      - kind
+      - id
+      - selfUrl
+      - holdingRef
+      - holdingUrl
+      - investingEntityRef
+      - investingEntityUrl
+      - issuingEntityRef
+      - issuingEntityUrl
+      - accountRef
+      - accountUrl
+      properties:
+        kind:
+          type: string
+          description: activity
+        id:
+          type: number
+          description: The Arch ID for tracking the activity
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+        holdingRef:
+          $ref: '#/components/schemas/HoldingRef'
+        holdingUrl:
+          type: string
+          description: The relative path to query the related holding
+          example: /holdings/112
+        investingEntityRef:
+          $ref: '#/components/schemas/InvestingEntityRef'
+        investingEntityUrl:
+          type: string
+          description: The relative path to query the related Investing Entity if any
+          example: /investing-entities/711
+        issuingEntityRef:
+          $ref: '#/components/schemas/IssuingEntityRef'
+        issuingEntityUrl:
+          type: string
+          description: The relative path to query the related Issuing Entity if any
+          example: /issuing-entities/204
+        accountRef:
+          $ref: '#/components/schemas/AccountRef'
+        accountUrl:
+          type: string
+          description: The relative path to query the related Account if any
+          example: /accounts/56
+        taskRef:
+          $ref: '#/components/schemas/TaskRef'
+        taxDocRef:
+          $ref: '#/components/schemas/TaxDocRef'
+        type:
+          $ref: '#/components/schemas/ActivityType'
+        createdAt:
+          deprecated: true
+          type: string
+          format: date
+          description: Date and time of activity created in UTC
+        dueAt:
+          type: string
+          format: date
+          description: Due date of the activity
+        statementDate:
+          type: string
+          format: date
+          description: Statement date of the activity
+        amountCents:
+          type: number
+          description: Amount Cents
+        totalCommitmentCents:
+          type: number
+          description: Total Commitment Cents
+        totalCommitment:
+          type: object
+          description: Total Commitment Financial Value
+          properties:
+            dollars:
+              type: number
+              description: The totalCommitment in dollars
+              example: 100000
+            currencyCode:
+              type: string
+              description: The currency code for the totalCommitment. Only populated for currency type financial value units.
+              example: USD
+            quantity:
+              type: number
+              description: The quantity of the totalCommitment
+              example: 100000
+        totalContributionCents:
+          type: number
+          description: Total Contribution Cents
+        totalContribution:
+          type: object
+          description: Total Contribution Financial Value
+          properties:
+            dollars:
+              type: number
+              description: The totalContribution in dollars
+              example: 100000
+            currencyCode:
+              type: string
+              description: The currency code for the totalContribution. Only populated for currency type financial value units.
+              example: USD
+            quantity:
+              type: number
+              description: The quantity of the totalContribution
+              example: 100000
+        totalDistributionCents:
+          type: number
+          description: Total Distribution Cents
+        totalDistribution:
+          type: object
+          description: Total Distribution Financial Value
+          properties:
+            dollars:
+              type: number
+              description: The totalDistribution in dollars
+              example: 100000
+            currencyCode:
+              type: string
+              description: The currency code for the totalDistribution. Only populated for currency type financial value units.
+              example: USD
+            quantity:
+              type: number
+              description: The quantity of the totalDistribution
+              example: 100000
+        remainingCommitmentCents:
+          type: number
+          description: Remaining Commitment Cents
+        remainingCommitment:
+          type: object
+          description: Remaining Commitment Financial Value
+          properties:
+            dollars:
+              type: number
+              description: The remainingCommitment in dollars
+              example: 100000
+            currencyCode:
+              type: string
+              description: The currency code for the remainingCommitment. Only populated for currency type financial value units.
+              example: USD
+            quantity:
+              type: number
+              description: The quantity of the remainingCommitment
+              example: 100000
+        recallableDistributionCents:
+          type: number
+          description: Recallable Distribution Cents
+        recallableDistribution:
+          type: object
+          description: Recallable Distribution Financial Value
+          properties:
+            dollars:
+              type: number
+              description: The recallableDistribution in dollars
+              example: 100000
+            currencyCode:
+              type: string
+              description: The currency code for the recallableDistribution. Only populated for currency type financial value units.
+              example: USD
+            quantity:
+              type: number
+              description: The quantity of the recallableDistribution
+              example: 100000
+        capitalAccountCents:
+          type: number
+          description: Capital Account Cents
+        capitalAccount:
+          type: object
+          description: Capital Account Financial Value
+          properties:
+            dollars:
+              type: number
+              description: The capitalAccount in dollars
+              example: 100000
+            currencyCode:
+              type: string
+              description: The currency code for the capitalAccount. Only populated for currency type financial value units.
+              example: USD
+            quantity:
+              type: number
+              description: The quantity of the capitalAccount
+              example: 100000
+        processedAt:
+          type: number
+          format: date
+          description: First processed time
+        summaries:
+          type: array
+          items:
+            type: string
+        cashFlowRef:
+          $ref: '#/components/schemas/CashFlowRef'
+        cashFlowUrl:
+          type: string
+          description: The relative path to query the related cash flow if any
+          example: /cash-flows/524
+        cashFlow:
+          type: object
+          required:
+          - id
+          - type
+          - financialValue
+          - dueAt
+          properties:
+            id:
+              type: integer
+              description: The Arch ID of the cash flow
+              example: 12345
+            type:
+              $ref: '#/components/schemas/CashFlowType'
+            financialValue:
+              $ref: '#/components/schemas/FinancialValue'
+            dueAt:
+              type: string
+              format: date-time
+              description: Date and time of cash flow's specified completion in UTC
+            title:
+              type: string
+              description: The title or name of the cash flow
+        emailHtml:
+          type: string
+          description: The html of the email associated with the activity
+        emailText:
+          type: string
+          description: The text of the email associated with the activity
+        approvalStatus:
+          type: string
+          enum:
+          - Pending
+          - Approved
+          nullable: true
+          description: The approval status of the activity
+      example:
+        kind: activity
+        id: 50051
+        selfUrl: /activities/50051
+        holdingRef:
+          kind: holding-ref
+          id: 112
+          url: /holdings/112
+          name: Holding 112
+        holdingUrl: /holdings/112
+        investingEntityRef:
+          kind: investing-entity-ref
+          id: 711
+          url: /investing-entities/711
+          name: Investing Entity 711
+        investingEntityUrl: /investing-entities/711
+        issuingEntityRef:
+          kind: issuing-entity-ref
+          id: 204
+          url: /issuing-entities/204
+          name: Issuing Entity 204
+        issuingEntityUrl: /issuing-entities/204
+        accountRef:
+          kind: account-ref
+          id: 56
+          url: /accounts/56
+          name: Account 56
+        accountUrl: /accounts/56
+        taskRef:
+          id: 42
+          url: /tasks/42
+        type: Stock Certificate Uploaded
+        createdAt: '2023-09-05T15:22:48.000Z'
+        dueAt: '2023-09-05T15:22:48.000Z'
+        statementDate: YYYY-MM-DD
+        amountCents: 234234
+        totalCommitmentCents: 2345234
+        totalCommitment:
+          dollars: 23452.34
+          currencyCode: USD
+          quantity: 23452.34
+        totalContributionCents: 4573456
+        totalContibution:
+          dollars: 45734.56
+          currencyCode: USD
+          quantity: 45734.56
+        remainingCommitmentCents: 24534
+        remainingCommitment:
+          dollars: 245.34
+          currencyCode: USD
+          quantity: 245.34
+        totalDistributionCents: 324234
+        totalDistribution:
+          dollars: 3242.34
+          currencyCode: USD
+          quantity: 3242.34
+        recallableDistributionCents: 9768
+        recallableDistribution:
+          dollars: 97.68
+          currencyCode: USD
+          quantity: 97.68
+        capitalAccountCents: 234562
+        capitalAccount:
+          dollars: 2345.62
+          currencyCode: USD
+          quantity: 2345.62
+        processedAt: '2023-09-05T15:22:48.000Z'
+        summaries:
+        - This is an AI-generated summary of the activity.
+        cashFlowRef:
+          id: 1
+          url: /cash-flows/1
+        cashFlowUrl: /cash-flows/1
+        cashFlow:
+          id: 1
+          title: Cash Flow 1
+          dueAt: '2023-09-05T15:22:48.000Z'
+          type:
+            id: 1
+            name: Capital Call
+          financialValue:
+            dollars: 2342.34
+            currencyCode: USD
+            quantity: 2342.34
+        approvalStatus: Pending
+    TaskRef:
+      type: object
+      required:
+      - id
+      - url
+      properties:
+        id:
+          type: string
+          description: The ID of the referenced task
+          example: 42
+        url:
+          type: string
+          description: A relative url to the referenced task
+          example: /tasks/42
+    File:
+      type: object
+      required:
+      - id
+      - name
+      - uploadTime
+      - downloadUrl
+      properties:
+        id:
+          type: number
+          description: A unique identifier for the file
+          example: 101
+        name:
+          type: string
+          description: Name of the file
+          example: 56_TestEntity.pdf
+        sizeBytes:
+          type: number
+          description: Size of the file in bytes
+          example: 123456
+        uploadTime:
+          type: string
+          description: Time of the file upload
+          example: '2024-02-08T18:50:15.000Z'
+        fileHash:
+          type: string
+          description: A hash of the file
+          example: afakehash
+        downloadUrl:
+          type: string
+          description: A relative url to download the file itself, as originally received by Arch
+          example: /{parentType}/1234/files/1234/download
+        originalName:
+          type: string
+          description: Original name of the file before applying custom name conventions
+          example: file_123.pdf
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
