@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Tax Documents API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tax Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all tax documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tax-documents",
+            "params": [
+              {
+                "name": "year",
+                "value": "",
+                "type": "query",
+                "description": "A year to query tax documents from. Defaults to the last calendar year."
+              },
+              {
+                "name": "beforeReceivedTime",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a processed time before the queried timestamp."
+              },
+              {
+                "name": "afterReceivedTime",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a processed time after the queried timestamp."
+              },
+              {
+                "name": "years",
+                "value": "",
+                "type": "query",
+                "description": "A comma separated list of years to query tax documents from. Defaults to the last calendar year."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of tax documents to skip before collecting results"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of tax documents to return"
+              },
+              {
+                "name": "documentType",
+                "value": "",
+                "type": "query",
+                "description": "The type of tax document to filter by"
+              },
+              {
+                "name": "includeFiles",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include file details in the response"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get all tax documents"
+        },
+        {
+          "info": {
+            "name": "Get a single tax document by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tax-documents/:taxDocId",
+            "params": [
+              {
+                "name": "taxDocId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the tax document to retrieve"
+              },
+              {
+                "name": "includeFiles",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include file details in the response"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single tax document by ID"
+        },
+        {
+          "info": {
+            "name": "Get all files for a specific tax document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tax-documents/:taxDocId/files",
+            "params": [
+              {
+                "name": "taxDocId",
+                "value": "",
+                "type": "path",
+                "description": "A specific tax document to query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of files, including download links."
+        },
+        {
+          "info": {
+            "name": "Download individual tax doc file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tax-documents/:taxDocId/files/:fileId/download",
+            "params": [
+              {
+                "name": "taxDocId",
+                "value": "",
+                "type": "path",
+                "description": "A specific tax document to query"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "A specific file to download"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download individual tax doc file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

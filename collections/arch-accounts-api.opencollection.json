@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all accounts for caller",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/accounts",
+            "params": [
+              {
+                "name": "includeAddeparInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include addepar account and entity info in the response"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the data for the specified account ids, if the user has access through the access token."
+        },
+        {
+          "info": {
+            "name": "Get data for a specific account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific account id to query for"
+              },
+              {
+                "name": "includeAddeparInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include addepar account and entity info in the response"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the data for a specific account, if the user has access through the access token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

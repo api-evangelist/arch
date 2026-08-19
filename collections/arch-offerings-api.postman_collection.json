@@ -1,0 +1,402 @@
+{
+  "item": [
+    {
+      "id": "3cf7b946-48a8-4865-ac15-ddee90abc983",
+      "name": "Offerings",
+      "description": {
+        "content": "Get data on individual investment offering opportunities offered by your holdings",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "53edebe2-4c94-4483-b51b-1dd2408160e4",
+          "name": "Get all offering ids for the caller",
+          "request": {
+            "name": "Get all offering ids for the caller",
+            "description": {
+              "content": "Return a page of offerings that the caller has access to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "offerings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of offerings to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of offerings to skip before collecting results"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26e60cbf-4965-46f2-9fcb-13b8be77aebd",
+              "name": "A page of offering data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "offerings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"page\",\n  \"prev\": \"/offerings?limit=1000&offset=0\",\n  \"next\": \"/offerings?limit=1000&offset=1000\",\n  \"selfUrl\": \"/offerings?limit=1000&offset=0\",\n  \"contents\": [\n    {\n      \"id\": 12345,\n      \"type\": \"Equity\",\n      \"name\": \"Arch Offering\",\n      \"selfUrl\": \"/offerings/12345\",\n      \"assetType\": \"Real Estate\"\n    },\n    {\n      \"id\": 12345,\n      \"type\": \"Equity\",\n      \"name\": \"Arch Offering\",\n      \"selfUrl\": \"/offerings/12345\",\n      \"assetType\": \"Real Estate\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dda18dc3-dd5e-48d4-802a-405351f6036b",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "offerings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "719811f8-c794-4cd2-903e-062bad855d47",
+          "name": "Get an offering by id",
+          "request": {
+            "name": "Get an offering by id",
+            "description": {
+              "content": "Return an offering with a specific id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "offerings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "The id of the offering to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "042dbd5e-0799-41ef-bb25-5edd23ef9ec7",
+              "name": "The requested offering.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "offerings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "The id of the offering to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12345,\n  \"type\": \"Equity\",\n  \"name\": \"Arch Offering\",\n  \"selfUrl\": \"/offerings/12345\",\n  \"assetType\": \"Real Estate\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcf69305-e0f7-4018-ba81-5e3e43029461",
+              "name": "Offering not found or not accessible.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "offerings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "The id of the offering to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0611c19c-b641-4934-8ccb-ad0a55001f72",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "offerings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "The id of the offering to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b4598b83-a77a-404b-9bd9-bd97e1bd5da3",
+    "name": "Arch Client Accounts Offerings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

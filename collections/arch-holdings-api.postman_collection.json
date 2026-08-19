@@ -1,0 +1,3160 @@
+{
+  "item": [
+    {
+      "id": "ef500de4-92fb-4a4d-b81c-081b2d3e82d7",
+      "name": "Holdings",
+      "description": {
+        "content": "Read holding data and push new investments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f397fb2-7027-4c5c-816a-e868eadcc123",
+          "name": "Get a paginated list of holdings",
+          "request": {
+            "name": "Get a paginated list of holdings",
+            "description": {
+              "content": "Return a paginated list of holdings",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of holdings to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of holdings to skip before collecting results"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeMetrics",
+                  "value": "<boolean>",
+                  "description": "Include financial metrics (IRR, TVPI, and DPI) in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeOwnership",
+                  "value": "<boolean>",
+                  "description": "Include ownership info. Will cause an error if holding is not set up for lookthrough extraction. Provides the ownership percentage of the fund, and the issuing entity to query to access the underlying portfolio companies."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTransferInfo",
+                  "value": "<boolean>",
+                  "description": "Include transfer relationships (transferInfo) for each holding in the response. When omitted or false, the transferInfo field is not returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeBlackDiamondInfo",
+                  "value": "<boolean>",
+                  "description": "Include Black Diamond info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeCustomFields",
+                  "value": "<boolean>",
+                  "description": "Set this to true to receive custom fields associated with the holding."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAddeparInfo",
+                  "value": "<boolean>",
+                  "description": "Include Addepar info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeArchwayInfo",
+                  "value": "<boolean>",
+                  "description": "Include Archway info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeBurgissInfo",
+                  "value": "<boolean>",
+                  "description": "Include Burgiss info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTamaracInfo",
+                  "value": "<boolean>",
+                  "description": "Include Tamarac info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeOrionInfo",
+                  "value": "<boolean>",
+                  "description": "Include Orion info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "investingEntityIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include holdings relevant to one of the investing entity ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "issuingEntityIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include holdings relevant to one of the issuing entity ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "accountIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter the output for holding names that include the search term."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeEndDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for holdings with an end date before the queried date."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterEndDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for holdings with an end date after the queried date."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeStartDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for holdings with a start date before the queried date."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterStartDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for holdings with a start date after the queried date."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTax",
+                  "value": "Exclude",
+                  "description": "Controls whether tax placeholder holdings are included in the results. Use \"Only\" to return only tax placeholder holdings, \"Include\" to include them along with regular holdings, or \"Exclude\" to exclude them entirely. Defaults to Exclude."
+                },
+                {
+                  "disabled": false,
+                  "key": "valueAsOfDate",
+                  "value": "<dateTime>",
+                  "description": "Return financial values as of this date (YYYY-MM-DD). When omitted, the latest values are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "valueCalculationMethod",
+                  "value": "includeCashFlows",
+                  "description": "Controls how financial values are calculated. \"statementsOnly\" pulls the value directly from the latest statement before the \"as of\" date; \"includeCashFlows\" (the default) uses that account statement, plus/minus and subsequent cash flows up to the \"as of\" date."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ddd11b9d-790c-4e7d-bacd-4d9bcf6d92d0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "includeMetrics",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOwnership",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTransferInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBlackDiamondInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeCustomFields",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeArchwayInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBurgissInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTamaracInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOrionInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "beforeEndDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterEndDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeStartDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterStartDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "includeTax",
+                      "value": "Exclude"
+                    },
+                    {
+                      "key": "valueAsOfDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "valueCalculationMethod",
+                      "value": "includeCashFlows"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"page\",\n  \"id\": 56,\n  \"selfUrl\": \"/investing-entities/56/holdings?limit=25&offset=25\",\n  \"parentUrl\": \"/investing-entities/56\",\n  \"prev\": \"/investing-entities/56/holdings?limit=25&offset=0\",\n  \"next\": \"/investing-entities/56/holdings?limit=25&offset=50\",\n  \"contents\": [\n    {\n      \"kind\": \"holding\",\n      \"id\": 50051,\n      \"selfUrl\": \"/holdings/50051\",\n      \"name\": \"Arch Example Holding\",\n      \"isTaxPlaceholder\": false,\n      \"investingEntityRef\": {\n        \"kind\": \"investing-entity-ref\",\n        \"id\": 56,\n        \"url\": \"/investing-entities/56\",\n        \"name\": \"Arch Example Issuer\"\n      },\n      \"investingEntityName\": \"Arch Example Investor\",\n      \"investingEntityUrl\": \"/investingEntities/56\",\n      \"issuingEntityRef\": {\n        \"kind\": \"issuing-entity-ref\",\n        \"id\": 420,\n        \"url\": \"/issuing-entities/420\",\n        \"name\": \"Arch Example Issuer\"\n      },\n      \"issuingEntityName\": \"Arch Example Issuer\",\n      \"issuingEntityUrl\": \"/issuingEntities/420\",\n      \"offeringRef\": {\n        \"kind\": \"offering-ref\",\n        \"id\": 112,\n        \"url\": \"/offerings/112\",\n        \"name\": \"Offering 112\"\n      },\n      \"offeringUrl\": \"/offerings/112\",\n      \"accountName\": \"Arch Example Account\",\n      \"accountRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/accounts/56\",\n        \"name\": \"Account 56\"\n      },\n      \"archEmail\": \"exampleinvestor-exampleissuer@archdocuments.com\",\n      \"startDate\": \"2023-01-19T00:00:00.000Z\",\n      \"endDate\": \"2023-01-19T00:00:00.000Z\",\n      \"firmName\": \"Firm Name 1\",\n      \"firmRef\": {\n        \"kind\": \"firm-ref\",\n        \"id\": 42,\n        \"url\": \"/firms/42\",\n        \"name\": \"Firm Name 1\"\n      },\n      \"financials\": {\n        \"capitalAccount\": {\n          \"quantity\": 2000,\n          \"currencyCode\": \"USD\",\n          \"dollars\": 2000\n        },\n        \"valueAsOfTime\": \"2024-02-26H00:00:00.000Z\"\n      },\n      \"latestStatementRef\": {\n        \"id\": 12345,\n        \"url\": \"/activities/12345\",\n        \"activityType\": \"Account Statement Received\",\n        \"statementDate\": \"2025-06-30T00:00:00.000Z\",\n        \"activitiesSinceStatementUrl\": \"/activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4da7687-7b06-4b65-8235-4978ca9f90e9",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "includeMetrics",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOwnership",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTransferInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBlackDiamondInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeCustomFields",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeArchwayInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBurgissInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTamaracInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOrionInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "beforeEndDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterEndDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeStartDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterStartDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "includeTax",
+                      "value": "Exclude"
+                    },
+                    {
+                      "key": "valueAsOfDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "valueCalculationMethod",
+                      "value": "includeCashFlows"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4173d6e3-8a26-4e6a-a2ad-2f4a82c986ab",
+          "name": "Add a new holding to Arch",
+          "request": {
+            "name": "Add a new holding to Arch",
+            "description": {
+              "content": "Creates a new holding and returns the URL, if successful. Financial values are assumed to be in dollars",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"investingEntityId\": \"<number>\",\n  \"offeringId\": \"<number>\",\n  \"name\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"financials\": {\n    \"valueAsOfDate\": \"<date>\",\n    \"capitalAccount\": {\n      \"quantity\": \"<number>\"\n    },\n    \"initialCommitment\": {\n      \"quantity\": \"<number>\"\n    },\n    \"totalContribution\": {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": \"<number>\"\n    },\n    \"totalDistributions\": {\n      \"quantity\": \"<number>\"\n    },\n    \"recallableDistributions\": {\n      \"quantity\": \"<number>\"\n    }\n  },\n  \"customFields\": {\n    \"key_0\": {\n      \"value\": \"<string>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d36507c5-5c9c-4cc4-9d77-eb1cc24b0a6c",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investingEntityId\": \"<number>\",\n  \"offeringId\": \"<number>\",\n  \"name\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"financials\": {\n    \"valueAsOfDate\": \"<date>\",\n    \"capitalAccount\": {\n      \"quantity\": 100000\n    },\n    \"initialCommitment\": {\n      \"quantity\": 100000\n    },\n    \"totalContribution\": {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": 100000\n    },\n    \"totalDistributions\": {\n      \"quantity\": 100000\n    },\n    \"recallableDistributions\": {\n      \"quantity\": 100000\n    }\n  },\n  \"customFields\": {\n    \"key_0\": {\n      \"value\": \"<string>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\"\n    },\n    \"key_2\": {\n      \"value\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL of the new holding",
+                  "key": "Location",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e19377d7-43d6-4abe-8542-f4bd84b3d916",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investingEntityId\": \"<number>\",\n  \"offeringId\": \"<number>\",\n  \"name\": \"<string>\",\n  \"startDate\": \"<date>\",\n  \"endDate\": \"<date>\",\n  \"financials\": {\n    \"valueAsOfDate\": \"<date>\",\n    \"capitalAccount\": {\n      \"quantity\": 100000\n    },\n    \"initialCommitment\": {\n      \"quantity\": 100000\n    },\n    \"totalContribution\": {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": 100000\n    },\n    \"totalDistributions\": {\n      \"quantity\": 100000\n    },\n    \"recallableDistributions\": {\n      \"quantity\": 100000\n    }\n  },\n  \"customFields\": {\n    \"key_0\": {\n      \"value\": \"<string>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\"\n    },\n    \"key_2\": {\n      \"value\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6756419e-1b4f-4cc3-9d08-7e528d3e9b92",
+          "name": "Get data for a specific holding",
+          "request": {
+            "name": "Get data for a specific holding",
+            "description": {
+              "content": "Returns the data for a specific holding, if the user has access through the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeOwnership",
+                  "value": "<boolean>",
+                  "description": "Include ownership info. Will cause an error if holding is not set up for lookthrough extraction. Provides the ownership percentage of the fund, and the issuing entity to query to access the underlying portfolio companies."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTransferInfo",
+                  "value": "<boolean>",
+                  "description": "Include transfer relationships (transferInfo) for each holding in the response. When omitted or false, the transferInfo field is not returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeMetrics",
+                  "value": "<boolean>",
+                  "description": "Include financial metrics in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeBlackDiamondInfo",
+                  "value": "<boolean>",
+                  "description": "Include Black Diamond info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeCustomFields",
+                  "value": "<boolean>",
+                  "description": "Set this to true to receive custom fields associated with the holding."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAddeparInfo",
+                  "value": "<boolean>",
+                  "description": "Include Addepar info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeArchwayInfo",
+                  "value": "<boolean>",
+                  "description": "Include Archway info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeBurgissInfo",
+                  "value": "<boolean>",
+                  "description": "Include Burgiss info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTamaracInfo",
+                  "value": "<boolean>",
+                  "description": "Include Tamarac info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeOrionInfo",
+                  "value": "<boolean>",
+                  "description": "Include Orion info in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTax",
+                  "value": "Exclude",
+                  "description": "Controls whether tax placeholder holdings are included in the results. Use \"Only\" to return only tax placeholder holdings, \"Include\" to include them along with regular holdings, or \"Exclude\" to exclude them entirely. Defaults to Exclude."
+                },
+                {
+                  "disabled": false,
+                  "key": "valueAsOfDate",
+                  "value": "<dateTime>",
+                  "description": "Return historical financial values as of this date (YYYY-MM-DD). When omitted, latest values are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "valueCalculationMethod",
+                  "value": "includeCashFlows",
+                  "description": "Controls how financial values are calculated. \"includeCashFlows\" uses account statements and cash flows; \"statementsOnly\" pulls the value directly from the latest statement before the \"as of\" date. Defaults to \"includeCashFlows\"."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific holding to query"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7275765a-d37f-47d1-8a63-41eaaf1b83f2",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeOwnership",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTransferInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMetrics",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBlackDiamondInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeCustomFields",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeArchwayInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBurgissInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTamaracInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOrionInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTax",
+                      "value": "Exclude"
+                    },
+                    {
+                      "key": "valueAsOfDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "valueCalculationMethod",
+                      "value": "includeCashFlows"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific holding to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"holding\",\n  \"id\": 50051,\n  \"selfUrl\": \"/holdings/50051\",\n  \"name\": \"Arch Example Holding\",\n  \"isTaxPlaceholder\": false,\n  \"investingEntityRef\": {\n    \"kind\": \"investing-entity-ref\",\n    \"id\": 56,\n    \"url\": \"/investing-entities/56\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"investingEntityName\": \"Arch Example Investor\",\n  \"investingEntityUrl\": \"/investingEntities/56\",\n  \"issuingEntityRef\": {\n    \"kind\": \"issuing-entity-ref\",\n    \"id\": 420,\n    \"url\": \"/issuing-entities/420\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"issuingEntityName\": \"Arch Example Issuer\",\n  \"issuingEntityUrl\": \"/issuingEntities/420\",\n  \"offeringRef\": {\n    \"kind\": \"offering-ref\",\n    \"id\": 112,\n    \"url\": \"/offerings/112\",\n    \"name\": \"Offering 112\"\n  },\n  \"offeringUrl\": \"/offerings/112\",\n  \"accountName\": \"Arch Example Account\",\n  \"accountRef\": {\n    \"kind\": \"account-ref\",\n    \"id\": 56,\n    \"url\": \"/accounts/56\",\n    \"name\": \"Account 56\"\n  },\n  \"accountUrl\": \"/accounts/56\",\n  \"archEmail\": \"exampleinvestor-exampleissuer@archdocuments.com\",\n  \"startDate\": \"2023-01-19T00:00:00.000Z\",\n  \"endDate\": \"2023-01-19T00:00:00.000Z\",\n  \"firmName\": \"Firm Name 1\",\n  \"firmRef\": {\n    \"kind\": \"firm-ref\",\n    \"id\": 42,\n    \"url\": \"/firms/42\",\n    \"name\": \"Firm Name 1\"\n  },\n  \"financials\": {\n    \"capitalAccount\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"valueAsOfTime\": \"2024-02-26H00:00:00.000Z\",\n    \"initialCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalContribution\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"recallableDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    }\n  },\n  \"latestStatementRef\": {\n    \"id\": 12345,\n    \"url\": \"/activities/12345\",\n    \"activityType\": \"Account Statement Received\",\n    \"statementDate\": \"2025-06-30T00:00:00.000Z\",\n    \"activitiesSinceStatementUrl\": \"/activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c9bb4eb-340a-4f65-a477-3f39bb1e3c1c",
+              "name": "Holding id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeOwnership",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTransferInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMetrics",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBlackDiamondInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeCustomFields",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeArchwayInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBurgissInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTamaracInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOrionInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTax",
+                      "value": "Exclude"
+                    },
+                    {
+                      "key": "valueAsOfDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "valueCalculationMethod",
+                      "value": "includeCashFlows"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific holding to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e7152725-6a09-4e30-8c9d-2ed639bbada7",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeOwnership",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTransferInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMetrics",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBlackDiamondInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeCustomFields",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeArchwayInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeBurgissInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTamaracInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeOrionInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeTax",
+                      "value": "Exclude"
+                    },
+                    {
+                      "key": "valueAsOfDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "valueCalculationMethod",
+                      "value": "includeCashFlows"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific holding to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b24ed9de-30ee-4737-be60-b5a0d6a79ac9",
+          "name": "Add a new funds or real estate holding to Arch",
+          "request": {
+            "name": "Add a new funds or real estate holding to Arch",
+            "description": {
+              "content": "Creates a new funds or real estate holding (direct ownership) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided. Note: offeringInfo should be null for Real Estate - Direct Ownership.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                "fund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"<string>\",\n    \"investingEntityId\": \"<integer>\",\n    \"entityInput\": {\n      \"inputMethod\": \"<string>\",\n      \"firmName\": \"<string>\",\n      \"issuingEntityName\": \"<string>\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"<string>\",\n      \"enableLookthrough\": false\n    },\n    \"notes\": \"<string>\",\n    \"financials\": {\n      \"valueAsOfDate\": \"<date>\",\n      \"capitalAccount\": {\n        \"quantity\": \"<number>\"\n      },\n      \"initialCommitment\": {\n        \"quantity\": \"<number>\"\n      },\n      \"totalContribution\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"outstandingCommitment\": {\n        \"quantity\": \"<number>\"\n      },\n      \"totalDistributions\": {\n        \"quantity\": \"<number>\"\n      },\n      \"recallableDistributions\": {\n        \"quantity\": \"<number>\"\n      }\n    },\n    \"customFields\": {\n      \"key_0\": {\n        \"value\": \"<string>\"\n      }\n    },\n    \"addeparInfo\": {\n      \"accountId\": \"<integer>\",\n      \"ownerEntityId\": \"<integer>\",\n      \"ownedEntityId\": \"<integer>\"\n    },\n    \"contactInfo\": {\n      \"email\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\"\n    },\n    \"transferInfo\": {\n      \"transferorHoldingId\": \"<integer>\",\n      \"transferDate\": \"<date>\",\n      \"transferType\": \"full\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"<string>\",\n      \"taxDocumentStartYear\": \"<integer>\"\n    },\n    \"feeInfo\": {\n      \"managementFee\": \"<number>\",\n      \"carryFee\": \"<number>\",\n      \"returnExpectation\": \"<number>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33f140dd-dc04-41c6-9399-f544b838b322",
+              "name": "Holding created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "fund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Fund (Partnership Equity)\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"byName\",\n      \"firmName\": \"Sequoia Capital\",\n      \"issuingEntityName\": \"Sequoia Fund XIV\"\n    },\n    \"investmentSettings\": {\n      \"enableLookthrough\": true,\n      \"linkingMethod\": \"LOA\"\n    },\n    \"notes\": \"Committed in Q1 2024\",\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-01-15\",\n      \"initialCommitment\": {\n        \"quantity\": 5000000\n      }\n    },\n    \"contactInfo\": {\n      \"firstName\": \"John\",\n      \"lastName\": \"Smith\",\n      \"email\": \"john.smith@sequoia.com\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"K-1\",\n      \"taxDocumentStartYear\": 2024\n    },\n    \"feeInfo\": {\n      \"managementFee\": 2,\n      \"carryFee\": 20,\n      \"returnExpectation\": 25\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"holding\",\n  \"id\": 50051,\n  \"selfUrl\": \"/holdings/50051\",\n  \"name\": \"Arch Example Holding\",\n  \"isTaxPlaceholder\": false,\n  \"investingEntityRef\": {\n    \"kind\": \"investing-entity-ref\",\n    \"id\": 56,\n    \"url\": \"/investing-entities/56\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"investingEntityName\": \"Arch Example Investor\",\n  \"investingEntityUrl\": \"/investingEntities/56\",\n  \"issuingEntityRef\": {\n    \"kind\": \"issuing-entity-ref\",\n    \"id\": 420,\n    \"url\": \"/issuing-entities/420\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"issuingEntityName\": \"Arch Example Issuer\",\n  \"issuingEntityUrl\": \"/issuingEntities/420\",\n  \"offeringRef\": {\n    \"kind\": \"offering-ref\",\n    \"id\": 112,\n    \"url\": \"/offerings/112\",\n    \"name\": \"Offering 112\"\n  },\n  \"offeringUrl\": \"/offerings/112\",\n  \"accountName\": \"Arch Example Account\",\n  \"accountRef\": {\n    \"kind\": \"account-ref\",\n    \"id\": 56,\n    \"url\": \"/accounts/56\",\n    \"name\": \"Account 56\"\n  },\n  \"accountUrl\": \"/accounts/56\",\n  \"archEmail\": \"exampleinvestor-exampleissuer@archdocuments.com\",\n  \"startDate\": \"2023-01-19T00:00:00.000Z\",\n  \"endDate\": \"2023-01-19T00:00:00.000Z\",\n  \"firmName\": \"Firm Name 1\",\n  \"firmRef\": {\n    \"kind\": \"firm-ref\",\n    \"id\": 42,\n    \"url\": \"/firms/42\",\n    \"name\": \"Firm Name 1\"\n  },\n  \"financials\": {\n    \"capitalAccount\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"valueAsOfTime\": \"2024-02-26H00:00:00.000Z\",\n    \"initialCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalContribution\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"recallableDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    }\n  },\n  \"latestStatementRef\": {\n    \"id\": 12345,\n    \"url\": \"/activities/12345\",\n    \"activityType\": \"Account Statement Received\",\n    \"statementDate\": \"2025-06-30T00:00:00.000Z\",\n    \"activitiesSinceStatementUrl\": \"/activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2aeb10ed-5db0-42e0-8454-5c20f7c0a1a1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "fund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Fund (Partnership Equity)\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"byName\",\n      \"firmName\": \"Sequoia Capital\",\n      \"issuingEntityName\": \"Sequoia Fund XIV\"\n    },\n    \"investmentSettings\": {\n      \"enableLookthrough\": true,\n      \"linkingMethod\": \"LOA\"\n    },\n    \"notes\": \"Committed in Q1 2024\",\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-01-15\",\n      \"initialCommitment\": {\n        \"quantity\": 5000000\n      }\n    },\n    \"contactInfo\": {\n      \"firstName\": \"John\",\n      \"lastName\": \"Smith\",\n      \"email\": \"john.smith@sequoia.com\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"K-1\",\n      \"taxDocumentStartYear\": 2024\n    },\n    \"feeInfo\": {\n      \"managementFee\": 2,\n      \"carryFee\": 20,\n      \"returnExpectation\": 25\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing required field: email\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a7356bb-bc4a-4eab-aefe-db13097b5f22",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "fund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Fund (Partnership Equity)\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"byName\",\n      \"firmName\": \"Sequoia Capital\",\n      \"issuingEntityName\": \"Sequoia Fund XIV\"\n    },\n    \"investmentSettings\": {\n      \"enableLookthrough\": true,\n      \"linkingMethod\": \"LOA\"\n    },\n    \"notes\": \"Committed in Q1 2024\",\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-01-15\",\n      \"initialCommitment\": {\n        \"quantity\": 5000000\n      }\n    },\n    \"contactInfo\": {\n      \"firstName\": \"John\",\n      \"lastName\": \"Smith\",\n      \"email\": \"john.smith@sequoia.com\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"K-1\",\n      \"taxDocumentStartYear\": 2024\n    },\n    \"feeInfo\": {\n      \"managementFee\": 2,\n      \"carryFee\": 20,\n      \"returnExpectation\": 25\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd19c022-a7b4-476c-b5d5-d30f1355d107",
+          "name": "Add a new company holding to Arch",
+          "request": {
+            "name": "Add a new company holding to Arch",
+            "description": {
+              "content": "Creates a new company holding (direct equity, SAFE, convertible note, etc.) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided. Note: sharesInfo should be null for all except Company - Direct Equity. Note: offeringInfo should be null for all except Company - Direct Equity and Company - SAFE.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                "company"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"<string>\",\n    \"investingEntityId\": \"<integer>\",\n    \"entityInput\": {\n      \"inputMethod\": \"<string>\",\n      \"firmName\": \"<string>\",\n      \"issuingEntityName\": \"<string>\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"<string>\",\n      \"enableLookthrough\": false\n    },\n    \"notes\": \"<string>\",\n    \"financials\": {\n      \"valueAsOfDate\": \"<date>\",\n      \"capitalAccount\": {\n        \"quantity\": \"<number>\"\n      },\n      \"initialCommitment\": {\n        \"quantity\": \"<number>\"\n      },\n      \"totalContribution\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"outstandingCommitment\": {\n        \"quantity\": \"<number>\"\n      },\n      \"totalDistributions\": {\n        \"quantity\": \"<number>\"\n      },\n      \"recallableDistributions\": {\n        \"quantity\": \"<number>\"\n      }\n    },\n    \"customFields\": {\n      \"key_0\": {\n        \"value\": \"<string>\"\n      }\n    },\n    \"addeparInfo\": {\n      \"accountId\": \"<integer>\",\n      \"ownerEntityId\": \"<integer>\",\n      \"ownedEntityId\": \"<integer>\"\n    },\n    \"contactInfo\": {\n      \"email\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\"\n    },\n    \"transferInfo\": {\n      \"transferorHoldingId\": \"<integer>\",\n      \"transferDate\": \"<date>\",\n      \"transferType\": \"full\"\n    }\n  },\n  \"companyInfo\": {\n    \"equityRound\": \"<string>\",\n    \"sharesInfo\": {\n      \"shareType\": \"<string>\",\n      \"shareAmount\": \"<number>\"\n    },\n    \"taxTreatment\": {\n      \"qsbsTreatment\": \"<string>\",\n      \"qsbsStartDate\": \"<date>\",\n      \"qsbsNotes\": \"<string>\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"<string>\",\n      \"taxDocumentStartYear\": \"<integer>\"\n    },\n    \"marketInfo\": {\n      \"currentPrice\": \"<number>\",\n      \"conversionDiscount\": \"<number>\",\n      \"interestRate\": \"<number>\",\n      \"valuationCap\": \"<number>\",\n      \"preferredReturn\": \"<number>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07b958f0-cecf-4523-affb-8406bc93c4e1",
+              "name": "Holding created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "company"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Fund (Partnership Equity)\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"<string>\",\n      \"firmName\": \"Sequoia Capital\",\n      \"issuingEntityName\": \"Example Fund LP\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"LOA\",\n      \"enableLookthrough\": false\n    },\n    \"notes\": \"Invested in Series B round\",\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-03-15\",\n      \"capitalAccount\": {\n        \"quantity\": 100000\n      },\n      \"initialCommitment\": {\n        \"quantity\": 100000\n      },\n      \"totalContribution\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"outstandingCommitment\": {\n        \"quantity\": 100000\n      },\n      \"totalDistributions\": {\n        \"quantity\": 100000\n      },\n      \"recallableDistributions\": {\n        \"quantity\": 100000\n      }\n    },\n    \"customFields\": {\n      \"key_0\": {\n        \"value\": \"<string>\"\n      },\n      \"key_1\": {\n        \"value\": \"<string>\"\n      }\n    },\n    \"addeparInfo\": {\n      \"accountId\": 123456,\n      \"ownerEntityId\": 789012,\n      \"ownedEntityId\": 345678\n    },\n    \"contactInfo\": {\n      \"email\": \"john.smith@example.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Smith\"\n    },\n    \"transferInfo\": {\n      \"transferorHoldingId\": 50050,\n      \"transferDate\": \"2024-06-30\",\n      \"transferType\": \"full\"\n    }\n  },\n  \"companyInfo\": {\n    \"equityRound\": \"Series B\",\n    \"sharesInfo\": {\n      \"shareType\": \"Class A (Common)\",\n      \"shareAmount\": 10000\n    },\n    \"taxTreatment\": {\n      \"qsbsTreatment\": \"Unknown\",\n      \"qsbsStartDate\": \"2024-01-15\",\n      \"qsbsNotes\": \"Verified with legal counsel\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"K-1\",\n      \"taxDocumentStartYear\": 2024\n    },\n    \"marketInfo\": {\n      \"currentPrice\": 10.5,\n      \"conversionDiscount\": 20,\n      \"interestRate\": 5,\n      \"valuationCap\": 10000000,\n      \"preferredReturn\": 8\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"holding\",\n  \"id\": 50051,\n  \"selfUrl\": \"/holdings/50051\",\n  \"name\": \"Arch Example Holding\",\n  \"isTaxPlaceholder\": false,\n  \"investingEntityRef\": {\n    \"kind\": \"investing-entity-ref\",\n    \"id\": 56,\n    \"url\": \"/investing-entities/56\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"investingEntityName\": \"Arch Example Investor\",\n  \"investingEntityUrl\": \"/investingEntities/56\",\n  \"issuingEntityRef\": {\n    \"kind\": \"issuing-entity-ref\",\n    \"id\": 420,\n    \"url\": \"/issuing-entities/420\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"issuingEntityName\": \"Arch Example Issuer\",\n  \"issuingEntityUrl\": \"/issuingEntities/420\",\n  \"offeringRef\": {\n    \"kind\": \"offering-ref\",\n    \"id\": 112,\n    \"url\": \"/offerings/112\",\n    \"name\": \"Offering 112\"\n  },\n  \"offeringUrl\": \"/offerings/112\",\n  \"accountName\": \"Arch Example Account\",\n  \"accountRef\": {\n    \"kind\": \"account-ref\",\n    \"id\": 56,\n    \"url\": \"/accounts/56\",\n    \"name\": \"Account 56\"\n  },\n  \"accountUrl\": \"/accounts/56\",\n  \"archEmail\": \"exampleinvestor-exampleissuer@archdocuments.com\",\n  \"startDate\": \"2023-01-19T00:00:00.000Z\",\n  \"endDate\": \"2023-01-19T00:00:00.000Z\",\n  \"firmName\": \"Firm Name 1\",\n  \"firmRef\": {\n    \"kind\": \"firm-ref\",\n    \"id\": 42,\n    \"url\": \"/firms/42\",\n    \"name\": \"Firm Name 1\"\n  },\n  \"financials\": {\n    \"capitalAccount\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"valueAsOfTime\": \"2024-02-26H00:00:00.000Z\",\n    \"initialCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalContribution\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"recallableDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    }\n  },\n  \"latestStatementRef\": {\n    \"id\": 12345,\n    \"url\": \"/activities/12345\",\n    \"activityType\": \"Account Statement Received\",\n    \"statementDate\": \"2025-06-30T00:00:00.000Z\",\n    \"activitiesSinceStatementUrl\": \"/activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fbf6425-9ffc-459d-bf91-8d2c60650f0b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "company"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Fund (Partnership Equity)\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"<string>\",\n      \"firmName\": \"Sequoia Capital\",\n      \"issuingEntityName\": \"Example Fund LP\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"LOA\",\n      \"enableLookthrough\": false\n    },\n    \"notes\": \"Invested in Series B round\",\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-03-15\",\n      \"capitalAccount\": {\n        \"quantity\": 100000\n      },\n      \"initialCommitment\": {\n        \"quantity\": 100000\n      },\n      \"totalContribution\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"outstandingCommitment\": {\n        \"quantity\": 100000\n      },\n      \"totalDistributions\": {\n        \"quantity\": 100000\n      },\n      \"recallableDistributions\": {\n        \"quantity\": 100000\n      }\n    },\n    \"customFields\": {\n      \"key_0\": {\n        \"value\": \"<string>\"\n      },\n      \"key_1\": {\n        \"value\": \"<string>\"\n      }\n    },\n    \"addeparInfo\": {\n      \"accountId\": 123456,\n      \"ownerEntityId\": 789012,\n      \"ownedEntityId\": 345678\n    },\n    \"contactInfo\": {\n      \"email\": \"john.smith@example.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Smith\"\n    },\n    \"transferInfo\": {\n      \"transferorHoldingId\": 50050,\n      \"transferDate\": \"2024-06-30\",\n      \"transferType\": \"full\"\n    }\n  },\n  \"companyInfo\": {\n    \"equityRound\": \"Series B\",\n    \"sharesInfo\": {\n      \"shareType\": \"Class A (Common)\",\n      \"shareAmount\": 10000\n    },\n    \"taxTreatment\": {\n      \"qsbsTreatment\": \"Unknown\",\n      \"qsbsStartDate\": \"2024-01-15\",\n      \"qsbsNotes\": \"Verified with legal counsel\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"K-1\",\n      \"taxDocumentStartYear\": 2024\n    },\n    \"marketInfo\": {\n      \"currentPrice\": 10.5,\n      \"conversionDiscount\": 20,\n      \"interestRate\": 5,\n      \"valuationCap\": 10000000,\n      \"preferredReturn\": 8\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing required field: email\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13c0c4dd-e286-4b35-81f1-71ae6c3c0952",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "company"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Fund (Partnership Equity)\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"<string>\",\n      \"firmName\": \"Sequoia Capital\",\n      \"issuingEntityName\": \"Example Fund LP\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"LOA\",\n      \"enableLookthrough\": false\n    },\n    \"notes\": \"Invested in Series B round\",\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-03-15\",\n      \"capitalAccount\": {\n        \"quantity\": 100000\n      },\n      \"initialCommitment\": {\n        \"quantity\": 100000\n      },\n      \"totalContribution\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"outstandingCommitment\": {\n        \"quantity\": 100000\n      },\n      \"totalDistributions\": {\n        \"quantity\": 100000\n      },\n      \"recallableDistributions\": {\n        \"quantity\": 100000\n      }\n    },\n    \"customFields\": {\n      \"key_0\": {\n        \"value\": \"<string>\"\n      },\n      \"key_1\": {\n        \"value\": \"<string>\"\n      }\n    },\n    \"addeparInfo\": {\n      \"accountId\": 123456,\n      \"ownerEntityId\": 789012,\n      \"ownedEntityId\": 345678\n    },\n    \"contactInfo\": {\n      \"email\": \"john.smith@example.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Smith\"\n    },\n    \"transferInfo\": {\n      \"transferorHoldingId\": 50050,\n      \"transferDate\": \"2024-06-30\",\n      \"transferType\": \"full\"\n    }\n  },\n  \"companyInfo\": {\n    \"equityRound\": \"Series B\",\n    \"sharesInfo\": {\n      \"shareType\": \"Class A (Common)\",\n      \"shareAmount\": 10000\n    },\n    \"taxTreatment\": {\n      \"qsbsTreatment\": \"Unknown\",\n      \"qsbsStartDate\": \"2024-01-15\",\n      \"qsbsNotes\": \"Verified with legal counsel\"\n    }\n  },\n  \"offeringInfo\": {\n    \"taxDocumentInfo\": {\n      \"taxDocumentType\": \"K-1\",\n      \"taxDocumentStartYear\": 2024\n    },\n    \"marketInfo\": {\n      \"currentPrice\": 10.5,\n      \"conversionDiscount\": 20,\n      \"interestRate\": 5,\n      \"valuationCap\": 10000000,\n      \"preferredReturn\": 8\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61b0a5d5-486e-4c00-a9ff-07b97dc7f580",
+          "name": "Add a new account holding to Arch",
+          "request": {
+            "name": "Add a new account holding to Arch",
+            "description": {
+              "content": "Creates a new account holding (bank account, brokerage account, etc.) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"<string>\",\n    \"investingEntityId\": \"<integer>\",\n    \"entityInput\": {\n      \"inputMethod\": \"<string>\",\n      \"firmName\": \"<string>\",\n      \"issuingEntityName\": \"<string>\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"<string>\",\n      \"enableLookthrough\": false\n    },\n    \"notes\": \"<string>\",\n    \"financials\": {\n      \"valueAsOfDate\": \"<date>\",\n      \"capitalAccount\": {\n        \"quantity\": \"<number>\"\n      },\n      \"initialCommitment\": {\n        \"quantity\": \"<number>\"\n      },\n      \"totalContribution\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"outstandingCommitment\": {\n        \"quantity\": \"<number>\"\n      },\n      \"totalDistributions\": {\n        \"quantity\": \"<number>\"\n      },\n      \"recallableDistributions\": {\n        \"quantity\": \"<number>\"\n      }\n    },\n    \"customFields\": {\n      \"key_0\": {\n        \"value\": \"<string>\"\n      }\n    },\n    \"addeparInfo\": {\n      \"accountId\": \"<integer>\",\n      \"ownerEntityId\": \"<integer>\",\n      \"ownedEntityId\": \"<integer>\"\n    },\n    \"contactInfo\": {\n      \"email\": \"<email>\",\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\"\n    },\n    \"transferInfo\": {\n      \"transferorHoldingId\": \"<integer>\",\n      \"transferDate\": \"<date>\",\n      \"transferType\": \"full\"\n    }\n  },\n  \"accountInfo\": {\n    \"accountNumber\": \"<string>\",\n    \"accountAlias\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d11ec37e-6c74-40dd-8824-b338775d4bf9",
+              "name": "Holding created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Bank Account\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"byName\",\n      \"firmName\": \"Chase Bank\",\n      \"issuingEntityName\": \"JPMorgan Chase Bank\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"LOA\"\n    },\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-03-15\",\n      \"capitalAccount\": {\n        \"quantity\": 50000\n      }\n    },\n    \"contactInfo\": {\n      \"email\": \"account.manager@chase.com\"\n    }\n  },\n  \"accountInfo\": {\n    \"accountNumber\": \"12345678\",\n    \"accountAlias\": \"Operating Account\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"holding\",\n  \"id\": 50051,\n  \"selfUrl\": \"/holdings/50051\",\n  \"name\": \"Arch Example Holding\",\n  \"isTaxPlaceholder\": false,\n  \"investingEntityRef\": {\n    \"kind\": \"investing-entity-ref\",\n    \"id\": 56,\n    \"url\": \"/investing-entities/56\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"investingEntityName\": \"Arch Example Investor\",\n  \"investingEntityUrl\": \"/investingEntities/56\",\n  \"issuingEntityRef\": {\n    \"kind\": \"issuing-entity-ref\",\n    \"id\": 420,\n    \"url\": \"/issuing-entities/420\",\n    \"name\": \"Arch Example Issuer\"\n  },\n  \"issuingEntityName\": \"Arch Example Issuer\",\n  \"issuingEntityUrl\": \"/issuingEntities/420\",\n  \"offeringRef\": {\n    \"kind\": \"offering-ref\",\n    \"id\": 112,\n    \"url\": \"/offerings/112\",\n    \"name\": \"Offering 112\"\n  },\n  \"offeringUrl\": \"/offerings/112\",\n  \"accountName\": \"Arch Example Account\",\n  \"accountRef\": {\n    \"kind\": \"account-ref\",\n    \"id\": 56,\n    \"url\": \"/accounts/56\",\n    \"name\": \"Account 56\"\n  },\n  \"accountUrl\": \"/accounts/56\",\n  \"archEmail\": \"exampleinvestor-exampleissuer@archdocuments.com\",\n  \"startDate\": \"2023-01-19T00:00:00.000Z\",\n  \"endDate\": \"2023-01-19T00:00:00.000Z\",\n  \"firmName\": \"Firm Name 1\",\n  \"firmRef\": {\n    \"kind\": \"firm-ref\",\n    \"id\": 42,\n    \"url\": \"/firms/42\",\n    \"name\": \"Firm Name 1\"\n  },\n  \"financials\": {\n    \"capitalAccount\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"valueAsOfTime\": \"2024-02-26H00:00:00.000Z\",\n    \"initialCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalContribution\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"outstandingCommitment\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"totalDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    },\n    \"recallableDistributions\": {\n      \"quantity\": 2000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 2000\n    }\n  },\n  \"latestStatementRef\": {\n    \"id\": 12345,\n    \"url\": \"/activities/12345\",\n    \"activityType\": \"Account Statement Received\",\n    \"statementDate\": \"2025-06-30T00:00:00.000Z\",\n    \"activitiesSinceStatementUrl\": \"/activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "310d5f49-ebdf-46fc-9d0e-80e209b8e7fa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Bank Account\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"byName\",\n      \"firmName\": \"Chase Bank\",\n      \"issuingEntityName\": \"JPMorgan Chase Bank\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"LOA\"\n    },\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-03-15\",\n      \"capitalAccount\": {\n        \"quantity\": 50000\n      }\n    },\n    \"contactInfo\": {\n      \"email\": \"account.manager@chase.com\"\n    }\n  },\n  \"accountInfo\": {\n    \"accountNumber\": \"12345678\",\n    \"accountAlias\": \"Operating Account\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing required field: email\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed9bdff1-d8dc-40b0-a66f-89991cc2179b",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"investmentInfo\": {\n    \"investmentType\": \"Bank Account\",\n    \"investingEntityId\": 56,\n    \"entityInput\": {\n      \"inputMethod\": \"byName\",\n      \"firmName\": \"Chase Bank\",\n      \"issuingEntityName\": \"JPMorgan Chase Bank\"\n    },\n    \"investmentSettings\": {\n      \"linkingMethod\": \"LOA\"\n    },\n    \"financials\": {\n      \"valueAsOfDate\": \"2024-03-15\",\n      \"capitalAccount\": {\n        \"quantity\": 50000\n      }\n    },\n    \"contactInfo\": {\n      \"email\": \"account.manager@chase.com\"\n    }\n  },\n  \"accountInfo\": {\n    \"accountNumber\": \"12345678\",\n    \"accountAlias\": \"Operating Account\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ca51c12-ada4-415f-81ac-867c07dafec2",
+          "name": "Get uploadable file types for a holding",
+          "request": {
+            "name": "Get uploadable file types for a holding",
+            "description": {
+              "content": "List valid file types for upload",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":holdingId",
+                "files",
+                "types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "holdingId",
+                  "description": "(Required) The holding to view file types for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "07eeb69f-38ad-4d77-8495-b875a7b0c406",
+              "name": "A list of valid file types.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":holdingId",
+                    "files",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "holdingId",
+                      "description": "(Required) The holding to view file types for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"FileTypeList\",\n  \"contents\": [\n    {\n      \"name\": \"string\",\n      \"kind\": \"holding\"\n    },\n    {\n      \"name\": \"string\",\n      \"kind\": \"holding\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23691ef1-cc1b-4102-bea1-69343d0dc7a5",
+              "name": "Holding ID not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":holdingId",
+                    "files",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "holdingId",
+                      "description": "(Required) The holding to view file types for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/text"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/text"
+                }
+              ],
+              "body": "Not found or inaccessible",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9613bb4-0b2d-4f30-b83b-67ce8b723254",
+          "name": "Get all files for a specific holding",
+          "request": {
+            "name": "Get all files for a specific holding",
+            "description": {
+              "content": "Returns a list of file metadata, including a presigned download link for a specific holding, if the user has access through through the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":id",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "beforeUploadTime",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for files uploaded before the queried time."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterUploadTime",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for files uploaded after the queried time."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific holding to query"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae2816f5-a52c-4d08-b3f9-b425f667cb8d",
+              "name": "A list of file metadata for the holding.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beforeUploadTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterUploadTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific holding to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"FileList\",\n  \"contents\": [\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    },\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3a4641a-f64b-46a4-8e8b-7fd7d3519eee",
+              "name": "Holding id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beforeUploadTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterUploadTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific holding to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/text"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/text"
+                }
+              ],
+              "body": "Not found or inaccessible",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c888bae-e283-473b-889d-8a5fafd223a5",
+          "name": "Upload a new file",
+          "request": {
+            "name": "Upload a new file",
+            "description": {
+              "content": "Upload a file and attach it to a holding in Arch. This endpoint is for generic files.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":id",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The holding to upload to"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) The file to upload."
+                },
+                {
+                  "key": "fileType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The type of file being uploaded (required). Only accepts files other than statements or cash flows, such as \"Agreement\", \"Fund Correspondence\", \"Limited Partnership Agreement\", \"Offering Materials (e.g., PPM, Pitch Deck)\", \"Subscription Document\", or \"Miscellaneous Document\". For Statements (account statements, quarterly reports, etc.) and Cash Flows (capital call and distribution notices), please use the corresponding endpoints."
+                },
+                {
+                  "key": "notes",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Optional notes or comments about the file upload."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0323047a-eec2-4907-ac29-47981f6e5c19",
+              "name": "The metadata for the uploaded file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The holding to upload to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The file to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of file being uploaded (required). Only accepts files other than statements or cash flows, such as \"Agreement\", \"Fund Correspondence\", \"Limited Partnership Agreement\", \"Offering Materials (e.g., PPM, Pitch Deck)\", \"Subscription Document\", or \"Miscellaneous Document\". For Statements (account statements, quarterly reports, etc.) and Cash Flows (capital call and distribution notices), please use the corresponding endpoints.",
+                        "type": "text/plain"
+                      },
+                      "key": "fileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional notes or comments about the file upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"FileList\",\n  \"contents\": [\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    },\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e94dd726-4174-47a0-b816-9e9f1506e2f2",
+              "name": "Holding id not found or is inaccessible to the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The holding to upload to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/text"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The file to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The type of file being uploaded (required). Only accepts files other than statements or cash flows, such as \"Agreement\", \"Fund Correspondence\", \"Limited Partnership Agreement\", \"Offering Materials (e.g., PPM, Pitch Deck)\", \"Subscription Document\", or \"Miscellaneous Document\". For Statements (account statements, quarterly reports, etc.) and Cash Flows (capital call and distribution notices), please use the corresponding endpoints.",
+                        "type": "text/plain"
+                      },
+                      "key": "fileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional notes or comments about the file upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/text"
+                }
+              ],
+              "body": "Not Found or inaccessible",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7d0d501-5f89-4be9-bd96-2c34fb031337",
+          "name": "Upload a statement file",
+          "request": {
+            "name": "Upload a statement file",
+            "description": {
+              "content": "Upload a statement, report, or letter and attach it to a holding in Arch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":id",
+                "files",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The holding to upload to"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) The file to upload."
+                },
+                {
+                  "key": "fileType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The specific type of statement being uploaded. Must be one of: \"Account Statement\", \"Quarterly Report\", \"Financial Statements\". (This can only be one of Account Statement,Quarterly Report,Financial Statements)"
+                },
+                {
+                  "key": "statementDate",
+                  "value": "<date>",
+                  "type": "text",
+                  "description": "(Required) The statement date of the document (YYYY-MM-DD)."
+                },
+                {
+                  "key": "notes",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Optional notes or comments about the file upload."
+                },
+                {
+                  "key": "financials",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Financial values to update for the holding as a JSON string. Only applies when fileType is \"Account Statement\". All monetary values should be provided as dollars in USD.\nSupported fields:\n- value (Total value of the holding)\n- totalCommitment (Amount investor promised to contribute to the fund)\n- totalContribution (Total contributions made towards the commitment)\n- remainingCommitment (Total contributions required to meet the commitment)\n- totalDistribution (The amount paid by the fund to the investor)\n- recallableDistribution (Total distributions that can be recalled)\n\nExample: {\"value\": 100000, \"totalContribution\": 50000, \"totalDistribution\": 10000}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d0ed7925-bf28-4f66-b5c8-94ce3a860ebc",
+              "name": "The metadata for the uploaded file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The holding to upload to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The file to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The specific type of statement being uploaded. Must be one of: \"Account Statement\", \"Quarterly Report\", \"Financial Statements\". (This can only be one of Account Statement,Quarterly Report,Financial Statements)",
+                        "type": "text/plain"
+                      },
+                      "key": "fileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The statement date of the document (YYYY-MM-DD).",
+                        "type": "text/plain"
+                      },
+                      "key": "statementDate",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional notes or comments about the file upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Financial values to update for the holding as a JSON string. Only applies when fileType is \"Account Statement\". All monetary values should be provided as dollars in USD.\nSupported fields:\n- value (Total value of the holding)\n- totalCommitment (Amount investor promised to contribute to the fund)\n- totalContribution (Total contributions made towards the commitment)\n- remainingCommitment (Total contributions required to meet the commitment)\n- totalDistribution (The amount paid by the fund to the investor)\n- recallableDistribution (Total distributions that can be recalled)\n\nExample: {\"value\": 100000, \"totalContribution\": 50000, \"totalDistribution\": 10000}",
+                        "type": "text/plain"
+                      },
+                      "key": "financials",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"FileList\",\n  \"contents\": [\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    },\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe49d221-8dd0-4f75-99cd-af8aad7a017b",
+              "name": "Holding id not found or is inaccessible to the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The holding to upload to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/text"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The file to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The specific type of statement being uploaded. Must be one of: \"Account Statement\", \"Quarterly Report\", \"Financial Statements\". (This can only be one of Account Statement,Quarterly Report,Financial Statements)",
+                        "type": "text/plain"
+                      },
+                      "key": "fileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The statement date of the document (YYYY-MM-DD).",
+                        "type": "text/plain"
+                      },
+                      "key": "statementDate",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional notes or comments about the file upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Financial values to update for the holding as a JSON string. Only applies when fileType is \"Account Statement\". All monetary values should be provided as dollars in USD.\nSupported fields:\n- value (Total value of the holding)\n- totalCommitment (Amount investor promised to contribute to the fund)\n- totalContribution (Total contributions made towards the commitment)\n- remainingCommitment (Total contributions required to meet the commitment)\n- totalDistribution (The amount paid by the fund to the investor)\n- recallableDistribution (Total distributions that can be recalled)\n\nExample: {\"value\": 100000, \"totalContribution\": 50000, \"totalDistribution\": 10000}",
+                        "type": "text/plain"
+                      },
+                      "key": "financials",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/text"
+                }
+              ],
+              "body": "Not Found or inaccessible",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43553671-e382-4682-ac90-0eb3147c0a8a",
+          "name": "Upload a cash flow notice",
+          "request": {
+            "name": "Upload a cash flow notice",
+            "description": {
+              "content": "Upload a capital call or distribution notice and attach it to a holding in Arch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":id",
+                "files",
+                "cash-flows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The holding to upload to"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) The file to upload."
+                },
+                {
+                  "key": "fileType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) The specific type of cash flow notice being uploaded. Must be one of: \"Capital Call\", \"Distribution\". (This can only be one of Capital Call,Distribution)"
+                },
+                {
+                  "key": "dueDate",
+                  "value": "<date>",
+                  "type": "text",
+                  "description": "(Required) The due date for action (YYYY-MM-DD)."
+                },
+                {
+                  "key": "cashFlowAmount",
+                  "value": "<number>",
+                  "type": "text",
+                  "description": "The cash flow amount in USD."
+                },
+                {
+                  "key": "notes",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Optional notes or comments about the file upload."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dc0ea462-4688-439d-98f3-c3c3f1e215ff",
+              "name": "The metadata for the uploaded file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The holding to upload to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The file to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The specific type of cash flow notice being uploaded. Must be one of: \"Capital Call\", \"Distribution\". (This can only be one of Capital Call,Distribution)",
+                        "type": "text/plain"
+                      },
+                      "key": "fileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The due date for action (YYYY-MM-DD).",
+                        "type": "text/plain"
+                      },
+                      "key": "dueDate",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The cash flow amount in USD.",
+                        "type": "text/plain"
+                      },
+                      "key": "cashFlowAmount",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional notes or comments about the file upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"FileList\",\n  \"contents\": [\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    },\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6be87775-fcce-4890-90b6-e273a9df0f3e",
+              "name": "Holding id not found or is inaccessible to the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":id",
+                    "files",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The holding to upload to"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/text"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The file to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The specific type of cash flow notice being uploaded. Must be one of: \"Capital Call\", \"Distribution\". (This can only be one of Capital Call,Distribution)",
+                        "type": "text/plain"
+                      },
+                      "key": "fileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) The due date for action (YYYY-MM-DD).",
+                        "type": "text/plain"
+                      },
+                      "key": "dueDate",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The cash flow amount in USD.",
+                        "type": "text/plain"
+                      },
+                      "key": "cashFlowAmount",
+                      "value": "<number>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Optional notes or comments about the file upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/text"
+                }
+              ],
+              "body": "Not Found or inaccessible",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cab3c61a-e71e-4fe8-968d-108243b61e71",
+          "name": "Download the file, as originally received.",
+          "request": {
+            "name": "Download the file, as originally received.",
+            "description": {
+              "content": "Download the file, as originally received by Arch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "holdings",
+                ":holdingId",
+                "files",
+                ":fileId",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "holdingId",
+                  "description": "(Required) The holding the file exists under"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileId",
+                  "description": "(Required) The id of the file that's being requested"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4c33a7a1-0c8a-4824-aca1-994c5aaa8197",
+              "name": "Buffer containing the content of the requested file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":holdingId",
+                    "files",
+                    ":fileId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "holdingId",
+                      "description": "(Required) The holding the file exists under"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileId",
+                      "description": "(Required) The id of the file that's being requested"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "123fb2eb-1c11-455f-a4f1-cdd51b89c2df",
+              "name": "Holding id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "holdings",
+                    ":holdingId",
+                    "files",
+                    ":fileId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "holdingId",
+                      "description": "(Required) The holding the file exists under"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileId",
+                      "description": "(Required) The id of the file that's being requested"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c4117c0-0b80-4975-862c-f10f39de70cd",
+    "name": "Arch Client Accounts Holdings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Tasks API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a task by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task to get."
+              },
+              {
+                "name": "includeWireInstructions",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include Wire Verification in the data. Please contact Arch to enable this parameter."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a task by ID."
+        },
+        {
+          "info": {
+            "name": "Complete a task by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/tasks/:id/complete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task to complete."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Complete a task by ID."
+        },
+        {
+          "info": {
+            "name": "Get all tasks for the user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tasks",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of activities to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of activities to skip before collecting results"
+              },
+              {
+                "name": "holdingIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for tasks related to holdings with ids in the provided argument"
+              },
+              {
+                "name": "investingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for tasks related to investing entities with ids in the provided argument"
+              },
+              {
+                "name": "issuingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for tasks related to issuing entities with ids in the provided argument"
+              },
+              {
+                "name": "accountIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+              },
+              {
+                "name": "assignedToUsers",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for tasks with an assigned user with a matching id on one of the provided ids"
+              },
+              {
+                "name": "completedByUsers",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for tasks completed by a user with a matching id on one of the provided ids"
+              },
+              {
+                "name": "beforeDueDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for tasks with a due time before the queried date-time."
+              },
+              {
+                "name": "afterDueDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for tasks with a due time after the queried date-time."
+              },
+              {
+                "name": "beforeCompletionDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for tasks with a completion date before the queried date-time."
+              },
+              {
+                "name": "afterCompletionDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for tasks with a completion date after the queried date-time."
+              },
+              {
+                "name": "beforeCreationTime",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for tasks with a creation time before the queried date-time."
+              },
+              {
+                "name": "afterCreationTime",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for tasks with a creation time after the queried date-time."
+              },
+              {
+                "name": "isComplete",
+                "value": "true",
+                "type": "query",
+                "description": "Filter the output for tasks that have a completion status matching the provided value"
+              },
+              {
+                "name": "includeWireInstructions",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include Wire Verification in the data. Please contact Arch to enable this parameter."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get all tasks for the user."
+        },
+        {
+          "info": {
+            "name": "Assign one or more tasks to a user with userId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/client-api/v0/tasks/:userId/assign",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to be assigned the tasks."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assign one or more tasks to a user with userId."
+        },
+        {
+          "info": {
+            "name": "Update the notes section of a task.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/client-api/v0/tasks/:id/task-notes",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the notes section (investorNotes) of a task by ID."
+        },
+        {
+          "info": {
+            "name": "Get all user comments for a task.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/tasks/:id/comments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task to get comments for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get all user comments for a task. Employee comments are excluded. Requires CommentsRead permission."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

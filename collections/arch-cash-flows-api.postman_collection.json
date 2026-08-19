@@ -1,0 +1,868 @@
+{
+  "item": [
+    {
+      "id": "f252e2f6-11b1-45ff-9e04-e6c1014f915b",
+      "name": "Cash Flows",
+      "description": {
+        "content": "Read and write data relating to money inflow / outflow",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7bc9c6ab-bcdb-42cf-b002-398f6be2c948",
+          "name": "Get data for a set of cash flows available to the user",
+          "request": {
+            "name": "Get data for a set of cash flows available to the user",
+            "description": {
+              "content": "Returns a paginated list of cash flows available to the user as determined by the user's access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "cash-flows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of cash flows to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of cash flows to skip before collecting results"
+                },
+                {
+                  "disabled": false,
+                  "key": "holdingIds",
+                  "value": "<string>",
+                  "description": "Filter the output for cash flows belonging to holdings with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "investingEntityIds",
+                  "value": "<string>",
+                  "description": "Filter the output for cash flows belonging to investing entities with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "issuingEntityIds",
+                  "value": "<string>",
+                  "description": "Filter the output for cash flows belonging to issuing entities with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "accountIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "Filter the output for cash flows with a title that contains the provided value"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include cash flows with one of the types in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeDueAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for cash flows with a due time before the queried datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterDueAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for cash flows with a due time after the queried datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCompletedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for cash flows with a completion date before the queried datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCompletedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for cash flows with a completion date after the queried datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCreatedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for cash flows with a creation time before the queried datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCreatedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for cash flows with a creation time after the queried datetime."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAllocations",
+                  "value": "<boolean>",
+                  "description": "Whether to include data about allocations in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7d7fc9ba-fde2-49fc-9a7e-2a3ea0ad1eee",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "holdingIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "title",
+                      "value": "Test Name"
+                    },
+                    {
+                      "key": "types",
+                      "value": "Capital Call, Distribution, Contribution"
+                    },
+                    {
+                      "key": "beforeDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCompletedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCompletedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "includeAllocations",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"page\",\n  \"selfUrl\": \"/cashflows?limit=1000&offset=1000\",\n  \"contents\": [\n    {\n      \"kind\": \"string\",\n      \"id\": 12345,\n      \"type\": {\n        \"name\": \"Contribution\",\n        \"flowDirection\": 1\n      },\n      \"selfUrl\": \"/cashflows/37205\",\n      \"firmUrl\": \"/firms/15\",\n      \"holdingUrl\": \"/investments/91494\",\n      \"investingEntityUrl\": \"/entities/29110\",\n      \"financialValue\": {\n        \"quantity\": 100000,\n        \"currencyCode\": \"USD\",\n        \"dollars\": 100000,\n        \"symbol\": \"$\",\n        \"unitType\": \"CURRENCY\"\n      },\n      \"createdAt\": \"2025-03-03T15:50:50.749Z\",\n      \"activityUrl\": \"/activities/23125\",\n      \"issuingEntityUrl\": \"/issuing-entities/15\",\n      \"accountUrl\": \"/accounts/56\",\n      \"dueAt\": \"2005-11-14T23:43:40.021Z\",\n      \"completedAt\": \"2024-01-24T08:11:59.994Z\",\n      \"title\": \"My Cash Flow\",\n      \"investorNotes\": \"Created via API\",\n      \"allocations\": [\n        {\n          \"flowDirection\": 1,\n          \"typeName\": \"Buy\",\n          \"financialValue\": {\n            \"quantity\": 100000,\n            \"currencyCode\": \"USD\",\n            \"dollars\": 100000,\n            \"symbol\": \"$\",\n            \"unitType\": \"CURRENCY\"\n          },\n          \"id\": 1,\n          \"investorNotes\": \"My Note\"\n        },\n        {\n          \"flowDirection\": 1,\n          \"typeName\": \"Buy\",\n          \"financialValue\": {\n            \"quantity\": 100000,\n            \"currencyCode\": \"USD\",\n            \"dollars\": 100000,\n            \"symbol\": \"$\",\n            \"unitType\": \"CURRENCY\"\n          },\n          \"id\": 1,\n          \"investorNotes\": \"My Note\"\n        }\n      ]\n    },\n    {\n      \"kind\": \"string\",\n      \"id\": 12345,\n      \"type\": {\n        \"name\": \"Redemption\",\n        \"flowDirection\": 1\n      },\n      \"selfUrl\": \"/cashflows/37205\",\n      \"firmUrl\": \"/firms/15\",\n      \"holdingUrl\": \"/investments/91494\",\n      \"investingEntityUrl\": \"/entities/29110\",\n      \"financialValue\": {\n        \"quantity\": 100000,\n        \"currencyCode\": \"USD\",\n        \"dollars\": 100000,\n        \"symbol\": \"$\",\n        \"unitType\": \"CURRENCY\"\n      },\n      \"createdAt\": \"1973-08-29T02:14:53.814Z\",\n      \"activityUrl\": \"/activities/23125\",\n      \"issuingEntityUrl\": \"/issuing-entities/15\",\n      \"accountUrl\": \"/accounts/56\",\n      \"dueAt\": \"1959-09-01T01:27:42.474Z\",\n      \"completedAt\": \"1992-08-25T16:19:33.625Z\",\n      \"title\": \"My Cash Flow\",\n      \"investorNotes\": \"Created via API\",\n      \"allocations\": [\n        {\n          \"flowDirection\": 1,\n          \"typeName\": \"Buy\",\n          \"financialValue\": {\n            \"quantity\": 100000,\n            \"currencyCode\": \"USD\",\n            \"dollars\": 100000,\n            \"symbol\": \"$\",\n            \"unitType\": \"CURRENCY\"\n          },\n          \"id\": 1,\n          \"investorNotes\": \"My Note\"\n        },\n        {\n          \"flowDirection\": 1,\n          \"typeName\": \"Buy\",\n          \"financialValue\": {\n            \"quantity\": 100000,\n            \"currencyCode\": \"USD\",\n            \"dollars\": 100000,\n            \"symbol\": \"$\",\n            \"unitType\": \"CURRENCY\"\n          },\n          \"id\": 1,\n          \"investorNotes\": \"My Note\"\n        }\n      ]\n    }\n  ],\n  \"next\": \"/cashflows?limit=1000&offset=2000\",\n  \"prev\": \"/cashflows?limit=1000&offset=0\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6cf12c9-a007-40f7-8aca-2cb4cdafedc1",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "holdingIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "title",
+                      "value": "Test Name"
+                    },
+                    {
+                      "key": "types",
+                      "value": "Capital Call, Distribution, Contribution"
+                    },
+                    {
+                      "key": "beforeDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCompletedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCompletedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "includeAllocations",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42ff6757-c173-4ee9-95c5-562eed8597b4",
+          "name": "Add a new cash flow to Arch. Assumes USD.",
+          "request": {
+            "name": "Add a new cash flow to Arch. Assumes USD.",
+            "description": {
+              "content": "Creates a new cash flow and returns the URL, if successful. Assumes the cash flow is in USD.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "cash-flows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"financialValue\": {\n    \"quantity\": \"<number>\"\n  },\n  \"dueAt\": \"<dateTime>\",\n  \"holdingId\": \"<integer>\",\n  \"completedAt\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"investorNotes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94fdcaaa-e89b-4fca-8c73-89d26b3cf13d",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"Capital Call\",\n  \"financialValue\": {\n    \"quantity\": 1000,\n    \"currencyCode\": \"USD\"\n  },\n  \"holdingId\": 29110,\n  \"dueAt\": \"2023-12-16 01:00:00\",\n  \"completedAt\": \"2023-11-15 01:00:00\",\n  \"title\": \"My New Cash Flow\",\n  \"investorNotes\": \"Created via API\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL of the new cash flow",
+                  "key": "Location",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "820390b0-1f7b-43fc-9568-b93f28c0b308",
+              "name": "No permission to create cash flow with the specified data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"Capital Call\",\n  \"financialValue\": {\n    \"quantity\": 1000,\n    \"currencyCode\": \"USD\"\n  },\n  \"holdingId\": 29110,\n  \"dueAt\": \"2023-12-16 01:00:00\",\n  \"completedAt\": \"2023-11-15 01:00:00\",\n  \"title\": \"My New Cash Flow\",\n  \"investorNotes\": \"Created via API\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2cfc1210-d40c-48bf-aba1-c8307f0f4ecb",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"Capital Call\",\n  \"financialValue\": {\n    \"quantity\": 1000,\n    \"currencyCode\": \"USD\"\n  },\n  \"holdingId\": 29110,\n  \"dueAt\": \"2023-12-16 01:00:00\",\n  \"completedAt\": \"2023-11-15 01:00:00\",\n  \"title\": \"My New Cash Flow\",\n  \"investorNotes\": \"Created via API\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ef10e6c-c755-4727-aa00-a710c23e20ab",
+          "name": "Get a specific cash flow by ID.",
+          "request": {
+            "name": "Get a specific cash flow by ID.",
+            "description": {
+              "content": "Returns an object containing data for a specific cash flow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "cash-flows",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeAllocations",
+                  "value": "<boolean>",
+                  "description": "Whether to include data about allocations in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific cash flow to query"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "be1767d8-ab67-44d5-9aba-fee92bcbecf0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAllocations",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific cash flow to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"string\",\n  \"id\": 12345,\n  \"type\": {\n    \"name\": \"<string>\",\n    \"flowDirection\": 1\n  },\n  \"selfUrl\": \"/cashflows/37205\",\n  \"firmUrl\": \"/firms/15\",\n  \"holdingUrl\": \"/investments/91494\",\n  \"investingEntityUrl\": \"/entities/29110\",\n  \"financialValue\": {\n    \"quantity\": 100000,\n    \"currencyCode\": \"USD\",\n    \"dollars\": 100000,\n    \"symbol\": \"$\",\n    \"unitType\": \"CURRENCY\"\n  },\n  \"createdAt\": \"2011-11-28T21:41:02.182Z\",\n  \"activityUrl\": \"/activities/23125\",\n  \"issuingEntityUrl\": \"/issuing-entities/15\",\n  \"accountUrl\": \"/accounts/56\",\n  \"dueAt\": \"1968-03-10T05:57:03.171Z\",\n  \"completedAt\": \"2008-06-02T11:10:20.140Z\",\n  \"title\": \"My Cash Flow\",\n  \"investorNotes\": \"Created via API\",\n  \"allocations\": [\n    {\n      \"flowDirection\": 1,\n      \"typeName\": \"Buy\",\n      \"financialValue\": {\n        \"quantity\": 100000,\n        \"currencyCode\": \"USD\",\n        \"dollars\": 100000,\n        \"symbol\": \"$\",\n        \"unitType\": \"CURRENCY\"\n      },\n      \"id\": 1,\n      \"investorNotes\": \"My Note\"\n    },\n    {\n      \"flowDirection\": 1,\n      \"typeName\": \"Buy\",\n      \"financialValue\": {\n        \"quantity\": 100000,\n        \"currencyCode\": \"USD\",\n        \"dollars\": 100000,\n        \"symbol\": \"$\",\n        \"unitType\": \"CURRENCY\"\n      },\n      \"id\": 1,\n      \"investorNotes\": \"My Note\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d3683b8-30f7-477c-8cc0-be748a2cac5a",
+              "name": "Cash flow ID could not be parsed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAllocations",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific cash flow to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "df26193f-46d0-44c0-aae0-a463930670ce",
+              "name": "Cash flow ID not found or is inaccessible to the user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAllocations",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific cash flow to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "44ee6f9d-1646-48f1-a825-fdb82051cf8c",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "cash-flows",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAllocations",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific cash flow to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "11f690eb-1dfa-4aed-a4f1-79057518da3c",
+    "name": "Arch Client Accounts Cash Flows API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

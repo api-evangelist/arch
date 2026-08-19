@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Users API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get data for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific user id to lookup"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the user object associated with the specified id."
+        },
+        {
+          "info": {
+            "name": "Update data for a user. Unspecified fields will not be updated.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/client-api/v0/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The specific user id to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the user's first and last name (email and ID cannot be changed). Returns the user object with updated field values."
+        },
+        {
+          "info": {
+            "name": "Create new user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

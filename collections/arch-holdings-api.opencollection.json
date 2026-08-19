@@ -1,0 +1,586 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Holdings API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Holdings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a paginated list of holdings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/holdings",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of holdings to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of holdings to skip before collecting results"
+              },
+              {
+                "name": "includeMetrics",
+                "value": "",
+                "type": "query",
+                "description": "Include financial metrics (IRR, TVPI, and DPI) in the response"
+              },
+              {
+                "name": "includeOwnership",
+                "value": "",
+                "type": "query",
+                "description": "Include ownership info. Will cause an error if holding is not set up for lookthrough extraction. Provides the ownership percentage of the fund, and the issuing entity to query to access the underlying portfolio companies."
+              },
+              {
+                "name": "includeTransferInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include transfer relationships (transferInfo) for each holding in the response. When omitted or false, the transferInfo field is not returned."
+              },
+              {
+                "name": "includeBlackDiamondInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Black Diamond info in the response"
+              },
+              {
+                "name": "includeCustomFields",
+                "value": "",
+                "type": "query",
+                "description": "Set this to true to receive custom fields associated with the holding."
+              },
+              {
+                "name": "includeAddeparInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Addepar info in the response"
+              },
+              {
+                "name": "includeArchwayInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Archway info in the response"
+              },
+              {
+                "name": "includeBurgissInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Burgiss info in the response"
+              },
+              {
+                "name": "includeTamaracInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Tamarac info in the response"
+              },
+              {
+                "name": "includeOrionInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Orion info in the response"
+              },
+              {
+                "name": "investingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the investing entity ids in the provided argument"
+              },
+              {
+                "name": "issuingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the issuing entity ids in the provided argument"
+              },
+              {
+                "name": "accountIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter the output for holding names that include the search term."
+              },
+              {
+                "name": "beforeEndDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for holdings with an end date before the queried date."
+              },
+              {
+                "name": "afterEndDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for holdings with an end date after the queried date."
+              },
+              {
+                "name": "beforeStartDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for holdings with a start date before the queried date."
+              },
+              {
+                "name": "afterStartDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for holdings with a start date after the queried date."
+              },
+              {
+                "name": "includeTax",
+                "value": "",
+                "type": "query",
+                "description": "Controls whether tax placeholder holdings are included in the results. Use \"Only\" to return only tax placeholder holdings, \"Include\" to include them along with regular holdings, or \"Exclude\" to exclude them entirely. Defaults to Exclude."
+              },
+              {
+                "name": "valueAsOfDate",
+                "value": "",
+                "type": "query",
+                "description": "Return financial values as of this date (YYYY-MM-DD). When omitted, the latest values are returned."
+              },
+              {
+                "name": "valueCalculationMethod",
+                "value": "",
+                "type": "query",
+                "description": "Controls how financial values are calculated. \"statementsOnly\" pulls the value directly from the latest statement before the \"as of\" date; \"includeCashFlows\" (the default) uses that account statement, plus/minus and subsequent cash flows up to the \"as of\" date."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Return a paginated list of holdings"
+        },
+        {
+          "info": {
+            "name": "Add a new holding to Arch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new holding and returns the URL, if successful. Financial values are assumed to be in dollars"
+        },
+        {
+          "info": {
+            "name": "Get data for a specific holding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/holdings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific holding to query"
+              },
+              {
+                "name": "includeOwnership",
+                "value": "",
+                "type": "query",
+                "description": "Include ownership info. Will cause an error if holding is not set up for lookthrough extraction. Provides the ownership percentage of the fund, and the issuing entity to query to access the underlying portfolio companies."
+              },
+              {
+                "name": "includeTransferInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include transfer relationships (transferInfo) for each holding in the response. When omitted or false, the transferInfo field is not returned."
+              },
+              {
+                "name": "includeMetrics",
+                "value": "",
+                "type": "query",
+                "description": "Include financial metrics in the response"
+              },
+              {
+                "name": "includeBlackDiamondInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Black Diamond info in the response"
+              },
+              {
+                "name": "includeCustomFields",
+                "value": "",
+                "type": "query",
+                "description": "Set this to true to receive custom fields associated with the holding."
+              },
+              {
+                "name": "includeAddeparInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Addepar info in the response"
+              },
+              {
+                "name": "includeArchwayInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Archway info in the response"
+              },
+              {
+                "name": "includeBurgissInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Burgiss info in the response"
+              },
+              {
+                "name": "includeTamaracInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Tamarac info in the response"
+              },
+              {
+                "name": "includeOrionInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Orion info in the response"
+              },
+              {
+                "name": "includeTax",
+                "value": "",
+                "type": "query",
+                "description": "Controls whether tax placeholder holdings are included in the results. Use \"Only\" to return only tax placeholder holdings, \"Include\" to include them along with regular holdings, or \"Exclude\" to exclude them entirely. Defaults to Exclude."
+              },
+              {
+                "name": "valueAsOfDate",
+                "value": "",
+                "type": "query",
+                "description": "Return historical financial values as of this date (YYYY-MM-DD). When omitted, latest values are returned."
+              },
+              {
+                "name": "valueCalculationMethod",
+                "value": "",
+                "type": "query",
+                "description": "Controls how financial values are calculated. \"includeCashFlows\" uses account statements and cash flows; \"statementsOnly\" pulls the value directly from the latest statement before the \"as of\" date. Defaults to \"includeCashFlows\"."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the data for a specific holding, if the user has access through the access token."
+        },
+        {
+          "info": {
+            "name": "Add a new funds or real estate holding to Arch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings/fund",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new funds or real estate holding (direct ownership) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided. Note: offeringInfo should be null for Real Estate - Direct Ownership.\n"
+        },
+        {
+          "info": {
+            "name": "Add a new company holding to Arch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings/company",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new company holding (direct equity, SAFE, convertible note, etc.) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided. Note: sharesInfo should be null for all except Company - Direct Equity. Note: offeringInfo should be null for all except Company - Direct Equity and Company - SAFE.\n"
+        },
+        {
+          "info": {
+            "name": "Add a new account holding to Arch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new account holding (bank account, brokerage account, etc.) and returns the holding. Financial values should be provided in USD (currently the only supported currency). Values can be negative. No defaults are applied - values are stored exactly as provided.\n"
+        },
+        {
+          "info": {
+            "name": "Get uploadable file types for a holding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/holdings/:holdingId/files/types",
+            "params": [
+              {
+                "name": "holdingId",
+                "value": "",
+                "type": "path",
+                "description": "The holding to view file types for"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List valid file types for upload"
+        },
+        {
+          "info": {
+            "name": "Get all files for a specific holding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/holdings/:id/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific holding to query"
+              },
+              {
+                "name": "beforeUploadTime",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for files uploaded before the queried time."
+              },
+              {
+                "name": "afterUploadTime",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for files uploaded after the queried time."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of file metadata, including a presigned download link for a specific holding, if the user has access through through the access token."
+        },
+        {
+          "info": {
+            "name": "Upload a new file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings/:id/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The holding to upload to"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "fileType",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "notes",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload a file and attach it to a holding in Arch. This endpoint is for generic files."
+        },
+        {
+          "info": {
+            "name": "Upload a statement file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings/:id/files/statements",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The holding to upload to"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "fileType",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "statementDate",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "notes",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "financials",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload a statement, report, or letter and attach it to a holding in Arch."
+        },
+        {
+          "info": {
+            "name": "Upload a cash flow notice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/holdings/:id/files/cash-flows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The holding to upload to"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "fileType",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "dueDate",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "cashFlowAmount",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "notes",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload a capital call or distribution notice and attach it to a holding in Arch."
+        },
+        {
+          "info": {
+            "name": "Download the file, as originally received.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/holdings/:holdingId/files/:fileId/download",
+            "params": [
+              {
+                "name": "holdingId",
+                "value": "",
+                "type": "path",
+                "description": "The holding the file exists under"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the file that's being requested"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download the file, as originally received by Arch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

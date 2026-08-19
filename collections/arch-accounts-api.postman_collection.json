@@ -1,0 +1,456 @@
+{
+  "item": [
+    {
+      "id": "c28d42f4-651e-4280-8d4f-5865bbef338e",
+      "name": "Accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33626183-7cd5-43c9-a926-74176e5f34f3",
+          "name": "Get all accounts for caller",
+          "request": {
+            "name": "Get all accounts for caller",
+            "description": {
+              "content": "Returns the data for the specified account ids, if the user has access through the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeAddeparInfo",
+                  "value": "<boolean>",
+                  "description": "Include addepar account and entity info in the response"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "457035c2-59c4-4802-b732-2a4ee00c4caf",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8341,\n    \"name\": \"My Arch Account\",\n    \"addeparInfo\": {\n      \"addeparFirmId\": 3355,\n      \"addeparAccountId\": 5060,\n      \"addeparEntities\": [\n        {\n          \"addeparEntityId\": 1978,\n          \"name\": \"My Addepar Entity\"\n        },\n        {\n          \"addeparEntityId\": 5142,\n          \"name\": \"My Addepar Entity\"\n        }\n      ]\n    },\n    \"clientRef\": {\n      \"kind\": \"client-ref\",\n      \"id\": 7437,\n      \"name\": \"John Client\"\n    },\n    \"externalClientId\": \"string\"\n  },\n  {\n    \"id\": 121,\n    \"name\": \"My Arch Account\",\n    \"addeparInfo\": {\n      \"addeparFirmId\": 9755,\n      \"addeparAccountId\": 4395,\n      \"addeparEntities\": [\n        {\n          \"addeparEntityId\": 3289,\n          \"name\": \"My Addepar Entity\"\n        },\n        {\n          \"addeparEntityId\": 41,\n          \"name\": \"My Addepar Entity\"\n        }\n      ]\n    },\n    \"clientRef\": {\n      \"kind\": \"client-ref\",\n      \"id\": 6845,\n      \"name\": \"John Client\"\n    },\n    \"externalClientId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ca0c166-bbac-42ab-ad2c-3dc4d33aff3a",
+              "name": "Account id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0332726d-6c95-4db4-9aad-23c19f758cc7",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cce6e53-e6d6-4247-8a58-da49d6ff6ac7",
+          "name": "Get data for a specific account",
+          "request": {
+            "name": "Get data for a specific account",
+            "description": {
+              "content": "Returns the data for a specific account, if the user has access through the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeAddeparInfo",
+                  "value": "<boolean>",
+                  "description": "Include addepar account and entity info in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific account id to query for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eaec07c4-bea5-43d2-b412-39a260610219",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific account id to query for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 6441,\n  \"name\": \"My Arch Account\",\n  \"addeparInfo\": {\n    \"addeparFirmId\": 509,\n    \"addeparAccountId\": 6157,\n    \"addeparEntities\": [\n      {\n        \"addeparEntityId\": 8347,\n        \"name\": \"My Addepar Entity\"\n      },\n      {\n        \"addeparEntityId\": 2201,\n        \"name\": \"My Addepar Entity\"\n      }\n    ]\n  },\n  \"clientRef\": {\n    \"kind\": \"client-ref\",\n    \"id\": 9017,\n    \"name\": \"John Client\"\n  },\n  \"externalClientId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec0cba20-279a-4cba-b7f6-610b0fb9c727",
+              "name": "Account id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific account id to query for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a6343faf-db43-4760-bc35-d53b5ac0f7c5",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeAddeparInfo",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific account id to query for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6aebdf20-ae73-4efa-bf08-89838c3ca925",
+    "name": "Arch Client Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

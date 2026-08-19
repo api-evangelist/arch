@@ -1,0 +1,296 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Activities API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Activities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all activities accessible to the user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/activities",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of activities to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of activities to skip before collecting results"
+              },
+              {
+                "name": "investingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include activities belonging to one of the Investing Entity ids in the provided argument"
+              },
+              {
+                "name": "issuingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include activities belonging to one of the Issuing Entity ids in the provided argument"
+              },
+              {
+                "name": "accountIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+              },
+              {
+                "name": "types",
+                "value": "Investment Added,Account Statement",
+                "type": "query",
+                "description": "Will filter the output to only include activities with one of the types in the provided argument"
+              },
+              {
+                "name": "beforeStatementDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a statement date before the queried timestamp."
+              },
+              {
+                "name": "afterStatementDate",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a statement date after the queried date."
+              },
+              {
+                "name": "beforeCreatedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a creation time before the queried timestamp."
+              },
+              {
+                "name": "afterCreatedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a creation time after the queried timestamp."
+              },
+              {
+                "name": "beforeDueAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a due time before the queried timestamp."
+              },
+              {
+                "name": "afterDueAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a due time after the queried timestamp."
+              },
+              {
+                "name": "beforeProcessedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a processed time before the queried timestamp."
+              },
+              {
+                "name": "afterProcessedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for activities with a processed time after the queried timestamp."
+              },
+              {
+                "name": "holdingIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for activities related to holdings with ids in the provided argument"
+              },
+              {
+                "name": "includeSummaries",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include AI summaries in the data. Please contact Arch to enable this parameter."
+              },
+              {
+                "name": "hasSummaries",
+                "value": "true",
+                "type": "query",
+                "description": "Filter the output for activities that have an AI summary if true, or activities that don't have an AI summary if false. Please contact Arch to enable this parameter."
+              },
+              {
+                "name": "includeCashFlow",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include the cash flow associated with the activity, if it exists"
+              },
+              {
+                "name": "includeEmailBodies",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include the email body and html associated with the activity"
+              },
+              {
+                "name": "includeApprovalStatus",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include whether the activity is Pending/Approved. Please contact Arch to enable this parameter."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of all activities available to the user determined by the access token."
+        },
+        {
+          "info": {
+            "name": "Get activity by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/activities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific activity to query"
+              },
+              {
+                "name": "includeSummaries",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include AI summaries in the data. Please contact Arch to enable this parameter."
+              },
+              {
+                "name": "includeCashFlow",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include the cash flow associated with the activity, if it exists"
+              },
+              {
+                "name": "includeEmailBodies",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include the email body and html associated with the activity"
+              },
+              {
+                "name": "includeApprovalStatus",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include whether the activity is Pending/Approved. Please contact Arch to enable this parameter."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns activity data."
+        },
+        {
+          "info": {
+            "name": "Update activity by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/client-api/v0/activities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific activity to query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates activity data. (Not yet documented)"
+        },
+        {
+          "info": {
+            "name": "Get all files for a specific activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/activities/:id/files",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific activity to query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of file metadata, including a presigned download link for a specific activity, if the user has access through through the access token."
+        },
+        {
+          "info": {
+            "name": "Query activity files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/activities/files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get metadata for activity files"
+        },
+        {
+          "info": {
+            "name": "Download the file, as originally received.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/activities/:activityId/files/:fileId/download",
+            "params": [
+              {
+                "name": "activityId",
+                "value": "",
+                "type": "path",
+                "description": "The activity the file exists under"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the file that's being requested"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download the file, as originally received by Arch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

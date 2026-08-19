@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Issuing Entities API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Issuing Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get data for a specific issuing entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/issuing-entities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific issuing entity to query"
+              },
+              {
+                "name": "includeInsights",
+                "value": "",
+                "type": "query",
+                "description": "Include 3rd party insights for the issuing entity"
+              },
+              {
+                "name": "includeLookthroughs",
+                "value": "",
+                "type": "query",
+                "description": "Include \"lookthrough\" holdings that this fund reports in its SOI (Premium Feature)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the data for a specific issuing entity, if the user has access through the access token."
+        },
+        {
+          "info": {
+            "name": "Get issuing entities accessible to the user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/issuing-entities",
+            "params": [
+              {
+                "name": "includeInsights",
+                "value": "",
+                "type": "query",
+                "description": "Include 3rd party insights for the issuing entity"
+              },
+              {
+                "name": "includeLookthroughs",
+                "value": "",
+                "type": "query",
+                "description": "How to handle \"lookthrough\" holdings that funds may report in their SOI (Premium Feature). Use \"include\" to include lookthroughs data in your query. Use \"only\" to include lookthroughs data and filter out issuing entities without lookthroughs. To not show lookthroughs, don't provide the field. Defaults to not showing lookthroughs"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of issuing entities to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of issuing entities to skip before collecting results"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of issuing entities available to the user determined by the access token. Ordered by name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

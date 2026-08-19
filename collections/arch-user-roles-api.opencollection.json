@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts User Roles API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a paginated list of user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/user-roles",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of user roles to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of user roles to skip before collecting results"
+              },
+              {
+                "name": "accountIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Only include roles on one of the account ids provided. Applies only to roles where `objectType` is `account`."
+              },
+              {
+                "name": "investingEntityIds",
+                "value": "10,12,13,14",
+                "type": "query",
+                "description": "Only include roles on one of the investing entity ids provided. Applies only to roles where `objectType` is `investingEntity`."
+              },
+              {
+                "name": "userIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Only include roles on one of the user ids provided."
+              },
+              {
+                "name": "objectType",
+                "value": "investingEntity",
+                "type": "query",
+                "description": "Which type of object to include. Allowed values: `account` or `investingEntity`.\n\n**This field defaults to `account` for backwards compatibility.** Callers that want\ninvesting-entity or holding roles must provide this parameter.\n"
+              },
+              {
+                "name": "roleType",
+                "value": "Tax%20Only",
+                "type": "query",
+                "description": "Filter results to only include roles matching the specified portal name.\nSpaces and special characters must be URL-encoded.\n\nExample values (as they appear in the database):\n- `Tax Only` (in URL: `?roleType=Tax%20Only`)\n- `Full Access` (in URL: `?roleType=Full%20Access`)\n"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of **direct** user roles. Only shows roles\nexplicitly granted on accounts, investing entities, or holdings.\nAccess inherited via parent folders is not expanded into this list.\n\nEach returned role identifies its target via a single `objectRef` (an `AccountRef`,\n`InvestingEntityRef`, or `HoldingRef`) along with an `objectType` discriminator. The\nlegacy `accountId` and `userUrl` fields are still populated where applicable but are\ndeprecated; new integrations should read `ob"
+        },
+        {
+          "info": {
+            "name": "Create new user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/user-roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create new user roles"
+        },
+        {
+          "info": {
+            "name": "Remove user roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/client-api/v0/user-roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove user roles"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

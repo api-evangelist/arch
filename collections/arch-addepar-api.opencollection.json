@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Addepar API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Addepar",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Addepar export results for accessible accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/addepar/exports",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns Addepar export for all activities Arch has attempted to export to Addepar for a given user. This includes activity IDs, export timestamps, and error messages for activities that have been exported to Addepar."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

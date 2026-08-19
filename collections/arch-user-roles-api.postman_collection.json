@@ -1,0 +1,1034 @@
+{
+  "item": [
+    {
+      "id": "c323df5e-811a-4573-aa62-e381df54e512",
+      "name": "User Roles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9612f6ca-670f-4dde-9536-bd64b742695b",
+          "name": "Get a paginated list of user roles",
+          "request": {
+            "name": "Get a paginated list of user roles",
+            "description": {
+              "content": "Returns a paginated list of **direct** user roles. Only shows roles\nexplicitly granted on accounts, investing entities, or holdings.\nAccess inherited via parent folders is not expanded into this list.\n\nEach returned role identifies its target via a single `objectRef` (an `AccountRef`,\n`InvestingEntityRef`, or `HoldingRef`) along with an `objectType` discriminator. The\nlegacy `accountId` and `userUrl` fields are still populated where applicable but are\ndeprecated; new integrations should read `objectRef` and `userRef` instead.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "user-roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of user roles to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of user roles to skip before collecting results"
+                },
+                {
+                  "disabled": false,
+                  "key": "accountIds",
+                  "value": "<integer>",
+                  "description": "Only include roles on one of the account ids provided. Applies only to roles where `objectType` is `account`."
+                },
+                {
+                  "disabled": false,
+                  "key": "accountIds",
+                  "value": "<integer>",
+                  "description": "Only include roles on one of the account ids provided. Applies only to roles where `objectType` is `account`."
+                },
+                {
+                  "disabled": false,
+                  "key": "investingEntityIds",
+                  "value": "<integer>",
+                  "description": "Only include roles on one of the investing entity ids provided. Applies only to roles where `objectType` is `investingEntity`."
+                },
+                {
+                  "disabled": false,
+                  "key": "investingEntityIds",
+                  "value": "<integer>",
+                  "description": "Only include roles on one of the investing entity ids provided. Applies only to roles where `objectType` is `investingEntity`."
+                },
+                {
+                  "disabled": false,
+                  "key": "userIds",
+                  "value": "<integer>",
+                  "description": "Only include roles on one of the user ids provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "userIds",
+                  "value": "<integer>",
+                  "description": "Only include roles on one of the user ids provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "objectType",
+                  "value": "<string>",
+                  "description": "Which type of object to include. Allowed values: `account` or `investingEntity`.\n\n**This field defaults to `account` for backwards compatibility.** Callers that want\ninvesting-entity or holding roles must provide this parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "objectType",
+                  "value": "<string>",
+                  "description": "Which type of object to include. Allowed values: `account` or `investingEntity`.\n\n**This field defaults to `account` for backwards compatibility.** Callers that want\ninvesting-entity or holding roles must provide this parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "roleType",
+                  "value": "<string>",
+                  "description": "Filter results to only include roles matching the specified portal name.\nSpaces and special characters must be URL-encoded.\n\nExample values (as they appear in the database):\n- `Tax Only` (in URL: `?roleType=Tax%20Only`)\n- `Full Access` (in URL: `?roleType=Full%20Access`)\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3646c989-3467-44dc-bc40-d576d822b346",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "userIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "userIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roleType",
+                      "value": "Tax%20Only"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"string\",\n  \"selfUrl\": \"/user-roles\",\n  \"contents\": [\n    {\n      \"kind\": \"user-role\",\n      \"objectRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/account/56\",\n        \"name\": \"Account 56\"\n      },\n      \"userRef\": {\n        \"kind\": \"user-ref\",\n        \"id\": 15,\n        \"url\": \"/users/15\",\n        \"name\": \"John Smith\"\n      },\n      \"roleType\": \"Tax Only\",\n      \"accountId\": 56,\n      \"userUrl\": \"/users/15\"\n    },\n    {\n      \"kind\": \"user-role\",\n      \"objectRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/account/56\",\n        \"name\": \"Account 56\"\n      },\n      \"userRef\": {\n        \"kind\": \"user-ref\",\n        \"id\": 15,\n        \"url\": \"/users/15\",\n        \"name\": \"John Smith\"\n      },\n      \"roleType\": \"Tax Only\",\n      \"accountId\": 56,\n      \"userUrl\": \"/users/15\"\n    }\n  ],\n  \"prev\": \"string\",\n  \"next\": \"/user-roles?offset=25\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78b38b82-ae25-41d0-bd4a-5aa1591dcfda",
+              "name": "No permission to view access to some accounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "userIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "userIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roleType",
+                      "value": "Tax%20Only"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No permission to view access to some accounts\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1055e30e-34e7-45dd-9c47-980a16692ed8",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "userIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "userIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "objectType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roleType",
+                      "value": "Tax%20Only"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc3ad02b-18bf-458b-8a14-10e7c3b95050",
+          "name": "Create new user roles",
+          "request": {
+            "name": "Create new user roles",
+            "description": {},
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "user-roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"accountId\": \"<integer>\",\n    \"userId\": \"<integer>\",\n    \"roleType\": \"<string>\"\n  },\n  {\n    \"accountId\": \"<integer>\",\n    \"userId\": \"<integer>\",\n    \"roleType\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c0e9ae4f-d587-4882-9abf-eab385cb36ba",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2894a416-96ac-4bf4-a9d2-44fa7099bbb2",
+              "name": "Missing required fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42915aeb-c11b-4a70-80f3-8b98acda8bda",
+              "name": "No permission to invite to some accounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No permission to invite to some accounts\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c64bd25-2fe4-4253-a974-74c7f641df90",
+              "name": "Some user roles already exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Some user roles already exist\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "925b2d17-63d5-4fbf-a89c-5c29d0564aeb",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "063d7d5a-29b8-4558-bbc8-10200960d32f",
+          "name": "Remove user roles",
+          "request": {
+            "name": "Remove user roles",
+            "description": {},
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "user-roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"accountId\": \"<integer>\",\n    \"userId\": \"<integer>\",\n    \"roleType\": \"<string>\"\n  },\n  {\n    \"accountId\": \"<integer>\",\n    \"userId\": \"<integer>\",\n    \"roleType\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fc80e3e9-8d41-4910-b147-f4855b0d2589",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b41e0203-9a09-4f03-9588-211f6094e877",
+              "name": "Missing required fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09ca6cc5-d511-41f7-93a5-eac9ccdb110d",
+              "name": "No access to some accounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No access to some accounts\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c03c271-5e61-4e64-ab1b-1bbe870419b6",
+              "name": "Some user roles don't exist yet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Some user roles don't exist yet\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff582e3a-4c51-48bb-b278-9f84cde11971",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "user-roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  },\n  {\n    \"accountId\": 56,\n    \"userId\": 15,\n    \"roleType\": \"Tax Only\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a0b53d9c-0a40-4ccf-a88d-633994dd26f9",
+    "name": "Arch Client Accounts User Roles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

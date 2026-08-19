@@ -1,0 +1,1698 @@
+{
+  "item": [
+    {
+      "id": "19aab874-ab0a-4dad-a931-8ba6301ad489",
+      "name": "Tasks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "87edb62e-358f-491d-9f54-4da22343ad5f",
+          "name": "Get a task by ID.",
+          "request": {
+            "name": "Get a task by ID.",
+            "description": {
+              "content": "Get a task by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeWireInstructions",
+                  "value": "<boolean>",
+                  "description": "Whether to include Wire Verification in the data. Please contact Arch to enable this parameter."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The ID of the task to get."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "161ece86-0131-491e-be87-f6a03988d8b1",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeWireInstructions",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to get."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"dueDate\": \"2023-07-14\",\n  \"completionDate\": \"2024-04-02\",\n  \"completionTime\": \"2024-03-11T14:13:29.000Z\",\n  \"completed\": true,\n  \"creationTime\": \"2024-03-11T14:13:29.000Z\",\n  \"investorNotes\": \"This is a note\",\n  \"holdingUrl\": \"/holdings/16\",\n  \"investingEntityUrl\": \"/investing-entities/3\",\n  \"activityRef\": {\n    \"id\": \"string\",\n    \"url\": \"/activities/112\",\n    \"filesUrl\": \"/activities/112/files\"\n  },\n  \"activityUrl\": \"/activities/767801\",\n  \"accountUrl\": \"/accounts/56\",\n  \"completedByUserUrl\": \"/users/2766\",\n  \"assignedToUserUrl\": \"/users/2766\",\n  \"value\": {\n    \"quantity\": 100000,\n    \"currencyCode\": \"USD\",\n    \"dollars\": 100000\n  },\n  \"wireVerification\": {\n    \"currentWireExtraction\": {\n      \"id\": 198,\n      \"sourceActivityId\": 812464,\n      \"specifiedCompletionTime\": \"2025-06-01T00:00:00.000Z\",\n      \"wireInstructions\": {\n        \"id\": 2503,\n        \"bankName\": \"Arch Corpo Bank\",\n        \"bankAddress\": \"1048 Broadway New York, NY 10003 USA\",\n        \"accountName\": \"Tiger Global PIP\",\n        \"accountNumber\": \"string\",\n        \"abaNumber\": \"string\",\n        \"reference\": \"Arch Family Foundation\",\n        \"bic\": \"ABGGE\",\n        \"iban\": \"DE89370400440532013000\",\n        \"sortCode\": \"string\",\n        \"contactName\": \"John Smith\",\n        \"contactNumber\": \"123-456-7890\"\n      }\n    },\n    \"changedFields\": [\n      \"bankName\",\n      \"bankAddress\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2673a1b-76a6-4a20-bb57-e96b88efc5fd",
+              "name": "Task not found or caller not authorized to view task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeWireInstructions",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to get."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "138b0f0e-1904-4720-8b0c-a691fca35621",
+          "name": "Complete a task by ID.",
+          "request": {
+            "name": "Complete a task by ID.",
+            "description": {
+              "content": "Complete a task by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tasks",
+                ":id",
+                "complete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The ID of the task to complete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"completionDate\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9bbe516e-a5bd-4fa1-93e3-0d404abf002e",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completionDate\": \"2024-03-27\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c753471-9747-4204-958a-9b7d39d19e04",
+              "name": "Malformed body or task already completed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completionDate\": \"2024-03-27\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "429dcc25-6d72-4729-9dd5-41506fed3a70",
+              "name": "Task not found or caller not authorized to complete task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completionDate\": \"2024-03-27\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3edbf33b-c159-4d2a-8e68-089ca6116152",
+              "name": "Error completing task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to complete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"completionDate\": \"2024-03-27\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c685641-aec4-4452-85d4-0234da92d8c0",
+          "name": "Get all tasks for the user.",
+          "request": {
+            "name": "Get all tasks for the user.",
+            "description": {
+              "content": "Get all tasks for the user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of activities to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of activities to skip before collecting results"
+                },
+                {
+                  "disabled": false,
+                  "key": "holdingIds",
+                  "value": "<string>",
+                  "description": "Filter the output for tasks related to holdings with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "investingEntityIds",
+                  "value": "<string>",
+                  "description": "Filter the output for tasks related to investing entities with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "issuingEntityIds",
+                  "value": "<string>",
+                  "description": "Filter the output for tasks related to issuing entities with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "accountIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "assignedToUsers",
+                  "value": "<string>",
+                  "description": "Filter the output for tasks with an assigned user with a matching id on one of the provided ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "completedByUsers",
+                  "value": "<string>",
+                  "description": "Filter the output for tasks completed by a user with a matching id on one of the provided ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeDueDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for tasks with a due time before the queried date-time."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterDueDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for tasks with a due time after the queried date-time."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCompletionDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for tasks with a completion date before the queried date-time."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCompletionDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for tasks with a completion date after the queried date-time."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCreationTime",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for tasks with a creation time before the queried date-time."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCreationTime",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for tasks with a creation time after the queried date-time."
+                },
+                {
+                  "disabled": false,
+                  "key": "isComplete",
+                  "value": "<boolean>",
+                  "description": "Filter the output for tasks that have a completion status matching the provided value"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeWireInstructions",
+                  "value": "<boolean>",
+                  "description": "Whether to include Wire Verification in the data. Please contact Arch to enable this parameter."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23652a3b-2454-40ab-bd02-ef9197dbfa0b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "holdingIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "assignedToUsers",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "completedByUsers",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "beforeDueDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterDueDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCompletionDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCompletionDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCreationTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCreationTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "isComplete",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeWireInstructions",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"page\",\n  \"selfUrl\": \"/tasks?limit=10&offset=0\",\n  \"contents\": [\n    {\n      \"id\": \"string\",\n      \"dueDate\": \"2023-07-14\",\n      \"completionDate\": \"2024-04-02\",\n      \"completionTime\": \"2024-03-11T14:13:29.000Z\",\n      \"completed\": true,\n      \"creationTime\": \"2024-03-11T14:13:29.000Z\",\n      \"investorNotes\": \"This is a note\",\n      \"holdingUrl\": \"/holdings/16\",\n      \"investingEntityUrl\": \"/investing-entities/3\",\n      \"activityRef\": {\n        \"id\": \"string\",\n        \"url\": \"/activities/112\",\n        \"filesUrl\": \"/activities/112/files\"\n      },\n      \"activityUrl\": \"/activities/767801\",\n      \"accountUrl\": \"/accounts/56\",\n      \"completedByUserUrl\": \"/users/2766\",\n      \"assignedToUserUrl\": \"/users/2766\",\n      \"value\": {\n        \"quantity\": 100000,\n        \"currencyCode\": \"USD\",\n        \"dollars\": 100000\n      },\n      \"wireVerification\": {\n        \"currentWireExtraction\": {\n          \"id\": 198,\n          \"sourceActivityId\": 812464,\n          \"specifiedCompletionTime\": \"2025-06-01T00:00:00.000Z\",\n          \"wireInstructions\": {\n            \"id\": 2503,\n            \"bankName\": \"Arch Corpo Bank\",\n            \"bankAddress\": \"1048 Broadway New York, NY 10003 USA\",\n            \"accountName\": \"Tiger Global PIP\",\n            \"accountNumber\": \"string\",\n            \"abaNumber\": \"string\",\n            \"reference\": \"Arch Family Foundation\",\n            \"bic\": \"ABGGE\",\n            \"iban\": \"DE89370400440532013000\",\n            \"sortCode\": \"string\",\n            \"contactName\": \"John Smith\",\n            \"contactNumber\": \"123-456-7890\"\n          }\n        },\n        \"changedFields\": [\n          \"bankName\",\n          \"bankAddress\"\n        ]\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"dueDate\": \"2023-07-14\",\n      \"completionDate\": \"2024-04-02\",\n      \"completionTime\": \"2024-03-11T14:13:29.000Z\",\n      \"completed\": true,\n      \"creationTime\": \"2024-03-11T14:13:29.000Z\",\n      \"investorNotes\": \"This is a note\",\n      \"holdingUrl\": \"/holdings/16\",\n      \"investingEntityUrl\": \"/investing-entities/3\",\n      \"activityRef\": {\n        \"id\": \"string\",\n        \"url\": \"/activities/112\",\n        \"filesUrl\": \"/activities/112/files\"\n      },\n      \"activityUrl\": \"/activities/767801\",\n      \"accountUrl\": \"/accounts/56\",\n      \"completedByUserUrl\": \"/users/2766\",\n      \"assignedToUserUrl\": \"/users/2766\",\n      \"value\": {\n        \"quantity\": 100000,\n        \"currencyCode\": \"USD\",\n        \"dollars\": 100000\n      },\n      \"wireVerification\": {\n        \"currentWireExtraction\": {\n          \"id\": 198,\n          \"sourceActivityId\": 812464,\n          \"specifiedCompletionTime\": \"2025-06-01T00:00:00.000Z\",\n          \"wireInstructions\": {\n            \"id\": 2503,\n            \"bankName\": \"Arch Corpo Bank\",\n            \"bankAddress\": \"1048 Broadway New York, NY 10003 USA\",\n            \"accountName\": \"Tiger Global PIP\",\n            \"accountNumber\": \"string\",\n            \"abaNumber\": \"string\",\n            \"reference\": \"Arch Family Foundation\",\n            \"bic\": \"ABGGE\",\n            \"iban\": \"DE89370400440532013000\",\n            \"sortCode\": \"string\",\n            \"contactName\": \"John Smith\",\n            \"contactNumber\": \"123-456-7890\"\n          }\n        },\n        \"changedFields\": [\n          \"bankName\",\n          \"bankAddress\"\n        ]\n      }\n    }\n  ],\n  \"prev\": \"/tasks?limit=10&offset=0\",\n  \"next\": \"/tasks?limit=10&offset=10\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c9bb34d-1e44-43a8-bc48-59e9debb378f",
+          "name": "Assign one or more tasks to a user with userId.",
+          "request": {
+            "name": "Assign one or more tasks to a user with userId.",
+            "description": {
+              "content": "Assign one or more tasks to a user with userId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tasks",
+                ":userId",
+                "assign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) The ID of the user to be assigned the tasks."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taskIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "54d691aa-464d-4604-b99e-baaf817bac1b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":userId",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) The ID of the user to be assigned the tasks."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskIds\": [\n    1,\n    2,\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf50a264-8a29-4468-a97f-fcce68bada8f",
+              "name": "Tasked user does not have permission to complete one or more of the provided tasks, or one or more of the provided tasks cannot be assigned by you.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":userId",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) The ID of the user to be assigned the tasks."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskIds\": [\n    1,\n    2,\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b5eead66-ca0e-4d40-a078-56926241c8b7",
+              "name": "User not found or is inaccessible.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":userId",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) The ID of the user to be assigned the tasks."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskIds\": [\n    1,\n    2,\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0ab7fda6-df79-4c6a-b9da-f884ef58948c",
+              "name": "Error completing task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":userId",
+                    "assign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) The ID of the user to be assigned the tasks."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskIds\": [\n    1,\n    2,\n    3\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ff7bebd-cb96-4658-a89e-d514ae6bf9c5",
+          "name": "Update the notes section of a task.",
+          "request": {
+            "name": "Update the notes section of a task.",
+            "description": {
+              "content": "Update the notes section (investorNotes) of a task by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tasks",
+                ":id",
+                "task-notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The ID of the task to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taskNotes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d6d52b84-66a2-4e4b-8df1-86b6a80a5255",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "task-notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskNotes\": \"Updated task notes here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"dueDate\": \"2023-07-14\",\n  \"completionDate\": \"2024-04-02\",\n  \"completionTime\": \"2024-03-11T14:13:29.000Z\",\n  \"completed\": true,\n  \"creationTime\": \"2024-03-11T14:13:29.000Z\",\n  \"investorNotes\": \"This is a note\",\n  \"holdingUrl\": \"/holdings/16\",\n  \"investingEntityUrl\": \"/investing-entities/3\",\n  \"activityRef\": {\n    \"id\": \"string\",\n    \"url\": \"/activities/112\",\n    \"filesUrl\": \"/activities/112/files\"\n  },\n  \"activityUrl\": \"/activities/767801\",\n  \"accountUrl\": \"/accounts/56\",\n  \"completedByUserUrl\": \"/users/2766\",\n  \"assignedToUserUrl\": \"/users/2766\",\n  \"value\": {\n    \"quantity\": 100000,\n    \"currencyCode\": \"USD\",\n    \"dollars\": 100000\n  },\n  \"wireVerification\": {\n    \"currentWireExtraction\": {\n      \"id\": 198,\n      \"sourceActivityId\": 812464,\n      \"specifiedCompletionTime\": \"2025-06-01T00:00:00.000Z\",\n      \"wireInstructions\": {\n        \"id\": 2503,\n        \"bankName\": \"Arch Corpo Bank\",\n        \"bankAddress\": \"1048 Broadway New York, NY 10003 USA\",\n        \"accountName\": \"Tiger Global PIP\",\n        \"accountNumber\": \"string\",\n        \"abaNumber\": \"string\",\n        \"reference\": \"Arch Family Foundation\",\n        \"bic\": \"ABGGE\",\n        \"iban\": \"DE89370400440532013000\",\n        \"sortCode\": \"string\",\n        \"contactName\": \"John Smith\",\n        \"contactNumber\": \"123-456-7890\"\n      }\n    },\n    \"changedFields\": [\n      \"bankName\",\n      \"bankAddress\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51edf04d-9e91-4225-b5af-cfba9cb93def",
+              "name": "Malformed request body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "task-notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskNotes\": \"Updated task notes here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3aa5cc0-c811-43e7-9a0c-eeafe30ecc8f",
+              "name": "Task not found or caller not authorized to update task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "task-notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskNotes\": \"Updated task notes here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "513d05b1-d7ea-4611-98d5-091e4bd42255",
+              "name": "Error updating task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "task-notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskNotes\": \"Updated task notes here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56e35d6b-5f33-4c4a-9e6d-104ade1dfed5",
+          "name": "Get all user comments for a task.",
+          "request": {
+            "name": "Get all user comments for a task.",
+            "description": {
+              "content": "Get all user comments for a task. Employee comments are excluded. Requires CommentsRead permission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tasks",
+                ":id",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The ID of the task to get comments for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "95077e9e-6f75-463b-b874-f4160f6b84d4",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to get comments for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 12345,\n    \"author\": {\n      \"id\": 2766,\n      \"name\": \"John Smith\",\n      \"url\": \"/users/2766\"\n    },\n    \"creationTime\": \"2024-03-11T14:13:29.000Z\",\n    \"updateTime\": \"2024-03-11T14:13:29.000Z\",\n    \"message\": \"This needs to be reviewed\",\n    \"parentCommentId\": 12340\n  },\n  {\n    \"id\": 12345,\n    \"author\": {\n      \"id\": 2766,\n      \"name\": \"John Smith\",\n      \"url\": \"/users/2766\"\n    },\n    \"creationTime\": \"2024-03-11T14:13:29.000Z\",\n    \"updateTime\": \"2024-03-11T14:13:29.000Z\",\n    \"message\": \"This needs to be reviewed\",\n    \"parentCommentId\": 12340\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb8c963b-f9c1-4eee-ab01-b87cbf76a000",
+              "name": "Invalid task ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to get comments for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "09d05e7c-c18b-4e87-8b71-787132893e62",
+              "name": "Forbidden - CommentsRead permission required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to get comments for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc451a4f-aa72-407c-96b5-3d0d1cc51f54",
+              "name": "Task not found or caller not authorized to view task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tasks",
+                    ":id",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The ID of the task to get comments for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "93792491-d74e-475f-9e5b-1803c6eeb129",
+    "name": "Arch Client Accounts Tasks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

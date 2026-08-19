@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Investing Entities API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Investing Entities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all investing entities accessible to the user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/investing-entities",
+            "params": [
+              {
+                "name": "accountIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of all investing entities available to the user determined by the access token."
+        },
+        {
+          "info": {
+            "name": "Add a new investing entity to Arch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/investing-entities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new investing entity and returns the URL, if successful."
+        },
+        {
+          "info": {
+            "name": "Get info about one investing entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/investing-entities/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific investing entity to query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns details about a single investing entity."
+        },
+        {
+          "info": {
+            "name": "Get data for a set of holdings under an investing entity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/investing-entities/:id/holdings",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific investing entity to query holdings for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of holdings to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of holdings to skip before collecting results"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of holdings data under an investing entity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

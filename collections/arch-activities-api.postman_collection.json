@@ -1,0 +1,1361 @@
+{
+  "item": [
+    {
+      "id": "6c7885d1-decb-40e0-8d97-c43c419d3d1f",
+      "name": "Activities",
+      "description": {
+        "content": "Interact with Arch objects representing financial updates",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "421fc1cb-78ab-4863-818e-b4b4a391132b",
+          "name": "Get all activities accessible to the user",
+          "request": {
+            "name": "Get all activities accessible to the user",
+            "description": {
+              "content": "Returns a list of all activities available to the user determined by the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "activities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of activities to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of activities to skip before collecting results"
+                },
+                {
+                  "disabled": false,
+                  "key": "investingEntityIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include activities belonging to one of the Investing Entity ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "issuingEntityIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include activities belonging to one of the Issuing Entity ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "accountIds",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "types",
+                  "value": "<string>",
+                  "description": "Will filter the output to only include activities with one of the types in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeStatementDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a statement date before the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterStatementDate",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a statement date after the queried date."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCreatedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a creation time before the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCreatedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a creation time after the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeDueAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a due time before the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterDueAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a due time after the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeProcessedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a processed time before the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterProcessedAt",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a processed time after the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "holdingIds",
+                  "value": "<string>",
+                  "description": "Filter the output for activities related to holdings with ids in the provided argument"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeSummaries",
+                  "value": "<boolean>",
+                  "description": "Whether to include AI summaries in the data. Please contact Arch to enable this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "hasSummaries",
+                  "value": "<boolean>",
+                  "description": "Filter the output for activities that have an AI summary if true, or activities that don't have an AI summary if false. Please contact Arch to enable this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeCashFlow",
+                  "value": "<boolean>",
+                  "description": "Whether to include the cash flow associated with the activity, if it exists"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeEmailBodies",
+                  "value": "<boolean>",
+                  "description": "Whether to include the email body and html associated with the activity"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeApprovalStatus",
+                  "value": "<boolean>",
+                  "description": "Whether to include whether the activity is Pending/Approved. Please contact Arch to enable this parameter."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee502710-668d-47ca-8d5c-f51844000c12",
+              "name": "A list of activities data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "types",
+                      "value": "Investment Added,Account Statement"
+                    },
+                    {
+                      "key": "beforeStatementDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterStatementDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeProcessedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterProcessedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "holdingIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "includeSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "hasSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCashFlow",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeEmailBodies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeApprovalStatus",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"string\",\n  \"selfUrl\": \"string\",\n  \"contents\": [\n    {\n      \"kind\": \"string\",\n      \"id\": 4011.083910822727,\n      \"selfUrl\": \"string\",\n      \"holdingRef\": {\n        \"kind\": \"holding-ref\",\n        \"id\": 112,\n        \"url\": \"/holdings/112\",\n        \"name\": \"Holding 112\"\n      },\n      \"holdingUrl\": \"/holdings/112\",\n      \"investingEntityRef\": {\n        \"kind\": \"investing-entity-ref\",\n        \"id\": 711,\n        \"url\": \"/investing-entities/711\",\n        \"name\": \"Investing Entity 711\"\n      },\n      \"investingEntityUrl\": \"/investing-entities/711\",\n      \"issuingEntityRef\": {\n        \"kind\": \"issuing-entity-ref\",\n        \"id\": 204,\n        \"url\": \"/issuing-entities/204\",\n        \"name\": \"Issuing Entity 204\"\n      },\n      \"issuingEntityUrl\": \"/issuing-entities/204\",\n      \"accountRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/account/56\",\n        \"name\": \"Account 56\"\n      },\n      \"accountUrl\": \"/accounts/56\",\n      \"taskRef\": {\n        \"id\": \"string\",\n        \"url\": \"/tasks/42\"\n      },\n      \"taxDocRef\": {\n        \"id\": 42,\n        \"url\": \"/tax-documents/42\"\n      },\n      \"type\": \"Contact Details Task\",\n      \"createdAt\": \"1989-07-26\",\n      \"dueAt\": \"2009-08-09\",\n      \"statementDate\": \"1964-09-22\",\n      \"amountCents\": 6856.1967211262245,\n      \"totalCommitmentCents\": 1553.625051537252,\n      \"totalCommitment\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"totalContributionCents\": 8154.258009573854,\n      \"totalContribution\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"totalDistributionCents\": 633.3906936472378,\n      \"totalDistribution\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"remainingCommitmentCents\": 7396.712290315769,\n      \"remainingCommitment\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"recallableDistributionCents\": 4598.3346007244945,\n      \"recallableDistribution\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"capitalAccountCents\": 3110.3331681128443,\n      \"capitalAccount\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"processedAt\": 3149.5590608063394,\n      \"summaries\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cashFlowRef\": {\n        \"id\": 524,\n        \"url\": \"/holdings/524\"\n      },\n      \"cashFlowUrl\": \"/cash-flows/524\",\n      \"cashFlow\": {\n        \"id\": 12345,\n        \"type\": \"Capital Call\",\n        \"financialValue\": {\n          \"quantity\": 100000,\n          \"currencyCode\": \"USD\",\n          \"dollars\": 100000\n        },\n        \"dueAt\": \"1996-06-19T08:36:23.032Z\",\n        \"title\": \"string\"\n      },\n      \"emailHtml\": \"string\",\n      \"emailText\": \"string\",\n      \"approvalStatus\": \"Approved\",\n      \"filesUrl\": \"string\"\n    },\n    {\n      \"kind\": \"string\",\n      \"id\": 3188.738618335283,\n      \"selfUrl\": \"string\",\n      \"holdingRef\": {\n        \"kind\": \"holding-ref\",\n        \"id\": 112,\n        \"url\": \"/holdings/112\",\n        \"name\": \"Holding 112\"\n      },\n      \"holdingUrl\": \"/holdings/112\",\n      \"investingEntityRef\": {\n        \"kind\": \"investing-entity-ref\",\n        \"id\": 711,\n        \"url\": \"/investing-entities/711\",\n        \"name\": \"Investing Entity 711\"\n      },\n      \"investingEntityUrl\": \"/investing-entities/711\",\n      \"issuingEntityRef\": {\n        \"kind\": \"issuing-entity-ref\",\n        \"id\": 204,\n        \"url\": \"/issuing-entities/204\",\n        \"name\": \"Issuing Entity 204\"\n      },\n      \"issuingEntityUrl\": \"/issuing-entities/204\",\n      \"accountRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/account/56\",\n        \"name\": \"Account 56\"\n      },\n      \"accountUrl\": \"/accounts/56\",\n      \"taskRef\": {\n        \"id\": \"string\",\n        \"url\": \"/tasks/42\"\n      },\n      \"taxDocRef\": {\n        \"id\": 42,\n        \"url\": \"/tax-documents/42\"\n      },\n      \"type\": \"Draft Tax Document\",\n      \"createdAt\": \"1947-03-19\",\n      \"dueAt\": \"2002-04-24\",\n      \"statementDate\": \"2003-04-04\",\n      \"amountCents\": 3798.1014087098097,\n      \"totalCommitmentCents\": 1208.8477806010967,\n      \"totalCommitment\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"totalContributionCents\": 753.2615307830637,\n      \"totalContribution\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"totalDistributionCents\": 7536.00633483264,\n      \"totalDistribution\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"remainingCommitmentCents\": 3106.8618209380206,\n      \"remainingCommitment\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"recallableDistributionCents\": 8125.457572994158,\n      \"recallableDistribution\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"capitalAccountCents\": 5015.024302674074,\n      \"capitalAccount\": {\n        \"dollars\": 100000,\n        \"currencyCode\": \"USD\",\n        \"quantity\": 100000\n      },\n      \"processedAt\": 6241.477770677278,\n      \"summaries\": [\n        \"string\",\n        \"string\"\n      ],\n      \"cashFlowRef\": {\n        \"id\": 524,\n        \"url\": \"/holdings/524\"\n      },\n      \"cashFlowUrl\": \"/cash-flows/524\",\n      \"cashFlow\": {\n        \"id\": 12345,\n        \"type\": \"Contribution\",\n        \"financialValue\": {\n          \"quantity\": 100000,\n          \"currencyCode\": \"USD\",\n          \"dollars\": 100000\n        },\n        \"dueAt\": \"1997-05-15T19:27:04.757Z\",\n        \"title\": \"string\"\n      },\n      \"emailHtml\": \"string\",\n      \"emailText\": \"string\",\n      \"approvalStatus\": \"Pending\",\n      \"filesUrl\": \"string\"\n    }\n  ],\n  \"prev\": \"string\",\n  \"next\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05db92e1-c211-4814-94f7-4b2f6fb76177",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "investingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "issuingEntityIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "accountIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "types",
+                      "value": "Investment Added,Account Statement"
+                    },
+                    {
+                      "key": "beforeStatementDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterStatementDate",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterCreatedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterDueAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "beforeProcessedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterProcessedAt",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "holdingIds",
+                      "value": "1,2,3,4"
+                    },
+                    {
+                      "key": "includeSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "hasSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCashFlow",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeEmailBodies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeApprovalStatus",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f52f23a-d952-407b-993a-09059392ee84",
+          "name": "Get activity by id",
+          "request": {
+            "name": "Get activity by id",
+            "description": {
+              "content": "Returns activity data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "activities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeSummaries",
+                  "value": "<boolean>",
+                  "description": "Whether to include AI summaries in the data. Please contact Arch to enable this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeCashFlow",
+                  "value": "<boolean>",
+                  "description": "Whether to include the cash flow associated with the activity, if it exists"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeEmailBodies",
+                  "value": "<boolean>",
+                  "description": "Whether to include the email body and html associated with the activity"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeApprovalStatus",
+                  "value": "<boolean>",
+                  "description": "Whether to include whether the activity is Pending/Approved. Please contact Arch to enable this parameter."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific activity to query"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bac85a35-bc6c-4463-8551-202122484254",
+              "name": "Activity data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCashFlow",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeEmailBodies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeApprovalStatus",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"string\",\n  \"id\": 8463.290197817867,\n  \"selfUrl\": \"string\",\n  \"holdingRef\": {\n    \"kind\": \"holding-ref\",\n    \"id\": 112,\n    \"url\": \"/holdings/112\",\n    \"name\": \"Holding 112\"\n  },\n  \"holdingUrl\": \"/holdings/112\",\n  \"investingEntityRef\": {\n    \"kind\": \"investing-entity-ref\",\n    \"id\": 711,\n    \"url\": \"/investing-entities/711\",\n    \"name\": \"Investing Entity 711\"\n  },\n  \"investingEntityUrl\": \"/investing-entities/711\",\n  \"issuingEntityRef\": {\n    \"kind\": \"issuing-entity-ref\",\n    \"id\": 204,\n    \"url\": \"/issuing-entities/204\",\n    \"name\": \"Issuing Entity 204\"\n  },\n  \"issuingEntityUrl\": \"/issuing-entities/204\",\n  \"accountRef\": {\n    \"kind\": \"account-ref\",\n    \"id\": 56,\n    \"url\": \"/account/56\",\n    \"name\": \"Account 56\"\n  },\n  \"accountUrl\": \"/accounts/56\",\n  \"taskRef\": {\n    \"id\": \"string\",\n    \"url\": \"/tasks/42\"\n  },\n  \"taxDocRef\": {\n    \"id\": 42,\n    \"url\": \"/tax-documents/42\"\n  },\n  \"type\": \"Quarterly Report\",\n  \"createdAt\": \"1971-02-03\",\n  \"dueAt\": \"1988-02-02\",\n  \"statementDate\": \"2021-08-12\",\n  \"amountCents\": 5478.262420513267,\n  \"totalCommitmentCents\": 1833.6833070844273,\n  \"totalCommitment\": {\n    \"dollars\": 100000,\n    \"currencyCode\": \"USD\",\n    \"quantity\": 100000\n  },\n  \"totalContributionCents\": 4313.807847413292,\n  \"totalContribution\": {\n    \"dollars\": 100000,\n    \"currencyCode\": \"USD\",\n    \"quantity\": 100000\n  },\n  \"totalDistributionCents\": 5192.660355303954,\n  \"totalDistribution\": {\n    \"dollars\": 100000,\n    \"currencyCode\": \"USD\",\n    \"quantity\": 100000\n  },\n  \"remainingCommitmentCents\": 9411.984004838681,\n  \"remainingCommitment\": {\n    \"dollars\": 100000,\n    \"currencyCode\": \"USD\",\n    \"quantity\": 100000\n  },\n  \"recallableDistributionCents\": 6159.324307175602,\n  \"recallableDistribution\": {\n    \"dollars\": 100000,\n    \"currencyCode\": \"USD\",\n    \"quantity\": 100000\n  },\n  \"capitalAccountCents\": 4855.8523356434325,\n  \"capitalAccount\": {\n    \"dollars\": 100000,\n    \"currencyCode\": \"USD\",\n    \"quantity\": 100000\n  },\n  \"processedAt\": 755.4193671984776,\n  \"summaries\": [\n    \"string\",\n    \"string\"\n  ],\n  \"cashFlowRef\": {\n    \"id\": 524,\n    \"url\": \"/holdings/524\"\n  },\n  \"cashFlowUrl\": \"/cash-flows/524\",\n  \"cashFlow\": {\n    \"id\": 12345,\n    \"type\": \"Dividend\",\n    \"financialValue\": {\n      \"quantity\": 100000,\n      \"currencyCode\": \"USD\",\n      \"dollars\": 100000\n    },\n    \"dueAt\": \"2001-06-16T10:52:17.742Z\",\n    \"title\": \"string\"\n  },\n  \"emailHtml\": \"string\",\n  \"emailText\": \"string\",\n  \"approvalStatus\": \"Approved\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2143051d-b04a-4a3f-8f18-fcd111e57b62",
+              "name": "Id could not be parsed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCashFlow",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeEmailBodies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeApprovalStatus",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "70706aca-eade-49a0-91b8-3f234c7788f9",
+              "name": "Activity id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCashFlow",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeEmailBodies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeApprovalStatus",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06e7e140-9f81-476a-9bbe-3b8ec41cb06f",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeSummaries",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCashFlow",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeEmailBodies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeApprovalStatus",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2faca10-ceb1-41e9-b3fe-c8b0c82c5c91",
+          "name": "Update activity by id",
+          "request": {
+            "name": "Update activity by id",
+            "description": {
+              "content": "Updates activity data. (Not yet documented)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "activities",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific activity to query"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "73c7eec6-769d-4738-a458-2f85f6b8969b",
+              "name": "Endpoint not yet implemented.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e369bb3-d6c0-4bf4-bdf6-583d55770f2e",
+          "name": "Get all files for a specific activity",
+          "request": {
+            "name": "Get all files for a specific activity",
+            "description": {
+              "content": "Returns a list of file metadata, including a presigned download link for a specific activity, if the user has access through through the access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "activities",
+                ":id",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) A specific activity to query"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4fbd99b2-eb6b-41de-a566-d94148acbdef",
+              "name": "A list of file metadata for the activity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"fileList\",\n  \"contents\": [\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    },\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f12897cb-5e4f-4a10-b7ff-861a96a66102",
+              "name": "Activity id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":id",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) A specific activity to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af96a5d4-c273-4591-a1aa-b829dc1cd5b6",
+          "name": "Query activity files",
+          "request": {
+            "name": "Query activity files",
+            "description": {
+              "content": "Get metadata for activity files",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "activities",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activityIds\": [\n    \"<number>\",\n    \"<number>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b8a79643-6702-4915-9868-5e6333fd64b9",
+              "name": "A flat array of files with metadata for the related activity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activityIds\": [\n    \"<number>\",\n    \"<number>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 101,\n    \"name\": \"56_TestEntity.pdf\",\n    \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n    \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n    \"sizeBytes\": 123456,\n    \"fileHash\": \"afakehash\",\n    \"originalName\": \"file_123.pdf\",\n    \"activityUrl\": \"/activities/1234\"\n  },\n  {\n    \"id\": 101,\n    \"name\": \"56_TestEntity.pdf\",\n    \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n    \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n    \"sizeBytes\": 123456,\n    \"fileHash\": \"afakehash\",\n    \"originalName\": \"file_123.pdf\",\n    \"activityUrl\": \"/activities/1234\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d71c649-862a-4ca8-81bb-3847d3464d29",
+          "name": "Download the file, as originally received.",
+          "request": {
+            "name": "Download the file, as originally received.",
+            "description": {
+              "content": "Download the file, as originally received by Arch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "activities",
+                ":activityId",
+                "files",
+                ":fileId",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "activityId",
+                  "description": "(Required) The activity the file exists under"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileId",
+                  "description": "(Required) The id of the file that's being requested"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5d499434-ad30-4835-8ec6-67fb3dd92d76",
+              "name": "Buffer containing the content of the requested file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":activityId",
+                    "files",
+                    ":fileId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "activityId",
+                      "description": "(Required) The activity the file exists under"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileId",
+                      "description": "(Required) The id of the file that's being requested"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9ad2b9d5-811d-4d84-b00b-966e1f8eedd0",
+              "name": "Activity id not found or is inaccessible to the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "activities",
+                    ":activityId",
+                    "files",
+                    ":fileId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "activityId",
+                      "description": "(Required) The activity the file exists under"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileId",
+                      "description": "(Required) The id of the file that's being requested"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/text"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/text"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a2d0d67f-ac3f-4164-a6f8-046b7f37a5e9",
+    "name": "Arch Client Accounts Activities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}

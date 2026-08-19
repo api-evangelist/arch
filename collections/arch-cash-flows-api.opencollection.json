@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Arch Client Accounts Cash Flows API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cash Flows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get data for a set of cash flows available to the user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/cash-flows",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of cash flows to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of cash flows to skip before collecting results"
+              },
+              {
+                "name": "holdingIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for cash flows belonging to holdings with ids in the provided argument"
+              },
+              {
+                "name": "investingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for cash flows belonging to investing entities with ids in the provided argument"
+              },
+              {
+                "name": "issuingEntityIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Filter the output for cash flows belonging to issuing entities with ids in the provided argument"
+              },
+              {
+                "name": "accountIds",
+                "value": "1,2,3,4",
+                "type": "query",
+                "description": "Will filter the output to only include holdings relevant to one of the account ids in the provided argument"
+              },
+              {
+                "name": "title",
+                "value": "Test Name",
+                "type": "query",
+                "description": "Filter the output for cash flows with a title that contains the provided value"
+              },
+              {
+                "name": "types",
+                "value": "Capital Call, Distribution, Contribution",
+                "type": "query",
+                "description": "Will filter the output to only include cash flows with one of the types in the provided argument"
+              },
+              {
+                "name": "beforeDueAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for cash flows with a due time before the queried datetime."
+              },
+              {
+                "name": "afterDueAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for cash flows with a due time after the queried datetime."
+              },
+              {
+                "name": "beforeCompletedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for cash flows with a completion date before the queried datetime."
+              },
+              {
+                "name": "afterCompletedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for cash flows with a completion date after the queried datetime."
+              },
+              {
+                "name": "beforeCreatedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for cash flows with a creation time before the queried datetime."
+              },
+              {
+                "name": "afterCreatedAt",
+                "value": "2024-05-22T21:15:55.306Z",
+                "type": "query",
+                "description": "Filter the output for cash flows with a creation time after the queried datetime."
+              },
+              {
+                "name": "includeAllocations",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include data about allocations in the response."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of cash flows available to the user as determined by the user's access token."
+        },
+        {
+          "info": {
+            "name": "Add a new cash flow to Arch. Assumes USD.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/client-api/v0/cash-flows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new cash flow and returns the URL, if successful. Assumes the cash flow is in USD."
+        },
+        {
+          "info": {
+            "name": "Get a specific cash flow by ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/client-api/v0/cash-flows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A specific cash flow to query"
+              },
+              {
+                "name": "includeAllocations",
+                "value": "true",
+                "type": "query",
+                "description": "Whether to include data about allocations in the response."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns an object containing data for a specific cash flow."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

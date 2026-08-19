@@ -269,3 +269,9 @@ tools:
   method: POST
   path: /client-api/v0/auth/token
   source_operation: openapi/arch-client-api-openapi.json#POST /client-api/v0/auth/token
+deployment:
+  mode: none
+  verified: derived
+  tools: 52
+  checked: '2026-08-12'
+  source: catalog MCP census

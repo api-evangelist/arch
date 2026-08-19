@@ -1,0 +1,608 @@
+{
+  "item": [
+    {
+      "id": "2018d648-c755-4e8e-b533-e37fa8241d8b",
+      "name": "Tax Documents",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1537ee9-72c0-457a-8514-94d12e9cd4a3",
+          "name": "Get all tax documents",
+          "request": {
+            "name": "Get all tax documents",
+            "description": {},
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tax-documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "A year to query tax documents from. Defaults to the last calendar year."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeReceivedTime",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a processed time before the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterReceivedTime",
+                  "value": "<dateTime>",
+                  "description": "Filter the output for activities with a processed time after the queried timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "years",
+                  "value": "<string>",
+                  "description": "A comma separated list of years to query tax documents from. Defaults to the last calendar year."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of tax documents to skip before collecting results"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "The number of tax documents to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "documentType",
+                  "value": "<string>",
+                  "description": "The type of tax document to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeFiles",
+                  "value": "false",
+                  "description": "Whether to include file details in the response"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5cf87495-911c-4738-89ac-4212656f7faa",
+              "name": "The tax document overview",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tax-documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "year",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "beforeReceivedTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "afterReceivedTime",
+                      "value": "2024-05-22T21:15:55.306Z"
+                    },
+                    {
+                      "key": "years",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    },
+                    {
+                      "key": "documentType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeFiles",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"string\",\n  \"selfUrl\": \"/tax-documents?limit=25&offset=50\",\n  \"contents\": [\n    {\n      \"kind\": \"tax-document\",\n      \"id\": 100200,\n      \"selfUrl\": \"/tax-documents/100200\",\n      \"type\": \"K-1\",\n      \"holdingRef\": {\n        \"kind\": \"holding-ref\",\n        \"id\": 112,\n        \"url\": \"/holdings/112\",\n        \"name\": \"Holding 112\"\n      },\n      \"investingEntityRef\": {\n        \"kind\": \"investing-entity-ref\",\n        \"id\": 711,\n        \"url\": \"/investing-entities/711\",\n        \"name\": \"Investing Entity 711\"\n      },\n      \"issuingEntityRef\": {\n        \"kind\": \"issuing-entity-ref\",\n        \"id\": 204,\n        \"url\": \"/issuing-entities/204\",\n        \"name\": \"Issuing Entity 204\"\n      },\n      \"taxYear\": 2024,\n      \"repeatedCadence\": \"One-off\",\n      \"collectionStatus\": \"ReceivedEstimate\",\n      \"receivedDate\": \"1948-08-18\",\n      \"receivedTime\": \"2024-03-29T14:30:00.000Z\",\n      \"expectedDate\": \"1972-12-17\",\n      \"fileUrl\": \"/tax-documents/100200/files\",\n      \"accountRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/account/56\",\n        \"name\": \"Account 56\"\n      }\n    },\n    {\n      \"kind\": \"tax-document\",\n      \"id\": 100200,\n      \"selfUrl\": \"/tax-documents/100200\",\n      \"type\": \"K-1\",\n      \"holdingRef\": {\n        \"kind\": \"holding-ref\",\n        \"id\": 112,\n        \"url\": \"/holdings/112\",\n        \"name\": \"Holding 112\"\n      },\n      \"investingEntityRef\": {\n        \"kind\": \"investing-entity-ref\",\n        \"id\": 711,\n        \"url\": \"/investing-entities/711\",\n        \"name\": \"Investing Entity 711\"\n      },\n      \"issuingEntityRef\": {\n        \"kind\": \"issuing-entity-ref\",\n        \"id\": 204,\n        \"url\": \"/issuing-entities/204\",\n        \"name\": \"Issuing Entity 204\"\n      },\n      \"taxYear\": 2024,\n      \"repeatedCadence\": \"One-off\",\n      \"collectionStatus\": \"ReceivedEstimate\",\n      \"receivedDate\": \"1968-04-01\",\n      \"receivedTime\": \"2024-03-29T14:30:00.000Z\",\n      \"expectedDate\": \"2023-02-12\",\n      \"fileUrl\": \"/tax-documents/100200/files\",\n      \"accountRef\": {\n        \"kind\": \"account-ref\",\n        \"id\": 56,\n        \"url\": \"/account/56\",\n        \"name\": \"Account 56\"\n      }\n    }\n  ],\n  \"next\": \"/tax-documents?limit=25&offset=75\",\n  \"prev\": \"/tax-documents?limit=25&offset=25\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e221ea0e-f031-4363-a692-57545a4e2e6f",
+          "name": "Get a single tax document by ID",
+          "request": {
+            "name": "Get a single tax document by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tax-documents",
+                ":taxDocId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeFiles",
+                  "value": "false",
+                  "description": "Whether to include file details in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "taxDocId",
+                  "description": "(Required) The ID of the tax document to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9155b6d4-9b4d-4bec-87ad-39cbd43341d1",
+              "name": "The tax document",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tax-documents",
+                    ":taxDocId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFiles",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "taxDocId",
+                      "description": "(Required) The ID of the tax document to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"tax-document\",\n  \"id\": 100200,\n  \"selfUrl\": \"/tax-documents/100200\",\n  \"type\": \"K-1\",\n  \"holdingRef\": {\n    \"kind\": \"holding-ref\",\n    \"id\": 112,\n    \"url\": \"/holdings/112\",\n    \"name\": \"Holding 112\"\n  },\n  \"investingEntityRef\": {\n    \"kind\": \"investing-entity-ref\",\n    \"id\": 711,\n    \"url\": \"/investing-entities/711\",\n    \"name\": \"Investing Entity 711\"\n  },\n  \"issuingEntityRef\": {\n    \"kind\": \"issuing-entity-ref\",\n    \"id\": 204,\n    \"url\": \"/issuing-entities/204\",\n    \"name\": \"Issuing Entity 204\"\n  },\n  \"taxYear\": 2024,\n  \"repeatedCadence\": \"One-off\",\n  \"collectionStatus\": \"ReceivedFinal\",\n  \"receivedDate\": \"2002-01-09\",\n  \"receivedTime\": \"2024-03-29T14:30:00.000Z\",\n  \"expectedDate\": \"1986-02-13\",\n  \"fileUrl\": \"/tax-documents/100200/files\",\n  \"accountRef\": {\n    \"kind\": \"account-ref\",\n    \"id\": 56,\n    \"url\": \"/account/56\",\n    \"name\": \"Account 56\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85ee9b3f-7e03-492b-89bb-8a5d2f39a145",
+              "name": "Tax document not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tax-documents",
+                    ":taxDocId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFiles",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "taxDocId",
+                      "description": "(Required) The ID of the tax document to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72fbd410-3b43-4556-b2d3-5ad0764adf8b",
+          "name": "Get all files for a specific tax document",
+          "request": {
+            "name": "Get all files for a specific tax document",
+            "description": {
+              "content": "Returns a list of files, including download links.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tax-documents",
+                ":taxDocId",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "taxDocId",
+                  "description": "(Required) A specific tax document to query"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9edb40c8-4389-4fe9-a42d-032f576ae983",
+              "name": "A list of files for the tax document.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tax-documents",
+                    ":taxDocId",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "taxDocId",
+                      "description": "(Required) A specific tax document to query"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"kind\": \"page\",\n  \"contents\": [\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\",\n      \"version\": \"Final\",\n      \"type\": \"K-1\",\n      \"activityRef\": {\n        \"id\": \"string\",\n        \"url\": \"/activities/112\",\n        \"filesUrl\": \"/activities/112/files\"\n      }\n    },\n    {\n      \"id\": 101,\n      \"name\": \"56_TestEntity.pdf\",\n      \"uploadTime\": \"2024-02-08T18:50:15.000Z\",\n      \"downloadUrl\": \"/{parentType}/1234/files/1234/download\",\n      \"sizeBytes\": 123456,\n      \"fileHash\": \"afakehash\",\n      \"originalName\": \"file_123.pdf\",\n      \"version\": \"Final\",\n      \"type\": \"K-1\",\n      \"activityRef\": {\n        \"id\": \"string\",\n        \"url\": \"/activities/112\",\n        \"filesUrl\": \"/activities/112/files\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63e075f0-7095-487f-8bf3-99d747b52839",
+          "name": "Download individual tax doc file",
+          "request": {
+            "name": "Download individual tax doc file",
+            "description": {},
+            "url": {
+              "path": [
+                "client-api",
+                "v0",
+                "tax-documents",
+                ":taxDocId",
+                "files",
+                ":fileId",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "taxDocId",
+                  "description": "(Required) A specific tax document to query"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileId",
+                  "description": "(Required) A specific file to download"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6aae8f34-f05e-40c6-8558-ae33061abda7",
+              "name": "Buffer containing the content of the requested file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "client-api",
+                    "v0",
+                    "tax-documents",
+                    ":taxDocId",
+                    "files",
+                    ":fileId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "taxDocId",
+                      "description": "(Required) A specific tax document to query"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileId",
+                      "description": "(Required) A specific file to download"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1167deb7-94fa-4847-abb1-5ab97ed0a8bc",
+    "name": "Arch Client Accounts Tax Documents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Arch Client API Documentation\n\n## Getting Started\n\nTo get started, you need to request credentials from us at [api-support@arch.co](mailto:api-support@arch.co).\n\nWe'll send you a secret link with the following information\n- a Client ID\n- a Client Secret\n\n<table>\n\n<tr>\n<td>\n\n### Authentication\n\nTo authenticate, you'll need to make a POST request to the\n[`/client-api/auth/token`](#/Authentication/post_client_api_v0_auth_token) endpoint. Include your Client ID and Client Secret\nin the appropriate fields in the request body.\n\nUsing [curl](https://curl.se/), that request might look like this:\n\n**You should store and reuse this token for as long as it's valid.**\n\nYou can find the expiration time by decoding the [JWT](https://jwt.io/introduction), and checking the `exp` field, which is the expiration time represented as seconds since the Unix Epoch.\n\n</td>\n<td>\n\n```\nCLIENT_ID='<your client id>'\nCLIENT_SECRET='<your client secret>'\ncurl \\ \n  -X 'POST' \\\n  -H 'accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d \"{ \\\n    \\\"clientId\\\": \\\"$CLIENT_ID\\\", \\\n    \\\"clientSecret\\\": \\\"$CLIENT_SECRET\\\" \\\n  }\" \\\n  'https://arch.co/client-api/v0/auth/token'\n```\n\n</td>\n</tr>\n\n</table>\n\n\n<table>\n<tr>\n\n<td>\n\n### Querying\n\nOnce you have an access token, you can query the API as described below. The\nauthorization header should include your Access Token, prefixed by the word\n\"Bearer\". (e.g. `authorization: Bearer tokendata...`)\n\nHere's an example with curl.\n</td>\n\n<td>\n\n```\nACCESS_TOKEN='<access token from the previous step>'\ncurl -X 'GET' \\\n  'https://arch.co/client-api/v0/holdings' \\\n  -H 'accept: application/json' \\\n  -H \"authorization: Bearer $ACCESS_TOKEN\"\n```\n\n</td>\n\n</tr>\n</table>\n\n<table>\n<tr>\n<td>\n\n### Rate Limit\n\nThe Arch Client API is rate limited, measured in requests per minute. If you hit this limit, you will get an error 429 - Too Many Requests.\nTo address this, consider spacing out your requests.\n\nTo check your API user's rate limit status, view the response headers on an API request. The headers are as follows:\n\n* #### RateLimit-Policy\n  The max number of requests allowed over a specified window of time. Format: [number of requests];w=[window of time in seconds]\n\n* #### RateLimit-Limit\n  The max number of requests allowed over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Remaining\n  The remaining number of requests that the user is allowed to make over the current window of time. Format: [number of requests]\n\n* #### RateLimit-Reset\n  The number of seconds remaining until the window of time resets. Format: [number of seconds]\n\n</tr>\n</td>\n</table>\n\n## Pages\n\nMany Arch objects can be returned in lists called Pages. By default, a Page\ncontains up to 25 objects. Some endpoints allow the user to increase the\nnumber of requested objects up to 1000.\n\n## Concepts\n\n<table>\n\n<tr>\n<td>\n\n### Users\nAn individual's personal access to Arch.\n\n### Accounts\nRepresents a collection of investments, which users are assigned to.\n\n### Holdings\n\nHoldings are investments, or any other piece of property (real estate, real assets, bank accounts, etc.). Each holding represents a\nrelationship between an Investing Entity and an Issuing Entity, where the\nInvesting Entity has invested in one of the Offerings that the Issuing Entity\noffers.\n\n  * #### Edge Cases\n    Sometimes, a holding may not directly represent one of your investments. For example, there might be a holding that contains tax documents related to a charitable contribution. Holdings aren't always direct investments as well, it's not uncommon to see a holding representing a Fund -> Fund investment.\n\n### Investing Entities\n\nThese are the entities that own holdings. Arch receives and processes investments on behalf of the Investing Entity.\n\n</td>\n<td>\n<img src=\"../static/images/user.png\" />\n</td>\n</tr>\n\n\n<tr>\n\n</tr>\n\n\n\n<tr>\n<td>\n\n### Issuing Entities\n\nThese are the entities that issue holdings, which you are investing in. They issue documents and updates that Arch receives and processes. Typically, an issuing entity is PE fund, Hedge Fund, etc. We also consider banks to be issuing entities who issue bank account holdings.\n\n  * #### Insights\n    Insights are third party data about issuing entites powered by our partner <a href=\"https://www.preqin.com\">Preqin</a>. Insights are accessible through the corresponding issuing entity.\n### Offerings\n\nThese represent the different investing opportunities that an Issuing Entity offers. For example, Uber might offer both a Seed round, and a later Series A round of investments. That would be a singular issuing entity (Uber), with two separate offerings (Seed, Series A).\n\n</td>\n<td>\n  <img src=\"../static/images/issuing.png\" />\n</td>\n</tr>\n\n<tr>\n\n<td>\n\n### Activities\n\nArch processes many types of documents and updates to your investments.\nCollectively, these updates are known as an \"Activity.\" Examples of activities\ninclude events like:\n- Account Statement Received\n- Capital Call Requested/Paid\n- Distribution Notice/Paid\n- Investor Letter\n\nWe process these activities and extract various finanicial facts about your activities. Examples of these finanical facts are:\n\n- Total Value (Capital Account)\n- Total Contribution\n- Total Distribution\n\n### Cash Flows\n\nThese represent money flowing into or out of your investments. For example, capital calls or distributions. One cash flow can be related to one or more activities.\nOne cashflow can also be related to one or more \"allocations.\" \n\nEach cash flow is also linked to one or more \"allocations,\" which represent the specific movement of money. An allocation has a specific type and describes an event initiated by the LP or GP. Each allocation has a direction: -1 (indicating cash flowing into the investment), 1 (indicating cash flowing out), or infrequently, 0 (no cash movement). The sum of the products of each allocation times its direction equals the total cash flow between the LP and the investment. These allocations can impact an investment's total value, contribution, remaining commitment, and distribution.\n\nTypes of allocations include:\n\n- Capital Calls\n- Expenses\n- Cash Distributions\n- Expenses\n\n#### Point in Time Valuation vs. Estimated Value\n\nPoint in time valuation and estimated value report the value of an investment at different times. Point in time valuation returns the value of an investment exactly as reported on the most recent statement, while estimated value starts with the most recent statement value and adjusts according to the capital calls that have occurred since the date of the most recent statement.\n\n### Tasks\n\nA specific investment related action that the user must complete. For example, confirming a new investment or verifying wire instructions.\n\n</td>\n<td>\n  <img src=\"../static/images/cashflow.png\" />\n</td>\n\n</tr>\n</table>\n\n<table>\n\n<td>\n\n### Lookthroughs\n\n**Premium Feature:** Arch can track and display the <u title=\"An SOI returns a list of your investments, including metrics such as number of shares, fair value, and liquidity.\">schedule of investments (SOI)</u> for any holdings you\nown. This allows you to \"look through\" the holdings you own to the\ninvestments that your holding made. This can make it easier to track your\n\"true\" exposure.\n\n### User Roles\n\nYou grant access to accounts, investing entities, and holdings with user roles. Each role grants a specific set of permissions.\n\n**Available role types for POST and DELETE requests:**\n- Full Access\n- Tax Only\n- Restricted Tax Only\n- View Only\n- File Only\n- Informed Tax Only\n- View Only with Task Completion\n- Restricted Investor\n- Investment Team\n\n**Note:** GET requests may return additional universal and custom role types beyond those listed above, depending on your Arch configuration.\n\nFor more information about permissions associated with roles, please refer to [Arch Permissions by User Type](https://intercom.help/archhelp/en/articles/8975969-arch-permissions-by-user-type).\n\n## Standards\n\n### Time Zone\n\nDates and times are in UTC unless otherwise specified.\n\n</td>\n\n</table>\n",
+      "type": "text/plain"
+    }
+  }
+}
