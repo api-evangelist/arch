@@ -1,21 +1,7 @@
 {
   "provider": "arch",
   "sources": [
-    "arch-accounts-api-openapi.yml",
-    "arch-activities-api-openapi.yml",
-    "arch-addepar-api-openapi.yml",
-    "arch-authentication-api-openapi.yml",
-    "arch-cash-flows-api-openapi.yml",
-    "arch-firms-api-openapi.yml",
-    "arch-holdings-api-openapi.yml",
-    "arch-investing-entities-api-openapi.yml",
-    "arch-issuing-entities-api-openapi.yml",
-    "arch-lookthroughs-api-openapi.yml",
-    "arch-offerings-api-openapi.yml",
-    "arch-tasks-api-openapi.yml",
-    "arch-tax-documents-api-openapi.yml",
-    "arch-user-roles-api-openapi.yml",
-    "arch-users-api-openapi.yml"
+    "_original/arch-client-api-openapi.json"
   ],
   "outputs": [
     "arch-accounts-api-openapi.yml",
@@ -37,6 +23,33 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "arch-client-api-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "arch-client-api-openapi.json: declared missing tag: Accounts",
+    "arch-client-api-openapi.json: declared missing tag: Addepar",
+    "arch-client-api-openapi.json: declared missing tag: Authentication",
+    "arch-client-api-openapi.json: declared missing tag: Tasks",
+    "arch-client-api-openapi.json: declared missing tag: Tax Documents",
+    "arch-client-api-openapi.json: declared missing tag: User Roles",
+    "arch-client-api-openapi.json: declared missing tag: Users",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "arch-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-activities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-addepar-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-cash-flows-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-firms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-holdings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-investing-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-issuing-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-lookthroughs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-offerings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-tasks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-tax-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-user-roles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "arch-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
