@@ -79,28 +79,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OfferingPage:
-      type: object
-      properties:
-        kind:
-          type: string
-          example: page
-        prev:
-          type: string
-          description: The URL to access the previous page of offerings
-          example: /offerings?limit=1000&offset=0
-        next:
-          type: string
-          description: The URL to access the next page of offerings
-          example: /offerings?limit=1000&offset=1000
-        selfUrl:
-          type: string
-          description: The URL to access this set of offerings
-          example: /offerings?limit=1000&offset=0
-        contents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Offering'
     Offering:
       type: object
       required:
@@ -129,6 +107,28 @@ components:
         name: Arch Offering
         selfUrl: /offerings/12345
         assetType: Real Estate
+    OfferingPage:
+      type: object
+      properties:
+        kind:
+          type: string
+          example: page
+        prev:
+          type: string
+          description: The URL to access the previous page of offerings
+          example: /offerings?limit=1000&offset=0
+        next:
+          type: string
+          description: The URL to access the next page of offerings
+          example: /offerings?limit=1000&offset=1000
+        selfUrl:
+          type: string
+          description: The URL to access this set of offerings
+          example: /offerings?limit=1000&offset=0
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Offering'
   securitySchemes:
     BearerAuth:
       type: http

@@ -57,7 +57,7 @@ tags:
 - Fintech
 - Wealth Management
 - Investment Administration
-- Portfolio-Management
+- Portfolio Management
 - Documents
 tags_raw:
 - Company
@@ -68,6 +68,7 @@ tags_raw:
 - Investment Administration
 - Portfolio Management
 - Documents
+- Portfolio-Management
 apis:
 - aid: arch:arch-accounts-api
   name: Arch Accounts API
@@ -463,7 +464,7 @@ common:
 - type: TrustCenter
   url: security/arch-trust-center.yml
 - type: Website
-  url: https://archlabs.com
+  url: https://arch.com/
 - type: DeveloperPortal
   url: https://arch.co/client-api/api-docs/
 - type: Documentation
