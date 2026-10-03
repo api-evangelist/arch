@@ -81,24 +81,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ClientRef:
-      type: object
-      required:
-      - kind
-      - id
-      - name
-      properties:
-        kind:
-          type: string
-          enum:
-          - client-ref
-        id:
-          type: integer
-          description: The id of the client
-        name:
-          example: John Client
-          type: string
-          description: The name of the client
     Account:
       type: object
       required:
@@ -142,6 +124,24 @@ components:
           - string
           - 'null'
           description: Non-Arch ID for this account. Used to map the account to an external system
+    ClientRef:
+      type: object
+      required:
+      - kind
+      - id
+      - name
+      properties:
+        kind:
+          type: string
+          enum:
+          - client-ref
+        id:
+          type: integer
+          description: The id of the client
+        name:
+          example: John Client
+          type: string
+          description: The name of the client
   securitySchemes:
     BearerAuth:
       type: http

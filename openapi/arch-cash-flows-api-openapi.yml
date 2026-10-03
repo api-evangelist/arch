@@ -200,6 +200,14 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    FinancialValueUnitType:
+      type: string
+      enum:
+      - CURRENCY
+      - STOCK
+      - CRYPTO
+      example: CURRENCY
+      description: Indicates the denomination or category of financial instrument being returned. Possible values include CURRENCY, STOCK, and CRYPTO
     CashFlowType:
       description: The type of cash flow
       type: string
@@ -213,40 +221,6 @@ components:
       - Sale
       - Dividend
       - Internal Transfer
-    FinancialValueUnitType:
-      type: string
-      enum:
-      - CURRENCY
-      - STOCK
-      - CRYPTO
-      example: CURRENCY
-      description: Indicates the denomination or category of financial instrument being returned. Possible values include CURRENCY, STOCK, and CRYPTO
-    CashFlowAllocation:
-      type: object
-      required:
-      - flowDirection
-      - typeName
-      - financialValue
-      - id
-      properties:
-        flowDirection:
-          type: number
-          example: 1
-          description: The direction of the cash transfer relative to the caller
-        typeName:
-          type: string
-          example: Buy
-          description: The type of this specific allocation
-        financialValue:
-          $ref: '#/components/schemas/CashFlowFinancialValue'
-        id:
-          type: number
-          example: 1
-          description: The ID of this specific allocation
-        investorNotes:
-          type: string
-          example: My Note
-          description: Notes relating to this allocation, entered by users on Portal.
     CashFlow:
       type: object
       required:
@@ -334,6 +308,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CashFlowAllocation'
+    CashFlowFinancialValue:
+      title: FinancialValue
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+        symbol:
+          type: string
+          description: Currency symbol, if unit type is a currency, or stock ticker if it is a stock
+        unitType:
+          $ref: '#/components/schemas/FinancialValueUnitType'
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+        symbol: $
+        unitType: CURRENCY
     NewFinancialValue:
       type: object
       description: 'A financial value in USD. Currently only USD is supported. Most values can be negative, except totalContribution which must be non-negative.
@@ -346,6 +346,65 @@ components:
           type: number
           description: The amount in dollars (USD). Can be negative for most fields, except totalContribution.
           example: 100000
+    CashFlowAllocation:
+      type: object
+      required:
+      - flowDirection
+      - typeName
+      - financialValue
+      - id
+      properties:
+        flowDirection:
+          type: number
+          example: 1
+          description: The direction of the cash transfer relative to the caller
+        typeName:
+          type: string
+          example: Buy
+          description: The type of this specific allocation
+        financialValue:
+          $ref: '#/components/schemas/CashFlowFinancialValue'
+        id:
+          type: number
+          example: 1
+          description: The ID of this specific allocation
+        investorNotes:
+          type: string
+          example: My Note
+          description: Notes relating to this allocation, entered by users on Portal.
+    CashFlowList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+          example: page
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+          example: /cashflows?limit=1000&offset=1000
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashFlow'
+          description: List of cash-flows
+        next:
+          type: string
+          description: The relative URL for accessing the next page of this resource via the Arch Client API
+          example: /cashflows?limit=1000&offset=2000
+        prev:
+          type: string
+          description: The relative URL for accessing the previous page of this resource via the Arch Client API
+          example: /cashflows?limit=1000&offset=0
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
     NewCashFlow:
       type: object
       required:
@@ -385,65 +444,6 @@ components:
         completedAt: '2023-11-15 01:00:00'
         title: My New Cash Flow
         investorNotes: Created via API
-    CashFlowFinancialValue:
-      title: FinancialValue
-      type: object
-      properties:
-        quantity:
-          type: integer
-          format: int64
-          description: The quantity of the financial value
-          example: 100000
-        currencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-        dollars:
-          type: integer
-          format: int64
-          description: The financial value in dollars
-        symbol:
-          type: string
-          description: Currency symbol, if unit type is a currency, or stock ticker if it is a stock
-        unitType:
-          $ref: '#/components/schemas/FinancialValueUnitType'
-      example:
-        quantity: 100000
-        currencyCode: USD
-        dollars: 100000
-        symbol: $
-        unitType: CURRENCY
-    CashFlowList:
-      type: object
-      required:
-      - kind
-      - selfUrl
-      - contents
-      properties:
-        kind:
-          type: string
-          description: page
-          example: page
-        selfUrl:
-          type: string
-          description: The relative URL for accessing this resource via the Arch Client API
-          example: /cashflows?limit=1000&offset=1000
-        contents:
-          type: array
-          items:
-            $ref: '#/components/schemas/CashFlow'
-          description: List of cash-flows
-        next:
-          type: string
-          description: The relative URL for accessing the next page of this resource via the Arch Client API
-          example: /cashflows?limit=1000&offset=2000
-        prev:
-          type: string
-          description: The relative URL for accessing the previous page of this resource via the Arch Client API
-          example: /cashflows?limit=1000&offset=0
-    CurrencyCode:
-      type: string
-      example: USD
-      default: USD
-      description: The currency code for the financial value. Defaults to "USD" if not provided.
   securitySchemes:
     BearerAuth:
       type: http

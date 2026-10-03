@@ -387,25 +387,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ActivityRef:
-      type: object
-      required:
-      - id
-      - url
-      - filesUrl
-      properties:
-        id:
-          type: string
-          description: The ID of the referenced activity
-          example: 112
-        url:
-          type: string
-          description: A relative url to the referenced activity
-          example: /activities/112
-        filesUrl:
-          type: string
-          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
-          example: /activities/112/files
     Task:
       type: object
       required:
@@ -553,24 +534,25 @@ components:
               - bankName
               - bankAddress
           description: Current wire instructions and changed fields between the current and previous iterations of wire instructions - requires includeWireInstructions flag to be true. Wire Data is a premium feature that will return null if the Client is not subscribed to Wire Instruction Data Extraction.
-    FinancialValue:
+    ActivityRef:
       type: object
+      required:
+      - id
+      - url
+      - filesUrl
       properties:
-        quantity:
-          type: integer
-          format: int64
-          description: The quantity of the financial value
-          example: 100000
-        currencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-        dollars:
-          type: integer
-          format: int64
-          description: The financial value in dollars
-      example:
-        quantity: 100000
-        currencyCode: USD
-        dollars: 100000
+        id:
+          type: string
+          description: The ID of the referenced activity
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced activity
+          example: /activities/112
+        filesUrl:
+          type: string
+          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
+          example: /activities/112/files
     Comment:
       type: object
       required:
@@ -624,6 +606,11 @@ components:
           - 'null'
           description: Parent comment ID for threaded comments, or null for top-level comments
           example: 12340
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
     TaskList:
       type: object
       required:
@@ -652,11 +639,24 @@ components:
           type: string
           description: The relative URL for the next page of tasks
           example: /tasks?limit=10&offset=10
-    CurrencyCode:
-      type: string
-      example: USD
-      default: USD
-      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    FinancialValue:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
   securitySchemes:
     BearerAuth:
       type: http

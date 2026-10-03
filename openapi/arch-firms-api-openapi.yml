@@ -81,6 +81,30 @@ paths:
                 type: string
 components:
   schemas:
+    Firm:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - id
+      properties:
+        kind:
+          type: string
+          enum:
+          - Firm
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource
+          example: /firms/2632
+        id:
+          type: string
+          description: The firm ID.
+          example: 2632
+          readOnly: true
+        name:
+          type: string
+          example: Arch Labs
+          description: The name of the firm.
     FirmList:
       type: object
       required:
@@ -123,30 +147,6 @@ components:
           id: '1234'
           name: Example Venture Partners
         next: /firms?limit=25&offset=25
-    Firm:
-      type: object
-      required:
-      - kind
-      - selfUrl
-      - id
-      properties:
-        kind:
-          type: string
-          enum:
-          - Firm
-        selfUrl:
-          type: string
-          description: The relative URL for accessing this resource
-          example: /firms/2632
-        id:
-          type: string
-          description: The firm ID.
-          example: 2632
-          readOnly: true
-        name:
-          type: string
-          example: Arch Labs
-          description: The name of the firm.
   securitySchemes:
     BearerAuth:
       type: http

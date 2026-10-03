@@ -102,191 +102,27 @@ paths:
           description: Internal server error.
 components:
   schemas:
-    InvestingEntityRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - investing-entity-ref
-        id:
-          type: number
-          description: The ID of the referenced investing entity
-          example: 711
-        url:
-          type: string
-          description: A relative url to the referenced investing entity
-          example: /investing-entities/711
-        name:
-          type: string
-          description: The name of the referenced investing entity
-          example: Investing Entity 711
-    PreqinDirectInsights:
-      type:
-      - object
-      - 'null'
-      required:
-      - domain
-      properties:
-        domain:
-          type: string
-          description: The web domain for the company
-          example: www.uber.com
-        fundingStage:
-          type: string
-          description: The company's funding stage as reported by Preqin.
-          example: Series A
-        fundingTotal:
-          type: number
-          description: The total funding for the company in million dollars as reported by Preqin.
-          example: 87.54
-        about:
-          type: string
-          description: A description of the company as reported by Preqin.
-          example: Uber is a ride-sharing company that allows users to request rides from their mobile devices.
-        sector:
-          type: string
-          description: The company's sector as reported by Preqin.
-          example: Transportation Services
-        subSectors:
-          type: array
-          items:
-            type: string
-          description: The company's sub-sectors as reported by Preqin.
-          example:
-          - Application Integration Software
-          - Car Hire Services
-          - Courier & Delivery Services
-          - Freight Transportation Services
-          - Logistics Software
-        verticals:
-          type: array
-          items:
-            type: string
-          description: The company's verticals as reported by Preqin.
-          example:
-          - E-commerce
-          - Mobile Apps
-    HoldingRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - holding-ref
-        id:
-          type: number
-          description: The ID of the referenced holding
-          example: 112
-        url:
-          type: string
-          description: A relative url to the referenced holding
-          example: /holdings/112
-        name:
-          type: string
-          description: The name of the referenced holding
-          example: Holding 112
-    FirmRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - firm-ref
-        id:
-          type: number
-          description: The ID of the referenced firm
-          example: 42
-        url:
-          type: string
-          description: A relative url to the referenced firm
-          example: /firms/42
-        name:
-          type: string
-          description: The name of the referenced firm
-          example: Acme Capital Partners
-    OfferingRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - offering-ref
-        id:
-          type: number
-          description: The ID of the referenced offering
-          example: 112
-        url:
-          type: string
-          description: A relative url to the referenced offering
-          example: /offerings/112
-        name:
-          type: string
-          description: The name of the referenced offering
-          example: Offering 112
-    CurrencyCode:
-      type: string
-      example: USD
-      default: USD
-      description: The currency code for the financial value. Defaults to "USD" if not provided.
     Timestamp:
       type: string
       format: YYYY-MM-DDTHH:mm:ss.SSSZ
-    InvestmentLinkStatus:
-      type: string
-      enum:
-      - Authorization Required
-      - Contact Info Required
-      - Pending External Action
-      - Additional Authorization Required
-      - In Progress
-      - Linked
-      - Linked Confirmed
-      - Linking Under Review
-      - Linked Confirmed
-      - Pass-Through Linked
-      - Unlinked
-      - Linking Unavailable
-      - Awaiting DocuSign
-    IssuingEntityRef:
+    FinancialValue:
       type: object
-      required:
-      - kind
-      - id
-      - url
       properties:
-        kind:
-          type: string
-          enum:
-          - issuing-entity-ref
-        id:
-          type: number
-          description: The ID of the referenced issuing entity
-          example: 204
-        url:
-          type: string
-          description: A relative url to the referenced issuing entity
-          example: /issuing-entities/204
-        name:
-          type: string
-          description: The name of the referenced issuing entity
-          example: Issuing Entity 204
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
     HarmonicDirectInsights:
       type:
       - object
@@ -315,6 +151,128 @@ components:
           type: number
           description: The total funding for the company in dollars
           example: 8754000000
+    IssuingEntity:
+      type: object
+      required:
+      - kind
+      - id
+      - name
+      - ein
+      - firmUrl
+      - firmId
+      - expectedFinancialValueUnit
+      - isSpv
+      - relatedHoldingsUrl
+      - relatedOfferingsUrl
+      - selfUrl
+      properties:
+        kind:
+          example: issuing-entity
+          type: string
+          description: The type of this object. Will always be "issuing-entity" for issuing entities
+        id:
+          example: 1
+          type: integer
+          description: The id of the issuing entity
+        name:
+          example: My Entity
+          type: string
+          description: The name of the issuing entity
+        ein:
+          example: '123456789'
+          type: string
+          description: The Entity Identification Number for the issuing entity. If the issuing entity has no ein, null will be returned.
+        firmUrl:
+          example: /firms/15
+          description: the firm associated with this issuing entity
+          type: string
+        firmId:
+          example: 15
+          description: the ID of the firm associated with this issuing entity
+          type: number
+        expectedFinancialValueUnit:
+          example: US Dollars
+          description: The name of the expected financial value unit for this issuing entity
+          type: string
+        isSpv:
+          example: false
+          type: boolean
+          description: Whether the issuing entity is a Special Purpose Vehicle
+        relatedHoldingsUrl:
+          type: string
+          description: Urls to fetch holdings that are related to this issuing entity
+          example: /holdings?issuingEntityIds=1
+        relatedOfferingUrls:
+          type: array
+          description: Any offerings that are related to this issuing entity
+          items:
+            type: string
+          example:
+          - /offerings/1
+          - /offerings/2
+          - /offerings/3
+        harmonicInsights:
+          allOf:
+          - description: 3rd party insights for the issuing entity (Powered by Harmonic.ai)
+          - $ref: '#/components/schemas/HarmonicDirectInsights'
+        preqinInsights:
+          allOf:
+          - description: 3rd party insights for the issuing entity (Powered by Preqin)
+          - $ref: '#/components/schemas/PreqinDirectInsights'
+        underlyingLookthroughs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Holding'
+        selfUrl:
+          example: /issuing-entities/1458
+          type: string
+          description: The url that can be used to fetch this object
+    InvestingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - investing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced investing entity
+          example: 711
+        url:
+          type: string
+          description: A relative url to the referenced investing entity
+          example: /investing-entities/711
+        name:
+          type: string
+          description: The name of the referenced investing entity
+          example: Investing Entity 711
+    IssuingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - issuing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced issuing entity
+          example: 204
+        url:
+          type: string
+          description: A relative url to the referenced issuing entity
+          example: /issuing-entities/204
+        name:
+          type: string
+          description: The name of the referenced issuing entity
+          example: Issuing Entity 204
     IssuingEntityList:
       type: object
       required:
@@ -343,25 +301,7 @@ components:
           type: string
           description: The relative URL for the next page of issuing entities
           example: /issuing-entities?offset=10&limit=5
-    FinancialValue:
-      type: object
-      properties:
-        quantity:
-          type: integer
-          format: int64
-          description: The quantity of the financial value
-          example: 100000
-        currencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-        dollars:
-          type: integer
-          format: int64
-          description: The financial value in dollars
-      example:
-        quantity: 100000
-        currencyCode: USD
-        dollars: 100000
-    AccountRef:
+    OfferingRef:
       type: object
       required:
       - kind
@@ -371,19 +311,19 @@ components:
         kind:
           type: string
           enum:
-          - account-ref
+          - offering-ref
         id:
           type: number
-          description: The ID of the referenced account
-          example: 56
+          description: The ID of the referenced offering
+          example: 112
         url:
           type: string
-          description: A relative url to the referenced account
-          example: /account/56
+          description: A relative url to the referenced offering
+          example: /offerings/112
         name:
           type: string
-          description: The name of the referenced account
-          example: Account 56
+          description: The name of the referenced offering
+          example: Offering 112
     Holding:
       type: object
       required:
@@ -783,82 +723,52 @@ components:
           activityType: Account Statement Received
           statementDate: '2025-06-30T00:00:00.000Z'
           activitiesSinceStatementUrl: /activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z
-    IssuingEntity:
-      type: object
+    PreqinDirectInsights:
+      type:
+      - object
+      - 'null'
       required:
-      - kind
-      - id
-      - name
-      - ein
-      - firmUrl
-      - firmId
-      - expectedFinancialValueUnit
-      - isSpv
-      - relatedHoldingsUrl
-      - relatedOfferingsUrl
-      - selfUrl
+      - domain
       properties:
-        kind:
-          example: issuing-entity
+        domain:
           type: string
-          description: The type of this object. Will always be "issuing-entity" for issuing entities
-        id:
-          example: 1
-          type: integer
-          description: The id of the issuing entity
-        name:
-          example: My Entity
+          description: The web domain for the company
+          example: www.uber.com
+        fundingStage:
           type: string
-          description: The name of the issuing entity
-        ein:
-          example: '123456789'
-          type: string
-          description: The Entity Identification Number for the issuing entity. If the issuing entity has no ein, null will be returned.
-        firmUrl:
-          example: /firms/15
-          description: the firm associated with this issuing entity
-          type: string
-        firmId:
-          example: 15
-          description: the ID of the firm associated with this issuing entity
+          description: The company's funding stage as reported by Preqin.
+          example: Series A
+        fundingTotal:
           type: number
-        expectedFinancialValueUnit:
-          example: US Dollars
-          description: The name of the expected financial value unit for this issuing entity
+          description: The total funding for the company in million dollars as reported by Preqin.
+          example: 87.54
+        about:
           type: string
-        isSpv:
-          example: false
-          type: boolean
-          description: Whether the issuing entity is a Special Purpose Vehicle
-        relatedHoldingsUrl:
+          description: A description of the company as reported by Preqin.
+          example: Uber is a ride-sharing company that allows users to request rides from their mobile devices.
+        sector:
           type: string
-          description: Urls to fetch holdings that are related to this issuing entity
-          example: /holdings?issuingEntityIds=1
-        relatedOfferingUrls:
+          description: The company's sector as reported by Preqin.
+          example: Transportation Services
+        subSectors:
           type: array
-          description: Any offerings that are related to this issuing entity
           items:
             type: string
+          description: The company's sub-sectors as reported by Preqin.
           example:
-          - /offerings/1
-          - /offerings/2
-          - /offerings/3
-        harmonicInsights:
-          allOf:
-          - description: 3rd party insights for the issuing entity (Powered by Harmonic.ai)
-          - $ref: '#/components/schemas/HarmonicDirectInsights'
-        preqinInsights:
-          allOf:
-          - description: 3rd party insights for the issuing entity (Powered by Preqin)
-          - $ref: '#/components/schemas/PreqinDirectInsights'
-        underlyingLookthroughs:
+          - Application Integration Software
+          - Car Hire Services
+          - Courier & Delivery Services
+          - Freight Transportation Services
+          - Logistics Software
+        verticals:
           type: array
           items:
-            $ref: '#/components/schemas/Holding'
-        selfUrl:
-          example: /issuing-entities/1458
-          type: string
-          description: The url that can be used to fetch this object
+            type: string
+          description: The company's verticals as reported by Preqin.
+          example:
+          - E-commerce
+          - Mobile Apps
     CustomField:
       type: object
       description: A user-specified custom field. Does not yet support File fields.
@@ -881,6 +791,96 @@ components:
           - type: number
           - type: boolean
           - $ref: '#/components/schemas/FinancialValue'
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    FirmRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - firm-ref
+        id:
+          type: number
+          description: The ID of the referenced firm
+          example: 42
+        url:
+          type: string
+          description: A relative url to the referenced firm
+          example: /firms/42
+        name:
+          type: string
+          description: The name of the referenced firm
+          example: Acme Capital Partners
+    InvestmentLinkStatus:
+      type: string
+      enum:
+      - Authorization Required
+      - Contact Info Required
+      - Pending External Action
+      - Additional Authorization Required
+      - In Progress
+      - Linked
+      - Linked Confirmed
+      - Linking Under Review
+      - Linked Confirmed
+      - Pass-Through Linked
+      - Unlinked
+      - Linking Unavailable
+      - Awaiting DocuSign
+    AccountRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - account-ref
+        id:
+          type: number
+          description: The ID of the referenced account
+          example: 56
+        url:
+          type: string
+          description: A relative url to the referenced account
+          example: /account/56
+        name:
+          type: string
+          description: The name of the referenced account
+          example: Account 56
+    HoldingRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - holding-ref
+        id:
+          type: number
+          description: The ID of the referenced holding
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced holding
+          example: /holdings/112
+        name:
+          type: string
+          description: The name of the referenced holding
+          example: Holding 112
   securitySchemes:
     BearerAuth:
       type: http
