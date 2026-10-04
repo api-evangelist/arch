@@ -169,84 +169,6 @@ paths:
           description: Buffer containing the content of the requested file.
 components:
   schemas:
-    ActivityRef:
-      type: object
-      required:
-      - id
-      - url
-      - filesUrl
-      properties:
-        id:
-          type: string
-          description: The ID of the referenced activity
-          example: 112
-        url:
-          type: string
-          description: A relative url to the referenced activity
-          example: /activities/112
-        filesUrl:
-          type: string
-          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
-          example: /activities/112/files
-    File:
-      type: object
-      required:
-      - id
-      - name
-      - uploadTime
-      - downloadUrl
-      properties:
-        id:
-          type: number
-          description: A unique identifier for the file
-          example: 101
-        name:
-          type: string
-          description: Name of the file
-          example: 56_TestEntity.pdf
-        sizeBytes:
-          type: number
-          description: Size of the file in bytes
-          example: 123456
-        uploadTime:
-          type: string
-          description: Time of the file upload
-          example: '2024-02-08T18:50:15.000Z'
-        fileHash:
-          type: string
-          description: A hash of the file
-          example: afakehash
-        downloadUrl:
-          type: string
-          description: A relative url to download the file itself, as originally received by Arch
-          example: /{parentType}/1234/files/1234/download
-        originalName:
-          type: string
-          description: Original name of the file before applying custom name conventions
-          example: file_123.pdf
-    InvestingEntityRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - investing-entity-ref
-        id:
-          type: number
-          description: The ID of the referenced investing entity
-          example: 711
-        url:
-          type: string
-          description: A relative url to the referenced investing entity
-          example: /investing-entities/711
-        name:
-          type: string
-          description: The name of the referenced investing entity
-          example: Investing Entity 711
     IssuingEntityRef:
       type: object
       required:
@@ -270,6 +192,29 @@ components:
           type: string
           description: The name of the referenced issuing entity
           example: Issuing Entity 204
+    InvestingEntityRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - investing-entity-ref
+        id:
+          type: number
+          description: The ID of the referenced investing entity
+          example: 711
+        url:
+          type: string
+          description: A relative url to the referenced investing entity
+          example: /investing-entities/711
+        name:
+          type: string
+          description: The name of the referenced investing entity
+          example: Investing Entity 711
     TaxDocFileList:
       type: object
       properties:
@@ -322,6 +267,134 @@ components:
                 type: K-1
                 downloadUrl: /tax-documents/100200/files/200102/download
                 originalName: final-k1.pdf
+    AccountRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - account-ref
+        id:
+          type: number
+          description: The ID of the referenced account
+          example: 56
+        url:
+          type: string
+          description: A relative url to the referenced account
+          example: /account/56
+        name:
+          type: string
+          description: The name of the referenced account
+          example: Account 56
+    HoldingRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - holding-ref
+        id:
+          type: number
+          description: The ID of the referenced holding
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced holding
+          example: /holdings/112
+        name:
+          type: string
+          description: The name of the referenced holding
+          example: Holding 112
+    File:
+      type: object
+      required:
+      - id
+      - name
+      - uploadTime
+      - downloadUrl
+      properties:
+        id:
+          type: number
+          description: A unique identifier for the file
+          example: 101
+        name:
+          type: string
+          description: Name of the file
+          example: 56_TestEntity.pdf
+        sizeBytes:
+          type: number
+          description: Size of the file in bytes
+          example: 123456
+        uploadTime:
+          type: string
+          description: Time of the file upload
+          example: '2024-02-08T18:50:15.000Z'
+        fileHash:
+          type: string
+          description: A hash of the file
+          example: afakehash
+        downloadUrl:
+          type: string
+          description: A relative url to download the file itself, as originally received by Arch
+          example: /{parentType}/1234/files/1234/download
+        originalName:
+          type: string
+          description: Original name of the file before applying custom name conventions
+          example: file_123.pdf
+    ActivityRef:
+      type: object
+      required:
+      - id
+      - url
+      - filesUrl
+      properties:
+        id:
+          type: string
+          description: The ID of the referenced activity
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced activity
+          example: /activities/112
+        filesUrl:
+          type: string
+          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
+          example: /activities/112/files
+    TaxDocumentList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxDocument'
+          description: List of tax documents
+        selfUrl:
+          type: string
+          description: The URL for the current page of documents
+          example: /tax-documents?limit=25&offset=50
+        next:
+          type: string
+          description: The URL for the next page of documents
+          example: /tax-documents?limit=25&offset=75
+        prev:
+          type: string
+          description: The URL for previous page of documents
+          example: /tax-documents?limit=25&offset=25
     TaxDocument:
       type: object
       required:
@@ -401,79 +474,6 @@ components:
           $ref: '#/components/schemas/IssuingEntityRef'
         accountRef:
           $ref: '#/components/schemas/AccountRef'
-    AccountRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - account-ref
-        id:
-          type: number
-          description: The ID of the referenced account
-          example: 56
-        url:
-          type: string
-          description: A relative url to the referenced account
-          example: /account/56
-        name:
-          type: string
-          description: The name of the referenced account
-          example: Account 56
-    TaxDocumentList:
-      type: object
-      required:
-      - kind
-      - selfUrl
-      - contents
-      properties:
-        kind:
-          type: string
-          description: page
-        contents:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxDocument'
-          description: List of tax documents
-        selfUrl:
-          type: string
-          description: The URL for the current page of documents
-          example: /tax-documents?limit=25&offset=50
-        next:
-          type: string
-          description: The URL for the next page of documents
-          example: /tax-documents?limit=25&offset=75
-        prev:
-          type: string
-          description: The URL for previous page of documents
-          example: /tax-documents?limit=25&offset=25
-    HoldingRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
-          type: string
-          enum:
-          - holding-ref
-        id:
-          type: number
-          description: The ID of the referenced holding
-          example: 112
-        url:
-          type: string
-          description: A relative url to the referenced holding
-          example: /holdings/112
-        name:
-          type: string
-          description: The name of the referenced holding
-          example: Holding 112
   securitySchemes:
     BearerAuth:
       type: http

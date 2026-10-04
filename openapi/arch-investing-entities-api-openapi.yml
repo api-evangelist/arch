@@ -139,27 +139,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Timestamp:
-      type: string
-      format: YYYY-MM-DDTHH:mm:ss.SSSZ
-    FinancialValue:
+    CustomField:
       type: object
+      description: A user-specified custom field. Does not yet support File fields.
       properties:
-        quantity:
-          type: integer
-          format: int64
-          description: The quantity of the financial value
-          example: 100000
-        currencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-        dollars:
-          type: integer
-          format: int64
-          description: The financial value in dollars
-      example:
-        quantity: 100000
-        currencyCode: USD
-        dollars: 100000
+        name:
+          type: string
+        fieldType:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - NUMBER
+          - CHECKBOX
+          - DATE
+          - FILES
+          - FINANCIAL_VALUE
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+          - $ref: '#/components/schemas/FinancialValue'
     InvestingEntityRef:
       type: object
       required:
@@ -183,6 +184,29 @@ components:
           type: string
           description: The name of the referenced investing entity
           example: Investing Entity 711
+    FirmRef:
+      type: object
+      required:
+      - kind
+      - id
+      - url
+      properties:
+        kind:
+          type: string
+          enum:
+          - firm-ref
+        id:
+          type: number
+          description: The ID of the referenced firm
+          example: 42
+        url:
+          type: string
+          description: A relative url to the referenced firm
+          example: /firms/42
+        name:
+          type: string
+          description: The name of the referenced firm
+          example: Acme Capital Partners
     IssuingEntityRef:
       type: object
       required:
@@ -206,7 +230,15 @@ components:
           type: string
           description: The name of the referenced issuing entity
           example: Issuing Entity 204
-    InvestingEntityList:
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    Timestamp:
+      type: string
+      format: YYYY-MM-DDTHH:mm:ss.SSSZ
+    HoldingList:
       type: object
       required:
       - kind
@@ -215,77 +247,254 @@ components:
       properties:
         kind:
           type: string
-          description: page
+          description: Page
         selfUrl:
           type: string
-          description: The relative URL for accessing this resource via the Arch Client API
+          description: The relative URL for accessing the current page of this resource
+          example: /holdings?offset=5&limit=5
         contents:
           type: array
           items:
-            $ref: '#/components/schemas/InvestingEntity'
-          description: List of investing entities
-    InvestingEntity:
+            $ref: '#/components/schemas/Holding'
+          description: List of holdings
+        prev:
+          type: string
+          description: The relative URL for accessing the previous page of this resource
+          example: /holdings?offset=0&limit=5
+        next:
+          type: string
+          description: The relative URL for accessing the next page of this resource
+          example: /holdings?offset=10&limit=5
+        parentUrl:
+          type: string
+          description: The relative URL for accessing the parent resource of this set of holdings
+      example:
+        kind: page
+        id: 56
+        selfUrl: /investing-entities/56/holdings?limit=25&offset=25
+        parentUrl: /investing-entities/56
+        prev: /investing-entities/56/holdings?limit=25&offset=0
+        next: /investing-entities/56/holdings?limit=25&offset=50
+        contents:
+        - kind: holding
+          id: 50051
+          selfUrl: /holdings/50051
+          name: Arch Example Holding
+          isTaxPlaceholder: false
+          investingEntityRef:
+            kind: investing-entity-ref
+            id: 56
+            url: /investing-entities/56
+            name: Arch Example Issuer
+          investingEntityName: Arch Example Investor
+          investingEntityUrl: /investingEntities/56
+          issuingEntityRef:
+            kind: issuing-entity-ref
+            id: 420
+            url: /issuing-entities/420
+            name: Arch Example Issuer
+          issuingEntityName: Arch Example Issuer
+          issuingEntityUrl: /issuingEntities/420
+          offeringRef:
+            kind: offering-ref
+            id: 112
+            url: /offerings/112
+            name: Offering 112
+          offeringUrl: /offerings/112
+          accountName: Arch Example Account
+          accountRef:
+            kind: account-ref
+            id: 56
+            url: /accounts/56
+            name: Account 56
+          archEmail: exampleinvestor-exampleissuer@archdocuments.com
+          startDate: '2023-01-19T00:00:00.000Z'
+          endDate: '2023-01-19T00:00:00.000Z'
+          firmName: Firm Name 1
+          firmRef:
+            kind: firm-ref
+            id: 42
+            url: /firms/42
+            name: Firm Name 1
+          financials:
+            capitalAccount:
+              quantity: 2000
+              currencyCode: USD
+              dollars: 2000
+            valueAsOfTime: 2024-02-26H00:00:00.000Z
+          latestStatementRef:
+            id: 12345
+            url: /activities/12345
+            activityType: Account Statement Received
+            statementDate: '2025-06-30T00:00:00.000Z'
+            activitiesSinceStatementUrl: /activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z
+    InvestmentLinkStatus:
+      type: string
+      enum:
+      - Authorization Required
+      - Contact Info Required
+      - Pending External Action
+      - Additional Authorization Required
+      - In Progress
+      - Linked
+      - Linked Confirmed
+      - Linking Under Review
+      - Linked Confirmed
+      - Pass-Through Linked
+      - Unlinked
+      - Linking Unavailable
+      - Awaiting DocuSign
+    NewInvestingEntity:
+      type: object
+      required:
+      - name
+      - archAccountId
+      properties:
+        name:
+          type: string
+          description: The name for the investing entity
+        archAccountId:
+          type: number
+          format: int32
+          description: The ID for the Arch account the investing entity belongs to
+        ein:
+          type: string
+          description: The 9-digit code for the entity's EIN or SSN
+        addressLine1:
+          type: string
+          description: The first line of the entity's address
+        addressLine2:
+          type: string
+          description: The second line of the entity's address
+        city:
+          type: string
+          description: The city of the entity's address
+        state:
+          type: string
+          description: The 2-letter state code of the entity's address
+        zip:
+          type: string
+          description: The 5-digit ZIP code of the entity's address
+        phoneNumber:
+          type: string
+          description: The entity's digit-only phone number
+        formationDate:
+          type: string
+          format: date
+          description: The date the investing entity was formed (YYYY-MM-DD)
+        taxFilingDate:
+          type: string
+          format: date
+          description: The tax filing date for the entity (YYYY-MM-DD)
+        sharedNotes:
+          type: string
+          description: The shared notes attached to the investing entity
+        defaultWireInstructions:
+          $ref: '#/components/schemas/WireInstructions'
+        defaultWireInstructionsForFurtherCredit:
+          $ref: '#/components/schemas/WireInstructions'
+      example:
+        name: Eddie Bauer
+        archAccountId: 56
+        ein: '000000000'
+        addressLine1: 115 E 23rd St
+        addressLine2: Floor 6
+        city: New York
+        state: NY
+        zip: '10010'
+        phoneNumber: '1234567890'
+        formationDate: '2024-01-01'
+        taxFilingDate: '2024-01-01'
+        sharedNotes: Don't call on Sundays
+    WireInstructions:
+      type: object
+      description: Instructions for how to wire an investing entity
+      properties:
+        bankName:
+          type: string
+          description: The name of the bank
+        bankAddress:
+          type: string
+          description: The full bank address
+        accountName:
+          type: string
+          description: The bank account name
+        accountType:
+          type: string
+          description: The type of account, e.g. "Checking", "Savings"
+        routingNumber:
+          type: string
+          description: The ABA routing number
+        wireReference:
+          type: string
+        bic:
+          type: string
+          description: A Business Identifier Code for wiring
+        iban:
+          type: string
+          description: An International Bank Account Number for wiring
+        sortCode:
+          type: string
+          description: A six-digit number predominantly used by banks in the UK
+        contactName:
+          type: string
+        contactNumber:
+          type: string
+          description: The digit-only phone number of the contact
+      example:
+        bankName: Bank Name
+        bankAddress: Address St, County, NY 10010
+        accountName: Account Name
+        accountType: Checking
+        accountNumber: '000100'
+        routingNumber: '000010200'
+        wireReference: Reference Name LLC
+        bic: DEUTDEFF
+        iban: GB82 WEST 1234 5698 7654 32
+        sortCode: '123456'
+        contactName: Mario Mario
+        contactNumber: '1234567890'
+    FinancialValue:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+    AccountRef:
       type: object
       required:
       - kind
       - id
-      - selfUrl
-      - accountUrl
+      - url
       properties:
         kind:
           type: string
-          description: investing-entity
+          enum:
+          - account-ref
         id:
           type: number
-          description: The Arch ID for tracking the investing entity
-          example: 100
+          description: The ID of the referenced account
+          example: 56
+        url:
+          type: string
+          description: A relative url to the referenced account
+          example: /account/56
         name:
           type: string
-          description: The entity name
-          example: Example Investing Partnership
-        selfUrl:
-          type: string
-          description: The relative URL for accessing this resource via the Arch Client API
-          example: /investing-entities/100
-        accountUrl:
-          type: string
-          description: The relative path to query the related account
-          example: /accounts/10
-        ein:
-          type: number
-          description: EIN number
-        structure:
-          type: string
-          description: Structure of the investing entity
-        taxForm:
-          type: string
-          description: Tax form
-        taxFilingDate:
-          type: string
-          format: date
-          description: Tax filing date
-        addressLine1:
-          type: string
-        addressLine2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-        phone:
-          type: string
-        note:
-          type: string
-        signatoryName:
-          type: string
-        signatoryEmail:
-          type: string
-        orionSignatoryName:
-          type: string
-        wireInstructions:
-          $ref: '#/components/schemas/WireInstructions'
+          description: The name of the referenced account
+          example: Account 56
     OfferingRef:
       type: object
       required:
@@ -708,54 +917,6 @@ components:
           activityType: Account Statement Received
           statementDate: '2025-06-30T00:00:00.000Z'
           activitiesSinceStatementUrl: /activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z
-    WireInstructions:
-      type: object
-      description: Instructions for how to wire an investing entity
-      properties:
-        bankName:
-          type: string
-          description: The name of the bank
-        bankAddress:
-          type: string
-          description: The full bank address
-        accountName:
-          type: string
-          description: The bank account name
-        accountType:
-          type: string
-          description: The type of account, e.g. "Checking", "Savings"
-        routingNumber:
-          type: string
-          description: The ABA routing number
-        wireReference:
-          type: string
-        bic:
-          type: string
-          description: A Business Identifier Code for wiring
-        iban:
-          type: string
-          description: An International Bank Account Number for wiring
-        sortCode:
-          type: string
-          description: A six-digit number predominantly used by banks in the UK
-        contactName:
-          type: string
-        contactNumber:
-          type: string
-          description: The digit-only phone number of the contact
-      example:
-        bankName: Bank Name
-        bankAddress: Address St, County, NY 10010
-        accountName: Account Name
-        accountType: Checking
-        accountNumber: '000100'
-        routingNumber: '000010200'
-        wireReference: Reference Name LLC
-        bic: DEUTDEFF
-        iban: GB82 WEST 1234 5698 7654 32
-        sortCode: '123456'
-        contactName: Mario Mario
-        contactNumber: '1234567890'
     HoldingRef:
       type: object
       required:
@@ -779,96 +940,69 @@ components:
           type: string
           description: The name of the referenced holding
           example: Holding 112
-    CustomField:
-      type: object
-      description: A user-specified custom field. Does not yet support File fields.
-      properties:
-        name:
-          type: string
-        fieldType:
-          type: string
-          enum:
-          - TEXT
-          - SELECT
-          - NUMBER
-          - CHECKBOX
-          - DATE
-          - FILES
-          - FINANCIAL_VALUE
-        value:
-          oneOf:
-          - type: string
-          - type: number
-          - type: boolean
-          - $ref: '#/components/schemas/FinancialValue'
-    FirmRef:
+    InvestingEntity:
       type: object
       required:
       - kind
       - id
-      - url
+      - selfUrl
+      - accountUrl
       properties:
         kind:
           type: string
-          enum:
-          - firm-ref
+          description: investing-entity
         id:
           type: number
-          description: The ID of the referenced firm
-          example: 42
-        url:
-          type: string
-          description: A relative url to the referenced firm
-          example: /firms/42
+          description: The Arch ID for tracking the investing entity
+          example: 100
         name:
           type: string
-          description: The name of the referenced firm
-          example: Acme Capital Partners
-    CurrencyCode:
-      type: string
-      example: USD
-      default: USD
-      description: The currency code for the financial value. Defaults to "USD" if not provided.
-    InvestmentLinkStatus:
-      type: string
-      enum:
-      - Authorization Required
-      - Contact Info Required
-      - Pending External Action
-      - Additional Authorization Required
-      - In Progress
-      - Linked
-      - Linked Confirmed
-      - Linking Under Review
-      - Linked Confirmed
-      - Pass-Through Linked
-      - Unlinked
-      - Linking Unavailable
-      - Awaiting DocuSign
-    AccountRef:
-      type: object
-      required:
-      - kind
-      - id
-      - url
-      properties:
-        kind:
+          description: The entity name
+          example: Example Investing Partnership
+        selfUrl:
           type: string
-          enum:
-          - account-ref
-        id:
+          description: The relative URL for accessing this resource via the Arch Client API
+          example: /investing-entities/100
+        accountUrl:
+          type: string
+          description: The relative path to query the related account
+          example: /accounts/10
+        ein:
           type: number
-          description: The ID of the referenced account
-          example: 56
-        url:
+          description: EIN number
+        structure:
           type: string
-          description: A relative url to the referenced account
-          example: /account/56
-        name:
+          description: Structure of the investing entity
+        taxForm:
           type: string
-          description: The name of the referenced account
-          example: Account 56
-    HoldingList:
+          description: Tax form
+        taxFilingDate:
+          type: string
+          format: date
+          description: Tax filing date
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        phone:
+          type: string
+        note:
+          type: string
+        signatoryName:
+          type: string
+        signatoryEmail:
+          type: string
+        orionSignatoryName:
+          type: string
+        wireInstructions:
+          $ref: '#/components/schemas/WireInstructions'
+    InvestingEntityList:
       type: object
       required:
       - kind
@@ -877,149 +1011,15 @@ components:
       properties:
         kind:
           type: string
-          description: Page
+          description: page
         selfUrl:
           type: string
-          description: The relative URL for accessing the current page of this resource
-          example: /holdings?offset=5&limit=5
+          description: The relative URL for accessing this resource via the Arch Client API
         contents:
           type: array
           items:
-            $ref: '#/components/schemas/Holding'
-          description: List of holdings
-        prev:
-          type: string
-          description: The relative URL for accessing the previous page of this resource
-          example: /holdings?offset=0&limit=5
-        next:
-          type: string
-          description: The relative URL for accessing the next page of this resource
-          example: /holdings?offset=10&limit=5
-        parentUrl:
-          type: string
-          description: The relative URL for accessing the parent resource of this set of holdings
-      example:
-        kind: page
-        id: 56
-        selfUrl: /investing-entities/56/holdings?limit=25&offset=25
-        parentUrl: /investing-entities/56
-        prev: /investing-entities/56/holdings?limit=25&offset=0
-        next: /investing-entities/56/holdings?limit=25&offset=50
-        contents:
-        - kind: holding
-          id: 50051
-          selfUrl: /holdings/50051
-          name: Arch Example Holding
-          isTaxPlaceholder: false
-          investingEntityRef:
-            kind: investing-entity-ref
-            id: 56
-            url: /investing-entities/56
-            name: Arch Example Issuer
-          investingEntityName: Arch Example Investor
-          investingEntityUrl: /investingEntities/56
-          issuingEntityRef:
-            kind: issuing-entity-ref
-            id: 420
-            url: /issuing-entities/420
-            name: Arch Example Issuer
-          issuingEntityName: Arch Example Issuer
-          issuingEntityUrl: /issuingEntities/420
-          offeringRef:
-            kind: offering-ref
-            id: 112
-            url: /offerings/112
-            name: Offering 112
-          offeringUrl: /offerings/112
-          accountName: Arch Example Account
-          accountRef:
-            kind: account-ref
-            id: 56
-            url: /accounts/56
-            name: Account 56
-          archEmail: exampleinvestor-exampleissuer@archdocuments.com
-          startDate: '2023-01-19T00:00:00.000Z'
-          endDate: '2023-01-19T00:00:00.000Z'
-          firmName: Firm Name 1
-          firmRef:
-            kind: firm-ref
-            id: 42
-            url: /firms/42
-            name: Firm Name 1
-          financials:
-            capitalAccount:
-              quantity: 2000
-              currencyCode: USD
-              dollars: 2000
-            valueAsOfTime: 2024-02-26H00:00:00.000Z
-          latestStatementRef:
-            id: 12345
-            url: /activities/12345
-            activityType: Account Statement Received
-            statementDate: '2025-06-30T00:00:00.000Z'
-            activitiesSinceStatementUrl: /activities?&holdingIds=50051&afterProcessedAt=2025-06-30T00:00:00.000Z
-    NewInvestingEntity:
-      type: object
-      required:
-      - name
-      - archAccountId
-      properties:
-        name:
-          type: string
-          description: The name for the investing entity
-        archAccountId:
-          type: number
-          format: int32
-          description: The ID for the Arch account the investing entity belongs to
-        ein:
-          type: string
-          description: The 9-digit code for the entity's EIN or SSN
-        addressLine1:
-          type: string
-          description: The first line of the entity's address
-        addressLine2:
-          type: string
-          description: The second line of the entity's address
-        city:
-          type: string
-          description: The city of the entity's address
-        state:
-          type: string
-          description: The 2-letter state code of the entity's address
-        zip:
-          type: string
-          description: The 5-digit ZIP code of the entity's address
-        phoneNumber:
-          type: string
-          description: The entity's digit-only phone number
-        formationDate:
-          type: string
-          format: date
-          description: The date the investing entity was formed (YYYY-MM-DD)
-        taxFilingDate:
-          type: string
-          format: date
-          description: The tax filing date for the entity (YYYY-MM-DD)
-        sharedNotes:
-          type: string
-          description: The shared notes attached to the investing entity
-        defaultWireInstructions:
-          $ref: '#/components/schemas/WireInstructions'
-        defaultWireInstructionsForFurtherCredit:
-          $ref: '#/components/schemas/WireInstructions'
-      example:
-        name: Eddie Bauer
-        archAccountId: 56
-        ein: '000000000'
-        addressLine1: 115 E 23rd St
-        addressLine2: Floor 6
-        city: New York
-        state: NY
-        zip: '10010'
-        phoneNumber: '1234567890'
-        formationDate: '2024-01-01'
-        taxFilingDate: '2024-01-01'
-        sharedNotes: Don't call on Sundays
+            $ref: '#/components/schemas/InvestingEntity'
+          description: List of investing entities
   securitySchemes:
     BearerAuth:
       type: http

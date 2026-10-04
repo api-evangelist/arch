@@ -387,6 +387,129 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    CurrencyCode:
+      type: string
+      example: USD
+      default: USD
+      description: The currency code for the financial value. Defaults to "USD" if not provided.
+    TaskList:
+      type: object
+      required:
+      - kind
+      - selfUrl
+      - contents
+      properties:
+        kind:
+          type: string
+          description: page
+          example: page
+        selfUrl:
+          type: string
+          description: The relative URL for accessing this resource via the Arch Client API
+          example: /tasks?limit=10&offset=0
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          description: List of tasks
+        prev:
+          type: string
+          description: The relative URL for the previous page of tasks
+          example: /tasks?limit=10&offset=0
+        next:
+          type: string
+          description: The relative URL for the next page of tasks
+          example: /tasks?limit=10&offset=10
+    Comment:
+      type: object
+      required:
+      - id
+      - author
+      - creationTime
+      - updateTime
+      - message
+      properties:
+        id:
+          type: integer
+          description: The comment ID
+          example: 12345
+        author:
+          type: object
+          description: Comment author information
+          required:
+          - id
+          - name
+          - url
+          properties:
+            id:
+              type: integer
+              description: User ID
+              example: 2766
+            name:
+              type: string
+              description: User's full name
+              example: John Smith
+            url:
+              type: string
+              description: URL to user resource
+              example: /users/2766
+        creationTime:
+          type: string
+          format: date-time
+          description: When the comment was created
+          example: '2024-03-11T14:13:29.000Z'
+        updateTime:
+          type: string
+          format: date-time
+          description: When the comment was last updated
+          example: '2024-03-11T14:13:29.000Z'
+        message:
+          type: string
+          description: The comment text
+          example: This needs to be reviewed
+        parentCommentId:
+          type:
+          - integer
+          - 'null'
+          description: Parent comment ID for threaded comments, or null for top-level comments
+          example: 12340
+    FinancialValue:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          description: The quantity of the financial value
+          example: 100000
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        dollars:
+          type: integer
+          format: int64
+          description: The financial value in dollars
+      example:
+        quantity: 100000
+        currencyCode: USD
+        dollars: 100000
+    ActivityRef:
+      type: object
+      required:
+      - id
+      - url
+      - filesUrl
+      properties:
+        id:
+          type: string
+          description: The ID of the referenced activity
+          example: 112
+        url:
+          type: string
+          description: A relative url to the referenced activity
+          example: /activities/112
+        filesUrl:
+          type: string
+          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
+          example: /activities/112/files
     Task:
       type: object
       required:
@@ -534,129 +657,6 @@ components:
               - bankName
               - bankAddress
           description: Current wire instructions and changed fields between the current and previous iterations of wire instructions - requires includeWireInstructions flag to be true. Wire Data is a premium feature that will return null if the Client is not subscribed to Wire Instruction Data Extraction.
-    ActivityRef:
-      type: object
-      required:
-      - id
-      - url
-      - filesUrl
-      properties:
-        id:
-          type: string
-          description: The ID of the referenced activity
-          example: 112
-        url:
-          type: string
-          description: A relative url to the referenced activity
-          example: /activities/112
-        filesUrl:
-          type: string
-          description: A relative url to the files attached to the referenced activity. The activity may not have files attached.
-          example: /activities/112/files
-    Comment:
-      type: object
-      required:
-      - id
-      - author
-      - creationTime
-      - updateTime
-      - message
-      properties:
-        id:
-          type: integer
-          description: The comment ID
-          example: 12345
-        author:
-          type: object
-          description: Comment author information
-          required:
-          - id
-          - name
-          - url
-          properties:
-            id:
-              type: integer
-              description: User ID
-              example: 2766
-            name:
-              type: string
-              description: User's full name
-              example: John Smith
-            url:
-              type: string
-              description: URL to user resource
-              example: /users/2766
-        creationTime:
-          type: string
-          format: date-time
-          description: When the comment was created
-          example: '2024-03-11T14:13:29.000Z'
-        updateTime:
-          type: string
-          format: date-time
-          description: When the comment was last updated
-          example: '2024-03-11T14:13:29.000Z'
-        message:
-          type: string
-          description: The comment text
-          example: This needs to be reviewed
-        parentCommentId:
-          type:
-          - integer
-          - 'null'
-          description: Parent comment ID for threaded comments, or null for top-level comments
-          example: 12340
-    CurrencyCode:
-      type: string
-      example: USD
-      default: USD
-      description: The currency code for the financial value. Defaults to "USD" if not provided.
-    TaskList:
-      type: object
-      required:
-      - kind
-      - selfUrl
-      - contents
-      properties:
-        kind:
-          type: string
-          description: page
-          example: page
-        selfUrl:
-          type: string
-          description: The relative URL for accessing this resource via the Arch Client API
-          example: /tasks?limit=10&offset=0
-        contents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Task'
-          description: List of tasks
-        prev:
-          type: string
-          description: The relative URL for the previous page of tasks
-          example: /tasks?limit=10&offset=0
-        next:
-          type: string
-          description: The relative URL for the next page of tasks
-          example: /tasks?limit=10&offset=10
-    FinancialValue:
-      type: object
-      properties:
-        quantity:
-          type: integer
-          format: int64
-          description: The quantity of the financial value
-          example: 100000
-        currencyCode:
-          $ref: '#/components/schemas/CurrencyCode'
-        dollars:
-          type: integer
-          format: int64
-          description: The financial value in dollars
-      example:
-        quantity: 100000
-        currencyCode: USD
-        dollars: 100000
   securitySchemes:
     BearerAuth:
       type: http
