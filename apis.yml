@@ -442,6 +442,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: RateLimits
+  url: rate-limits/arch-rate-limits.yml
 - type: DomainSecurity
   url: security/arch-domain-security.yml
 - type: AgenticAccess
