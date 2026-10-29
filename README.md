@@ -64,6 +64,154 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Arch is a company surfaced as a portfolio company of menlo-ventures, uncork-capital and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Arch (Arch Labs, Inc.) is the digital administration platform for private markets and alternative investments. It aggregates statements, capital calls, tax documents, and data from hundreds of funds and sources into one secure portal, then uses automation and AI to extract data, summarize documents, surface insights, and coordinate workflows for limited partners, advisors, accountants, family offices, and fund service providers. The Arch Client API is a JSON HTTP REST API that lets customers programmatically access holdings, cash flows, investing/issuing entities, activities, tasks, files, and tax documents on the platform, authenticating with client-credential JWT bearer tokens. Founded in 2018, Arch is backed by Oak HC/FT, Menlo Ventures, Craft Ventures, Uncork Capital, Citi Ventures, and others.
 
-Backed by: menlo-ventures, uncork-capital — https://archlabs.com
+**Areas:** Company · Private Markets · Alternative Investments · Fintech · Wealth Management · Investment Administration · Portfolio Management · Documents
+
+## Arch on APIs.io
+
+Everything profiled for Arch is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/arch/](https://apis.io/providers/arch/)** — or go straight to one of the APIs or properties below.
+
+### APIs (15)
+
+- [Arch Accounts API](https://apis.io/apis/arch/arch-accounts-api/) — The Accounts API from Arch — 2 operation(s) for accounts.
+- [Arch Activities API](https://apis.io/apis/arch/arch-activities-api/) — Interact with Arch objects representing financial updates
+- [Arch Addepar API](https://apis.io/apis/arch/arch-addepar-api/) — The Addepar API from Arch — 1 operation(s) for addepar.
+- [Arch Authentication API](https://apis.io/apis/arch/arch-authentication-api/) — The Authentication API from Arch — 1 operation(s) for authentication.
+- [Arch Cash Flows API](https://apis.io/apis/arch/arch-cash-flows-api/) — Read and write data relating to money inflow / outflow
+- [Arch Firms API](https://apis.io/apis/arch/arch-firms-api/) — Reference info about firms.
+- [Arch Holdings API](https://apis.io/apis/arch/arch-holdings-api/) — Read holding data and push new investments.
+- [Arch Investing Entities API](https://apis.io/apis/arch/arch-investing-entities-api/) — Read from and create new investing entities
+- [Arch Issuing Entities API](https://apis.io/apis/arch/arch-issuing-entities-api/) — Read from and create new issuing entities
+- [Arch Lookthroughs API](https://apis.io/apis/arch/arch-lookthroughs-api/) — Fetch data relating to the underling investments made by your own investments
+- [Arch Offerings API](https://apis.io/apis/arch/arch-offerings-api/) — Get data on individual investment offering opportunities offered by your holdings
+- [Arch Tasks API](https://apis.io/apis/arch/arch-tasks-api/) — The Tasks API from Arch — 6 operation(s) for tasks.
+- [Arch Tax Documents API](https://apis.io/apis/arch/arch-tax-documents-api/) — The Tax Documents API from Arch — 4 operation(s) for tax documents.
+- [Arch User Roles API](https://apis.io/apis/arch/arch-user-roles-api/) — The User Roles API from Arch — 1 operation(s) for user roles.
+- [Arch Users API](https://apis.io/apis/arch/arch-users-api/) — The Users API from Arch — 2 operation(s) for users.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [arch-client-api](https://apis.io/servers/arch/arch-client-api/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Arch Agentic Access](https://apis.io/agentic-access/arch/arch-agentic-access/)
+
+#### Collections (15)
+
+Postman and Open Collection request collections.
+
+- [Arch Client Accounts API](https://apis.io/collections/arch/open-arch-accounts-api/)
+- [Arch Client Accounts Activities API](https://apis.io/collections/arch/open-arch-activities-api/)
+- [Arch Client Accounts Addepar API](https://apis.io/collections/arch/open-arch-addepar-api/)
+- [Arch Client Accounts Authentication API](https://apis.io/collections/arch/open-arch-authentication-api/)
+- [Arch Client Accounts Cash Flows API](https://apis.io/collections/arch/open-arch-cash-flows-api/)
+- [Arch Client Accounts Firms API](https://apis.io/collections/arch/open-arch-firms-api/)
+- [Arch Client Accounts Holdings API](https://apis.io/collections/arch/open-arch-holdings-api/)
+- [Arch Client Accounts Investing Entities API](https://apis.io/collections/arch/open-arch-investing-entities-api/)
+- [Arch Client Accounts Issuing Entities API](https://apis.io/collections/arch/open-arch-issuing-entities-api/)
+- [Arch Client Accounts Lookthroughs API](https://apis.io/collections/arch/open-arch-lookthroughs-api/)
+- [Arch Client Accounts Offerings API](https://apis.io/collections/arch/open-arch-offerings-api/)
+- [Arch Client Accounts Tasks API](https://apis.io/collections/arch/open-arch-tasks-api/)
+- [Arch Client Accounts Tax Documents API](https://apis.io/collections/arch/open-arch-tax-documents-api/)
+- [Arch Client Accounts User Roles API](https://apis.io/collections/arch/open-arch-user-roles-api/)
+- [Arch Client Accounts Users API](https://apis.io/collections/arch/open-arch-users-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Arch Client Api Overlay](https://apis.io/overlays/arch/arch-client-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Arch Authentication](https://apis.io/security/arch/arch-authentication/)
+- [Arch Domain Security](https://apis.io/security/arch/arch-domain-security/)
+- [Arch Trust Center](https://apis.io/security/arch/arch-trust-center/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Arch Rate Limits](https://apis.io/rate-limits/arch/arch-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://arch.com/)
+- [Documentation](https://arch.co/client-api/api-docs/)
+- [Getting started](https://arch.co/client-api/api-docs/)
+- [API reference](https://arch.co/client-api/api-docs/)
+- [Sign up](https://archlabs.com/portal)
+- [Support](https://archlabs.com/contact.html)
+- [Compliance](https://arch.co/legal.html#gdpr-compliance-policy)
+- [Terms of service](https://arch.co/legal.html)
+- [Privacy policy](https://arch.co/legal.html#privacy-policy)
+- [Status](https://arch-group.gitlab.io/status-page/)
+
+## API Evangelist rating
+
+**Kin Score 44.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 45.3 |
+| Contract governance | 4.5 |
+| Operational transparency | 15.8 |
+| Developer ergonomics | 56.5 |
+| Access clarity | 50.0 |
+
+**Agent readiness 24.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 29.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/arch/](https://apis.io/providers/arch/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Arch: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/arch/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
